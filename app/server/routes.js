@@ -9,11 +9,15 @@ exports.listen = function (app) {
         if (req.session.user) {
             req.session.destroy(function () {
                 messages.success.push({title: "Logged Out", content: "You are now logged out!"});
-                res.render("landing.ejs", {messages: messages, title: 'Landing'});
+                res.render("teste.ejs", {messages: messages, title: 'Landing'});
             });
         } else {
             messages.success.push({title: "Sign in first", content: "You are not logged in"});
-            res.render("landing.ejs", {messages: messages, title: 'Landing'});
+            res.render("teste.ejs", {messages: messages, title: 'Landing'});
         }
+    });
+
+    app.get('*', function (req, res) {
+       res.render("teste.ejs");
     });
 };
