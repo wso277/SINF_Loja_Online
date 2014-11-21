@@ -26,6 +26,14 @@ exports.listen = function (app) {
         }
     });
 
+    app.post('/login', function (req,res) {
+        res.send(200);
+    });
+
+    app.get('/teste-erro', function (req, res) {
+        res.render("teste-erro.ejs");
+    });
+
     app.get('*', function (req, res) {
        res.render("teste.ejs");
     });
