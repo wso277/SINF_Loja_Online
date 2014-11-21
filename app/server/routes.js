@@ -17,7 +17,25 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/login', function (req, res) {
+        var messages = generateMessageBlock();
+        if (req.session.user) {
+
+        } else {
+            res.render("login.ejs", {messages: messages, title: 'Login'});
+        }
+    });
+
     app.get('*', function (req, res) {
        res.render("teste.ejs");
     });
 };
+
+var generateMessageBlock = function() {
+    return {
+        success: [],
+        info  : [],
+        warning: [],
+        danger: []
+    };
+}
