@@ -26,6 +26,13 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/product/:id', function (req, res) {
+        var messages = generateMessageBlock();
+        var id = parseInt(req.params.id);
+
+        res.render("product.ejs", {messages: messages, title:"Product"});
+    });
+
     app.post('/login', function (req,res) {
         res.send(200);
     });
@@ -35,7 +42,7 @@ exports.listen = function (app) {
     });
 
     app.get('*', function (req, res) {
-       res.render("teste.ejs");
+       res.render("dashboard.ejs", {title:"Dashboard"});
     });
 };
 
