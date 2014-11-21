@@ -25,6 +25,5 @@ routes.listen(app);
 
 app.listen(port, ip, function () {
         console.log("Listening");
-
     }
 );
