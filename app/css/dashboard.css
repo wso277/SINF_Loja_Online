@@ -7,11 +7,11 @@
 }
 
 #tile1{
-    background: rgb(0,172,238);
+    background: rgb(0,200,0);
 }
 
 #tile2{
-    background: rgb(243,243,243);
+    background: rgb(0,150,120);
 }
 
 #tile3{
@@ -32,7 +32,7 @@
 }
 
 #tile7{
-    background: white;
+    background: rgb(0,150,200);
 }
 
 #tile8{
