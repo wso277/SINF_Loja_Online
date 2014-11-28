@@ -72,7 +72,7 @@ exports.listen = function (app) {
         if (req.session.user) {
             res.render("dashboard-private.ejs", {title:"Dashboard"});
         } else {
-            res.render("dashboard-public.ejs", {title: "Dashboard"});
+            res.render("dashboard-private.ejs", {title: "Dashboard"});
         }
     });
 };
