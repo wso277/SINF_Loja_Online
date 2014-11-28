@@ -11,9 +11,6 @@ using Interop.IGcpBS800;
 //
 //
 
-
-
-
 namespace MvcApplication1.Lib_Primavera
 {
     public class ClientHelper
@@ -27,9 +24,8 @@ namespace MvcApplication1.Lib_Primavera
             Lib_Primavera.Models.Resposta resposta = new Models.Resposta();
 
             GcpBECliente myCli = new GcpBECliente();
-
+            
             try{
-
                 if( PriEngine.InitializeCompany(COMPANHIA, USER, PASS ) == true ){
 
                     myCli.set_Cliente(cli.CodigoCliente);
@@ -37,15 +33,22 @@ namespace MvcApplication1.Lib_Primavera
                     myCli.set_NumContribuinte(cli.NumContribuinte);
                     myCli.set_Moeda("EUR");
                     myCli.set_EnderecoWeb(cli.Email);
-                    //inserir os campos que forem preciso.
 
-                    //myCli.set_Password(cli.Password);
-                    
+
                     myCli.set_Telefone(cli.Telefone);
                     myCli.set_Morada(cli.Morada);
                     myCli.set_Localidade(cli.Localidade);
                     myCli.set_CodigoPostal(cli.CodPostal);
-                    myCli.set_Distrito(cli.CodDistrito);                    
+                    myCli.set_Distrito(cli.CodDistrito);        
+
+                    // Inserir campo de utilizador Password
+                    StdBECampo campoUtilizadorPassword = new StdBECampo();
+                    campoUtilizadorPassword.Nome = "Password";
+                    campoUtilizadorPassword.Valor = cli.Password;
+                    StdBECampos camposUtilizador = new StdBECampos();
+                    camposUtilizador.Insere(campoUtilizadorPassword);
+                    myCli.set_CamposUtil(camposUtilizador);
+                                
 
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
 
@@ -54,7 +57,6 @@ namespace MvcApplication1.Lib_Primavera
                     return resposta;
                 }
                 else {
-
                     resposta.Codigo = 1;
                     resposta.Descricao = "Erro ao abrir empresa " + COMPANHIA;
                     return resposta;
@@ -70,9 +72,6 @@ namespace MvcApplication1.Lib_Primavera
 
         public static Lib_Primavera.Models.Resposta AtualizaCliente(Lib_Primavera.Models.Client cliente)
         {
-
-
-
             Lib_Primavera.Models.Resposta resposta = new Models.Resposta();
             ErpBS objMotor = new ErpBS();
 
@@ -80,10 +79,8 @@ namespace MvcApplication1.Lib_Primavera
 
             try
             {
-
                 if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
                 {
-
                     if (PriEngine.Engine.Comercial.Clientes.Existe(cliente.CodigoCliente) == false)
                     {
                         resposta.Codigo = 1;
@@ -92,7 +89,6 @@ namespace MvcApplication1.Lib_Primavera
                     }
                     else
                     {
-
                         objCli = PriEngine.Engine.Comercial.Clientes.Edita(cliente.CodigoCliente);
                         objCli.set_EmModoEdicao(true);
 
@@ -122,9 +118,7 @@ namespace MvcApplication1.Lib_Primavera
 
                         //NumContribuinte
                         if (cliente.NumContribuinte != "")
-                            objCli.set_NumContribuinte(cliente.NumContribuinte);
-                        
-                        
+                            objCli.set_NumContribuinte(cliente.NumContribuinte);                 
 
                         PriEngine.Engine.Comercial.Clientes.Actualiza(objCli);
 
@@ -138,9 +132,7 @@ namespace MvcApplication1.Lib_Primavera
                     resposta.Codigo = 1;
                     resposta.Descricao = "Erro ao abrir a empresa "+ COMPANHIA;
                     return resposta;
-
                 }
-
             }
 
             catch (Exception ex)
@@ -149,13 +141,6 @@ namespace MvcApplication1.Lib_Primavera
                 resposta.Descricao = ex.Message;
                 return resposta;
             }
-
         }
-
-
-
-
-
-
     }
 }
