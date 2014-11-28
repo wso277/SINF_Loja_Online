@@ -26,6 +26,15 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/products', function (req, res) {
+        var messages = generateMessageBlock();
+        if (req.session.user) {
+
+        } else {
+            res.render("products.ejs", {messages: messages, title: 'Products'});
+        }
+    });
+
     app.get('/product/:id', function (req, res) {
         var messages = generateMessageBlock();
         var id = parseInt(req.params.id);
