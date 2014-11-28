@@ -18,9 +18,9 @@ namespace MvcApplication1.Lib_Primavera
 {
     public class ClientHelper
     {
-        static string COMPANHIA = "BELAFLOR";
-        static string USER = "";
-        static string PASS = "";
+        static string COMPANHIA = InformacaoEmpresa.COMPANHIA;
+        static string USER = InformacaoEmpresa.COMPANHIA;
+        static string PASS = InformacaoEmpresa.COMPANHIA;
 
         public static Lib_Primavera.Models.Resposta InsereCliente(Models.Client cli)
         {
@@ -36,8 +36,16 @@ namespace MvcApplication1.Lib_Primavera
                     myCli.set_Nome(cli.Nome);
                     myCli.set_NumContribuinte(cli.NumContribuinte);
                     myCli.set_Moeda("EUR");
+                    myCli.set_EnderecoWeb(cli.Email);
                     //inserir os campos que forem preciso.
 
+                    //myCli.set_Password(cli.Password);
+                    
+                    myCli.set_Telefone(cli.Telefone);
+                    myCli.set_Morada(cli.Morada);
+                    myCli.set_Localidade(cli.Localidade);
+                    myCli.set_CodigoPostal(cli.CodPostal);
+                    myCli.set_Distrito(cli.CodDistrito);                    
 
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
 

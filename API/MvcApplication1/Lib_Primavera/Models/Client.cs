@@ -11,8 +11,8 @@ namespace MvcApplication1.Lib_Primavera.Models
         public string CodigoCliente { get; set; }
         public string Nome { get; set; }
         public string Telefone { get; set; }
-        //public string Email { get; set; }
-        //public string Password { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
 
 
         /** Dados de envio da encomenda **/
