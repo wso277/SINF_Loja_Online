@@ -26,6 +26,15 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/orders', function (req, res) {
+        var messages = generateMessageBlock();
+        if (req.session.user) {
+
+        } else {
+            res.render("orders.ejs", {messages: messages, title: 'Orders'});
+        }
+    });
+
     app.get('/products', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
@@ -51,7 +60,11 @@ exports.listen = function (app) {
     });
 
     app.get('*', function (req, res) {
-       res.render("dashboard.ejs", {title:"Dashboard"});
+        if (req.session.user) {
+            res.render("dashboard-private.ejs", {title:"Dashboard"});
+        } else {
+            res.render("dashboard-public.ejs", {title: "Dashboard"});
+        }
     });
 };
 
