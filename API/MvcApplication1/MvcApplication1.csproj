@@ -269,6 +269,7 @@
     <Compile Include="Lib_Primavera\ClientHelper.cs" />
     <Compile Include="Lib_Primavera\Models\Artigo.cs" />
     <Compile Include="Lib_Primavera\Models\Client.cs" />
+    <Compile Include="Lib_Primavera\InformacaoEmpresa.cs" />
     <Compile Include="Lib_Primavera\Models\Resposta.cs" />
     <Compile Include="Lib_Primavera\PriEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
