@@ -1,0 +1,15 @@
+table tr[data-href] {
+    cursor: pointer;
+}
+
+thead tr {
+    border: 1px solid #ffffff;
+}
+
+tr {
+    border-top: 1px solid #ffffff;
+}
+
+tbody tr:hover {
+    color: #bf5a16;
+}
