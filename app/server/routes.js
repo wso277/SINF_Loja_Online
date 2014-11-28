@@ -35,6 +35,15 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/profile', function (req, res) {
+        var messages = generateMessageBlock();
+        if (req.session.user) {
+
+        } else {
+            res.render("profile.ejs", {messages: messages, title: 'Profile'});
+        }
+    });
+
     app.get('/product/:id', function (req, res) {
         var messages = generateMessageBlock();
         var id = parseInt(req.params.id);
