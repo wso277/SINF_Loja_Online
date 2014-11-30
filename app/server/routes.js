@@ -26,6 +26,15 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/orders', function (req, res) {
+        var messages = generateMessageBlock();
+        if (req.session.user) {
+
+        } else {
+            res.render("orders.ejs", {messages: messages, title: 'Orders'});
+        }
+    });
+
     app.get('/products', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
@@ -35,11 +44,25 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/profile', function (req, res) {
+        var messages = generateMessageBlock();
+        if (req.session.user) {
+
+        } else {
+            res.render("profile.ejs", {messages: messages, title: 'Profile'});
+        }
+    });
+
     app.get('/product/:id', function (req, res) {
         var messages = generateMessageBlock();
         var id = parseInt(req.params.id);
 
         res.render("product.ejs", {messages: messages, title:"Product"});
+    });
+
+    app.get('/register', function (req, res) {
+        var messages = generateMessageBlock();
+        res.render("register.ejs", {messages: messages, title:"Registo"});
     });
 
     app.post('/login', function (req,res) {
@@ -51,7 +74,11 @@ exports.listen = function (app) {
     });
 
     app.get('*', function (req, res) {
-       res.render("dashboard.ejs", {title:"Dashboard"});
+        if (req.session.user) {
+            res.render("dashboard-private.ejs", {title:"Dashboard"});
+        } else {
+            res.render("dashboard-public.ejs", {title: "Dashboard"});
+        }
     });
 };
 

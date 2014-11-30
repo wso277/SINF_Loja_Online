@@ -1,0 +1,15 @@
+.link-cursor[data-href] {
+    cursor: pointer;
+}
+
+.thead-border {
+    border: 1px solid #ffffff;
+}
+
+.tr-border {
+    border-top: 1px solid #ffffff;
+}
+
+.tr-hover:hover {
+    color: #bf5a16;
+}

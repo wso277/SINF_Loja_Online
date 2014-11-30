@@ -1,0 +1,316 @@
+<section class="wrapper">
+
+    <section class="material-design-hamburger">
+        <button class="material-design-hamburger__icon">
+            <span class="material-design-hamburger__layer"></span>
+        </button>
+    </section>
+
+    <section class="menu menu--off">
+        <a href="/" title="Home">
+            <div class="row">
+                <div class="col-sm-8 navElem">
+                    Home
+                </div>
+                <div class="col-sm-4">
+                    <span class="fa fa-home"></span>
+                </div>
+            </div>
+        </a>
+        <a href="" data-toggle="modal" data-target="#profile" title="Profile">
+            <div class="row">
+                <div class="col-sm-8 navElem">
+                    Profile
+                </div>
+                <div class="col-sm-4">
+                    <span class="fa fa-user"></span>
+                </div>
+            </div>
+        </a>
+        <a href="" data-toggle="modal" data-target="#lastOrder" title="Last Order">
+            <div class="row">
+                <div class="col-sm-8 navElem">
+                    Last Order
+                </div>
+                <div class="col-sm-4">
+                    <span class="fa fa-money"></span>
+                </div>
+            </div>
+        </a>
+        <a href="" data-toggle="modal" data-target="#cart" title="Shopping Cart">
+            <div class="row">
+                <div class="col-sm-8 navElem">
+                    Shopping Cart
+                </div>
+                <div class="col-sm-4">
+                    <span class="fa fa-shopping-cart"></span>
+                </div>
+            </div>
+        </a>
+    </section>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user"></i> Profile</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding-right: 2.5em">
+                            <div class="panel panel-info">
+                                <div class="panel-heading" style="background-color: #393939; border-color: #393939">
+                                    <h3 class="panel-title">Sheena Kristin A.Eschor</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-lg-3 " align="center"><img alt="User Pic"
+                                                                                            src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"
+                                                                                            class="img-circle"></div>
+                                        <div class=" col-md-9 col-lg-9 ">
+                                            <table class="table table-user-information">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Department:</td>
+                                                    <td>Programming</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Hire date:</td>
+                                                    <td>06/23/2013</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Date of Birth</td>
+                                                    <td>01/24/1988</td>
+                                                </tr>
+
+                                                <tr>
+                                                <tr>
+                                                    <td>Gender</td>
+                                                    <td>Male</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Home Address</td>
+                                                    <td>Metro Manila,Philippines</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td><a href="mailto:info@support.com">info@support.com</a></td>
+                                                </tr>
+                                                <td>Phone Number</td>
+                                                <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
+                                                </td>
+
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+
+                                            <a href="#" class="btn btn-sunny btn-md text-uppercase"><i
+                                                        class="fa fa-shopping-cart fa-lg"></i> 14</a>
+                                            <a href="#" class="btn btn-sunny btn-md text-uppercase"><i
+                                                        class="fa fa-history fa-lg"></i> Ver histórico de encomendas</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 65em">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-shopping-cart"></i> Shopping Cart</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-10">
+                            <table class="table ">
+                                <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th class="text-center">Preço</th>
+                                    <th>Quantidade</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="col-sm-4">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href=""> <img class="media-object"
+                                                                                         src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
+                                                                                         style="width: 72px; height: 72px;">
+                                            </a>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="">Nome Produto</a></h4>
+                                                <h5 class="media-heading"> by <a href="">Marca</a></h5>
+                                                <span>Status: </span><span class="text-success"><strong>Em
+                                                        Stock</strong></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-sm-1 text-center"><strong>$4.87</strong></td>
+                                    <td class="col-sm-1 text-center">2</td>
+                                    <td class="col-sm-1">
+                                        <button type="button" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> Remover
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-4">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object"
+                                                                                          src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
+                                                                                          style="width: 72px; height: 72px;">
+                                            </a>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">Nome Produto</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Marca</a></h5>
+                                                <span>Status: </span><span class="text-warning"><strong>Sai de stock em
+                                                        2 semanas</strong></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-sm-1 text-center"><strong>$4.99</strong></td>
+                                    <td class="col-sm-1 text-center">1</td>
+                                    <td class="col-sm-1">
+                                        <button type="button" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> Remover
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h4>Subtotal</h4></td>
+                                    <td class="text-center"><h5><strong>$24.59</strong></h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h4>Estimated shipping</h4></td>
+                                    <td class="text-center"><h5><strong>$6.94</strong></h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Total</h3></td>
+                                    <td class="text-center"><h3><strong>$31.53</strong></h3></td>
+                                    <td>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            <span class="fa fa-shopping-cart"></span> Continuar
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success">
+                                            Checkout <span class="fa fa-play"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="lastOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 65em">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-money"></i> Last Order</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-10">
+                            <table class="table ">
+                                <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                    <th class="text-center">Preço</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="col-sm-4">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href=""> <img class="media-object"
+                                                                                         src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
+                                                                                         style="width: 72px; height: 72px;">
+                                            </a>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="">Nome Produto</a></h4>
+                                                <h5 class="media-heading"> by <a href="">Marca</a></h5>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="col-sm-1 text-center">2</td>
+                                    <td class="col-sm-1 text-center"><strong>$4.87</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-4">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object"
+                                                                                          src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
+                                                                                          style="width: 72px; height: 72px;">
+                                            </a>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">Nome Produto</a></h4>
+                                                <h5 class="media-heading"> by <a href="#">Marca</a></h5>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="col-sm-1 text-center">1</td>
+                                    <td class="col-sm-1 text-center"><strong>$4.99</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><h4>Subtotal</h4></td>
+                                    <td></td>
+                                    <td class="text-center"><h5><strong>$24.59</strong></h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h4>Shipping Cost</h4></td>
+                                    <td></td>
+                                    <td class="text-center"><h5><strong>$6.94</strong></h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Total</h3></td>
+                                    <td></td>
+                                    <td class="text-center"><h3><strong>$31.53</strong></h3></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

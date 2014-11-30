@@ -1,3 +1,7 @@
+.dynamicTile {
+    padding-top: 10em;
+}
+
 .dynamicTile .col-sm-2.col-xs-4{
     padding:5px;
 }
@@ -7,11 +11,11 @@
 }
 
 #tile1{
-    background: rgb(0,200,0);
+    background: rgb(150,120,100);
 }
 
 #tile2{
-    background: rgb(0,150,120);
+    background: rgb(220,100,20);
 }
 
 #tile3{
@@ -28,7 +32,7 @@
 }
 
 #tile6{
-    background: rgb(62,157,215);
+    background: rgb(62,122,215);
 }
 
 #tile7{
@@ -46,6 +50,14 @@
 #tile10{
     background: rgb(0,93,233);
 }
+
+#tile11{
+    background: rgb(255,255,255);
+}
+
+#tile12{
+     background: rgb(100,100,255);
+ }
 
 .tilecaption{
     position: relative;

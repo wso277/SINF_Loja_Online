@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/css/search.css">
 </head>
 <body>
+<% include partials/header.ejs %>
 <div class="container">
     <section>
         <div class="container vertical-offset-100">
@@ -13,7 +14,7 @@
                 <div class="board-inner">
 
                     <hgroup class="mb20">
-                        <h1 style="color: white">Products</h1>
+                        <h1 style="color: white">Produtos disponíveis</h1>
                     </hgroup>
 
                     <section class="col-xs-12 col-sm-6 col-md-12">
@@ -33,7 +34,7 @@
                                     <li><i class="fa fa-mobile"></i>
                                         <span>100 in stock</span>
                                     </li>
-                                    <li id ="preco"><i class="fa fa-euro"></i>
+                                    <li id="preco"><i class="fa fa-euro"></i>
                                         <span>129,99</span>
                                     </li>
                                 </ul>
@@ -42,8 +43,11 @@
                                 <h3><a href="/product/1" title="">Produto x</a></h3>
 
                                 <p>Processador: zxc</p>
+
                                 <p>Processador: zxc</p>
+
                                 <p>Processador: zxc</p>
+
                                 <p>Processador: zxc</p>
                             </div>
                             <span class="clearfix borda"></span>
@@ -53,5 +57,7 @@
             </div>
         </div>
     </section>
+</div>
+<% include partials/scripts %>
 </body>
 </html>
