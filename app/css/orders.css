@@ -1,15 +1,15 @@
-table tr[data-href] {
+.link-cursor[data-href] {
     cursor: pointer;
 }
 
-thead tr {
+.thead-border {
     border: 1px solid #ffffff;
 }
 
-tr {
+.tr-border {
     border-top: 1px solid #ffffff;
 }
 
-tbody tr:hover {
+.tr-hover:hover {
     color: #bf5a16;
 }
