@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <% include partials/head %>
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+</head>
+<body ng-app="register-app">
+<% include partials/header.ejs %>
+<div class="container vertical-offset-80" ng-controller="RegisterController as registerCtrl">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row-fluid user-row">
+                        <img src="../images/register-icon.png" style="width:30%;height:30%" class="img-responsive"/>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" name="registerForm">
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                        <span class="input-group-addon">
+                                            Nome
+                                        </span>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="form-control" ng-model="formData.name" type="text"
+                                       placeholder="Insira o seu nome por favor"
+                                       required/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                        <span class="input-group-addon">
+                                            Email
+                                        </span>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="form-control" ng-model="formData.email" type="text"
+                                       placeholder="Insira o seu email por favor"
+                                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                                       required/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                        <span class="input-group-addon">
+                                            NIB
+                                        </span>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="form-control" ng-model="formData.nib" type="text"
+                                       placeholder="Insira o seu NIB por favor"
+                                       required/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                        <span class="input-group-addon">
+                                            Localidade
+                                        </span>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="form-control" ng-model="formData.hometown" type="text"
+                                       placeholder="Insira a sua localidade por favor"
+                                       required/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                        <span class="input-group-addon">
+                                            Password
+                                        </span>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="form-control" ng-model="formData.password" type="password"
+                                       placeholder="Insira a sua password desejada por favor"
+                                       required/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                        <span class="input-group-addon">
+                                            Confirmar Password
+                                        </span>
+                            </div>
+                            <div class="col-sm-8">
+                                <input class="form-control" ng-model="formData.confirmPassword" type="password"
+                                       placeholder="Confirme a sua password"
+                                       required/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div style="font-size: 1.2em">
+                            Ao <strong class="label label-danger">registar-se</strong>,
+                            está a concordar com os <a href="" data-toggle="modal" data-target="#terms"><span
+                                id="termsLink"><strong
+                                class="label label-danger">Termos e
+                            Condições</strong></span></a> deste web site, incluíndo o nosso uso de Cookies.
+                        </div>
+                        <button style="width: 100%; margin: 0" class="btn btn-fresh btn-lg text-uppercase"
+                                ng-disabled="!registerForm.$valid"
+                                type="submit"
+                                ng-click="register()">
+                            Registar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="terms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" sg>
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Termos e Condições</h4>
+            </div>
+            <div class="modal-body">
+                <p> Bla bla bla</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->
+
+<%include partials/scripts %>
+<script type="text/javascript" src="/js/app-register.js"></script>
+</body>
+</html>

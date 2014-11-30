@@ -60,6 +60,11 @@ exports.listen = function (app) {
         res.render("product.ejs", {messages: messages, title:"Product"});
     });
 
+    app.get('/register', function (req, res) {
+        var messages = generateMessageBlock();
+        res.render("register.ejs", {messages: messages, title:"Registo"});
+    });
+
     app.post('/login', function (req,res) {
         res.send(200);
     });
@@ -72,7 +77,7 @@ exports.listen = function (app) {
         if (req.session.user) {
             res.render("dashboard-private.ejs", {title:"Dashboard"});
         } else {
-            res.render("dashboard-private.ejs", {title: "Dashboard"});
+            res.render("dashboard-public.ejs", {title: "Dashboard"});
         }
     });
 };
