@@ -18,7 +18,7 @@ namespace MvcApplication1.Lib_Primavera.Models
         /** Dados de envio da encomenda **/
         public string Morada { get; set; }
         public string Localidade { get; set; }
-        public string CodDistrito { get; set; }
+        //public string CodDistrito { get; set; }
         public string CodPostal { get; set; }
 
         /** Dados Fiscais **/
