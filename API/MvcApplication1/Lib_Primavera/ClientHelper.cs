@@ -44,7 +44,7 @@ namespace MvcApplication1.Lib_Primavera
                     
                     // Inserir campo de utilizador Password
                     StdBECampo campoUtilizadorPassword = new StdBECampo();
-                    campoUtilizadorPassword.Nome = "CDU_CampoVar1";
+                    campoUtilizadorPassword.Nome = "CDU_Pass";
                     campoUtilizadorPassword.Valor = cli.Password;
                     StdBECampos camposUtilizador = new StdBECampos();
                     camposUtilizador.Insere(campoUtilizadorPassword);
