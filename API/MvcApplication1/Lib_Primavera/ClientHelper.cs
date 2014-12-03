@@ -26,10 +26,6 @@ namespace MvcApplication1.Lib_Primavera
             StdBELista objList;
 
             Models.Client cli = new Models.Client();
-            //List<Models.Client> listClientes = new List<Models.Client>();
-
-            //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
-
             objList = PriEngine.Engine.Consulta("SELECT Cliente FROM  CLIENTES");
             int numClienteMaior = 0;
             while (!objList.NoFim())

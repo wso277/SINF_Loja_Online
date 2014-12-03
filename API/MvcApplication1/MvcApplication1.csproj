@@ -265,6 +265,7 @@
     <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -276,7 +277,9 @@
     <Compile Include="Lib_Primavera\Models\Client.cs" />
     <Compile Include="Lib_Primavera\InformacaoEmpresa.cs" />
     <Compile Include="Lib_Primavera\Models\Resposta.cs" />
+    <Compile Include="Lib_Primavera\Models\Session.cs" />
     <Compile Include="Lib_Primavera\PriEngine.cs" />
+    <Compile Include="Lib_Primavera\SessionsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
