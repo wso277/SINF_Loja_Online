@@ -15,29 +15,78 @@ namespace MvcApplication1.Lib_Primavera
 {
     public class ArtigoHelper
     {
-        static string COMPANHIA = "BELAFLOR";
-        static string USER = "";
-        static string PASS = "";
+        static string COMPANHIA = InformacaoEmpresa.COMPANHIA;
+        static string USER = InformacaoEmpresa.USER;
+        static string PASS = InformacaoEmpresa.PASS;
 
         public static Lib_Primavera.Models.Artigo GetArtigo(string codArtigo)
         {
             GcpBEArtigo objArtigo = new GcpBEArtigo();
+            IGcpBSArtigos camposUser;
             GcpBEArtigoMoeda preco = new GcpBEArtigoMoeda();
             Models.Artigo myArt = new Models.Artigo();
 
                 if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
                 {
+                    if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false){
+                        return null;
+                    }
 
                     objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
+                    camposUser = PriEngine.Engine.Comercial.Artigos;
+
+                    //Codigo do Artigo
                     myArt.CodigoArtigo = objArtigo.get_Artigo();
+
+                    //Nome
                     myArt.Nome = objArtigo.get_Descricao();
+
+                    //Stock
                     myArt.StockAtual = (float) objArtigo.get_StkActual();
 
-                    preco = PriEngine.Engine.Comercial.ArtigosPrecos.Edita(codArtigo, "EUR", "");
+                    //PVP
+                    preco = PriEngine.Engine.Comercial.ArtigosPrecos.Edita(codArtigo, "EUR", "UN");
                     myArt.PVP = (float) preco.get_PVP1();
                     
+                    //Desconto
                     myArt.Desconto = objArtigo.get_Desconto();
-                    //myArt.Marc =
+
+                    //Marca
+                    myArt.Marca = PriEngine.Engine.Comercial.Marcas.DaValorAtributo(objArtigo.get_Marca(), "descricao");
+
+                    //Nome SO
+                    myArt.NomeSistemaOperativo = PriEngine.Engine.Comercial.Familias.DaDescricao(objArtigo.get_Familia());
+                   
+                    //Versao SO
+                    myArt.VersaoSistemaOperativo = objArtigo.get_SubFamilia();
+
+                    //Tamanho Ecra
+                    myArt.TamanhoEcra = (float) camposUser.DaValorAtributo(codArtigo, "CDU_ECRA");
+
+                    //RAM
+                    myArt.RAM = camposUser.DaValorAtributo(codArtigo, "CDU_RAM");
+
+                    //CPU
+                    myArt.CPU = camposUser.DaValorAtributo(codArtigo, "CDU_CPU");
+
+                    //Peso
+                    myArt.Peso = camposUser.DaValorAtributo(codArtigo, "CDU_PESO");
+
+                    //Camara
+                    myArt.CamaraTraseira = camposUser.DaValorAtributo(codArtigo, "CDU_CAMARA");
+
+                    //Armazenamento
+                    myArt.Armazenamento = camposUser.DaValorAtributo(codArtigo, "CDU_ARMAZENAMENTO");
+
+                    //Autonomia
+                    myArt.Autonomia = (float) camposUser.DaValorAtributo(codArtigo, "CDU_AUTONOMIA");
+
+                    //GPU
+                    myArt.GPU = camposUser.DaValorAtributo(codArtigo, "CDU_GPU");
+
+                    //FOTOURL
+                    myArt.fotoURL = camposUser.DaValorAtributo(codArtigo, "CDU_FOTO");
+  
 
                     return myArt;
                 }
@@ -48,96 +97,73 @@ namespace MvcApplication1.Lib_Primavera
                 }
             }
 
-        }
 
-        public static Lib_Primavera.Models.Resposta AtualizaCliente(Lib_Primavera.Models.Client cliente)
+
+
+        public static IEnumerable<Models.ArtigoShort> ListaArtigos()
         {
-
-
-
-            Lib_Primavera.Models.Resposta resposta = new Models.Resposta();
             ErpBS objMotor = new ErpBS();
 
-            GcpBECliente objCli = new GcpBECliente();
+            StdBELista objList;
 
-            try
+            Models.ArtigoShort art = new Models.ArtigoShort();
+            List<Models.ArtigoShort> listArts = new List<Models.ArtigoShort>();
+
+            if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
 
-                if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
+                objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+
+                while (!objList.NoFim())
                 {
+                    art = new Models.ArtigoShort();
 
-                    if (PriEngine.Engine.Comercial.Clientes.Existe(cliente.CodigoCliente) == false)
-                    {
-                        resposta.Codigo = 1;
-                        resposta.Descricao = "O cliente não existe";
-                        return resposta;
-                    }
-                    else
-                    {
+                    //Codigo do Artigo
+                    art.CodigoArtigo = objList.Valor("artigo");
 
-                        objCli = PriEngine.Engine.Comercial.Clientes.Edita(cliente.CodigoCliente);
-                        objCli.set_EmModoEdicao(true);
+                    GcpBEArtigo objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(art.CodigoArtigo);
+                    IGcpBSArtigos camposUser = PriEngine.Engine.Comercial.Artigos;
 
-                        // Nome
-                        if (cliente.Nome != "")
-                            objCli.set_Nome(cliente.Nome);
+                    //Nome
+                    art.Nome = objArtigo.get_Descricao();
 
-                        //Telefone
-                        if (cliente.Telefone != "")
-                            objCli.set_Telefone(cliente.Telefone);
+                    //Stock
+                    art.StockAtual = (float)objArtigo.get_StkActual();
 
-                        //Morada
-                        if (cliente.Morada != "")
-                            objCli.set_Morada(cliente.Morada);
+                    //PVP
+                    GcpBEArtigoMoeda preco = PriEngine.Engine.Comercial.ArtigosPrecos.Edita(art.CodigoArtigo, "EUR", "UN");
+                    art.PVP = (float)preco.get_PVP1();
 
-                        //Localidade
-                        if (cliente.Localidade != "")
-                            objCli.set_Localidade(cliente.Localidade);
+                    //Desconto
+                    art.Desconto = objArtigo.get_Desconto();
 
-                        //CodDistrito
-                        if (cliente.CodDistrito != "")
-                            objCli.set_Distrito(cliente.CodDistrito); //perguntar ao stor se é o ID do distrito ou a descricao
+                    //Nome SO
+                    art.NomeSistemaOperativo = PriEngine.Engine.Comercial.Familias.DaDescricao(objArtigo.get_Familia());
 
-                        //CodPostal
-                        if (cliente.CodPostal != "")
-                            objCli.set_CodigoPostal(cliente.CodPostal);
+                    //Tamanho Ecra
+                    art.TamanhoEcra = (float)camposUser.DaValorAtributo(art.CodigoArtigo, "CDU_ECRA");
 
-                        //NumContribuinte
-                        if (cliente.NumContribuinte != "")
-                            objCli.set_NumContribuinte(cliente.NumContribuinte);
+                    //CPU
+                    art.CPU = camposUser.DaValorAtributo(art.CodigoArtigo, "CDU_CPU");
 
+                    //Armazenamento
+                    art.Armazenamento = camposUser.DaValorAtributo(art.CodigoArtigo, "CDU_ARMAZENAMENTO");
 
-
-                        PriEngine.Engine.Comercial.Clientes.Actualiza(objCli);
-
-                        resposta.Codigo = 0;
-                        resposta.Descricao = "Sucesso";
-                        return resposta;
-                    }
+                    //FOTOURL
+                    art.fotoURL = camposUser.DaValorAtributo(art.CodigoArtigo, "CDU_FOTO");
+  
+                    listArts.Add(art);
+                    objList.Seguinte();
                 }
-                else
-                {
-                    resposta.Codigo = 1;
-                    resposta.Descricao = "Erro ao abrir a empresa " + COMPANHIA;
-                    return resposta;
 
-                }
+                return listArts;
 
             }
-
-            catch (Exception ex)
+            else
             {
-                resposta.Codigo = 1;
-                resposta.Descricao = ex.Message;
-                return resposta;
-            }
+                return null;
 
+            }
         }
-
-
-
-
-
-
     }
 }
