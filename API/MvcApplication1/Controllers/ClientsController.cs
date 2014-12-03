@@ -21,18 +21,18 @@ namespace MvcApplication1.Controllers
             resposta = Lib_Primavera.ClientHelper.InsereCliente(cliente);
 
             if (resposta.Codigo == 0){
-
+                /*
                 var response = Request.CreateResponse(HttpStatusCode.Created, cliente);
                 string uri = Url.Link("DefaultApi", new { CodCliente = cliente.CodigoCliente });
                 response.Headers.Location = new Uri(uri);
                 return response;
+                */
+                return Request.CreateResponse(HttpStatusCode.Created);
             }
             else
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
-
-
     }
 }
