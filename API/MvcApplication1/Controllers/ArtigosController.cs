@@ -13,10 +13,23 @@ namespace MvcApplication1.Controllers
     public class ArtigosController : ApiController
     {
 
-        // GET api/artigos/id 
-        public Artigo Get(string id)
+        // GET api/artigos/acao
+        public Lib_Primavera.Models.ArtigoShowcase Get(string id)
         {
-            Lib_Primavera.Models.Artigo artigo = Lib_Primavera.ArtigoHelper.GetArtigo(id);
+            Lib_Primavera.Models.ArtigoShowcase artigo = new ArtigoShowcase();
+
+            if (id == "novidade")
+                artigo = Lib_Primavera.ArtigoHelper.novidade();
+
+            else if (id == "oportunidade")
+                artigo = Lib_Primavera.ArtigoHelper.oportunidade();
+
+            else if (id == "antigo")
+                artigo = Lib_Primavera.ArtigoHelper.antigo();
+
+            else if( id == "stock" )
+                artigo = Lib_Primavera.ArtigoHelper.stock();
+
             if (artigo == null)
             {
                 throw new HttpResponseException(
@@ -28,11 +41,14 @@ namespace MvcApplication1.Controllers
             }
         }
 
+        
         // GET api/artigos
-        public IEnumerable<Lib_Primavera.Models.ArtigoShort> Get()
+        public IEnumerable<Lib_Primavera.Models.ArtigoShort> Get(int page=0)
         {
-            return Lib_Primavera.ArtigoHelper.ListaArtigos();
+            return Lib_Primavera.ArtigoHelper.ListaArtigos(page);
         }
+
+        
 
 
     }

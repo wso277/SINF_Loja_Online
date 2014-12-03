@@ -86,6 +86,10 @@ namespace MvcApplication1.Lib_Primavera
 
                     //FOTOURL
                     myArt.fotoURL = camposUser.DaValorAtributo(codArtigo, "CDU_FOTO");
+
+                    //Data de Lancamento
+                    DateTime d = camposUser.DaValorAtributo(codArtigo, "CDU_Lancamento");
+                    myArt.Lancamento = d.ToShortDateString();
   
 
                     return myArt;
@@ -100,7 +104,7 @@ namespace MvcApplication1.Lib_Primavera
 
 
 
-        public static IEnumerable<Models.ArtigoShort> ListaArtigos()
+        public static IEnumerable<Models.ArtigoShort> ListaArtigos(int page)
         {
             ErpBS objMotor = new ErpBS();
 
@@ -114,7 +118,18 @@ namespace MvcApplication1.Lib_Primavera
 
                 objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
-                while (!objList.NoFim())
+                int artigos_por_pagina = 15;
+                int i = 0;
+                int j = 0;
+
+                while (!objList.NoFim() && j != artigos_por_pagina * page)
+                {
+                    j++;
+                    objList.Seguinte();
+                }
+
+
+                while (!objList.NoFim() && i != artigos_por_pagina)
                 {
                     art = new Models.ArtigoShort();
 
@@ -151,8 +166,13 @@ namespace MvcApplication1.Lib_Primavera
 
                     //FOTOURL
                     art.fotoURL = camposUser.DaValorAtributo(art.CodigoArtigo, "CDU_FOTO");
+
+                    //Data de Lancamento
+                    DateTime d= camposUser.DaValorAtributo(art.CodigoArtigo, "CDU_Lancamento");
+                    art.Lancamento = d.ToShortDateString();
   
                     listArts.Add(art);
+                    i++;
                     objList.Seguinte();
                 }
 
@@ -164,6 +184,100 @@ namespace MvcApplication1.Lib_Primavera
                 return null;
 
             }
+        }
+
+        /** Retorna o produto com a data de lancamento mais recente **/
+        public static Models.ArtigoShowcase novidade()
+        {
+            if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
+            {
+                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, CDU_Lancamento as data, stkactual FROM Artigo WHERE stkactual > 0 ORDER BY data DESC;";
+
+                StdBELista objList = PriEngine.Engine.Consulta(query);
+                Models.ArtigoShowcase art = new Models.ArtigoShowcase();
+
+                if (objList.Vazia() == false)
+                {
+
+                    art.CodigoArtigo = objList.Valor("CodigoArtigo");
+                    art.fotoURL = objList.Valor("fotoURL");
+
+                    return art;
+                }
+                else { return null; }
+
+            }
+            else { return null; }
+        }
+
+        /** Retorna o produto em PROMOCAO com a data de lançamento mais antiga **/
+        public static Models.ArtigoShowcase oportunidade()
+        {
+            if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
+            {
+                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, CDU_Lancamento as data, stkactual FROM Artigo WHERE desconto > 0 AND stkactual > 0 ORDER BY data DESC;";
+
+                StdBELista objList = PriEngine.Engine.Consulta(query);
+                Models.ArtigoShowcase art = new Models.ArtigoShowcase();
+
+                if (objList.Vazia() == false)
+                {
+
+                    art.CodigoArtigo = objList.Valor("CodigoArtigo");
+                    art.fotoURL = objList.Valor("fotoURL");
+
+                    return art;
+                }
+                else { return null; }
+
+            }
+            else { return null; }
+        }
+
+        public static Models.ArtigoShowcase antigo()
+        {
+            if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
+            {
+                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, CDU_Lancamento as data, stkactual FROM Artigo WHERE stkactual > 0 ORDER BY data;";
+
+                StdBELista objList = PriEngine.Engine.Consulta(query);
+                Models.ArtigoShowcase art = new Models.ArtigoShowcase();
+
+                if (objList.Vazia() == false)
+                {
+
+                    art.CodigoArtigo = objList.Valor("CodigoArtigo");
+                    art.fotoURL = objList.Valor("fotoURL");
+
+                    return art;
+                }
+                else { return null; }
+
+            }
+            else { return null; }
+        }
+
+        public static Models.ArtigoShowcase stock()
+        {
+            if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
+            {
+                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, stkactual as stock FROM Artigo ORDER BY stock DESC;";
+
+                StdBELista objList = PriEngine.Engine.Consulta(query);
+                Models.ArtigoShowcase art = new Models.ArtigoShowcase();
+
+                if (objList.Vazia() == false)
+                {
+
+                    art.CodigoArtigo = objList.Valor("CodigoArtigo");
+                    art.fotoURL = objList.Valor("fotoURL");
+
+                    return art;
+                }
+                else { return null; }
+
+            }
+            else { return null; }
         }
     }
 }
