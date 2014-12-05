@@ -1,4 +1,6 @@
 var path = require('path');
+var http = require('http');
+var requestify = require('requestify');
 
 exports.listen = function (app) {
 
@@ -57,15 +59,31 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         var id = parseInt(req.params.id);
 
-        res.render("product.ejs", {messages: messages, title:"Product"});
+        res.render("product.ejs", {messages: messages, title: "Product"});
     });
 
     app.get('/register', function (req, res) {
         var messages = generateMessageBlock();
-        res.render("register.ejs", {messages: messages, title:"Registo"});
+        res.render("register.ejs", {messages: messages, title: "Registo"});
     });
 
-    app.post('/login', function (req,res) {
+    app.post('/login', function (req, res) {
+        if (req.body.email != "" && req.body.password != "") {
+
+            requestify.post('http://localhost:49445/api/sessions', {
+                email   : req.body.email,
+                password: req.body.password
+            })
+                .then(function (response) {
+                    if (response.statusCode() == 200) {
+                        console.log(response.getBody());
+                        req.session.user = response.getBody();
+                    } else {
+                        console.log("Status: " + response.statusCode() + " Bad request");
+                    }
+                });
+
+        }
         res.send(200);
     });
 
@@ -75,18 +93,18 @@ exports.listen = function (app) {
 
     app.get('*', function (req, res) {
         if (req.session.user) {
-            res.render("dashboard-private.ejs", {title:"Dashboard"});
+            res.render("dashboard-private.ejs", {title: "Dashboard"});
         } else {
             res.render("dashboard-public.ejs", {title: "Dashboard"});
         }
     });
 };
 
-var generateMessageBlock = function() {
+var generateMessageBlock = function () {
     return {
         success: [],
-        info  : [],
+        info   : [],
         warning: [],
-        danger: []
+        danger : []
     };
 }
