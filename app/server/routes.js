@@ -66,6 +66,22 @@ exports.listen = function (app) {
         res.render("register.ejs", {messages: messages, title: "Registo"});
     });
 
+    app.post('/register', function (req, res) {
+        console.log("começou");
+        if (req.body.password === req.body.confirmPassword) {
+            console.log("entrou");
+            requestify.put('http://localhost:49445/api/Clients', {NumContribuinte: req.body.nib, Nome: req.body.nome, Email: req.body.email, Telefone: req.body.telefone, Morada: req.body.morada, Localidade: req.body.localidade, CodPostal: req.body.codPostal, Password: req.body.password}).
+                then(function (response) {
+                    console.log("pedido");
+                    console.log(response.getBody());
+                });
+        } else {
+            console.log("peido");
+            res.status(400).send("Passwords must match!");
+        }
+    });
+
+
     app.post('/login', function (req, res) {
         if (req.body.email != "" && req.body.password != "") {
 
@@ -84,18 +100,6 @@ exports.listen = function (app) {
 
         }
         res.send(200);
-    });
-
-    app.post('/register', function (req, res) {
-
-        if (req.body.password === req.body.confirmPassword) {
-            requestify.post('http://localhost:49445/api/Clients', {NumContribuinte: req.body.nib, Nome: req.body.nome, Email: req.body.email, Telefone: req.body.telefone, Morada: req.body.morada, Localidade: req.body.localidade, CodPostal: req.body.codPostal, Password: req.body.password}).
-                then(function (response) {
-                    console.log(response.getBody());
-                });
-        } else {
-            res.status(400).send("Passwords must match!");
-        }
     });
 
     app.get('/teste-erro', function (req, res) {
