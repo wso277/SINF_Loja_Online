@@ -57,16 +57,28 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         var id = parseInt(req.params.id);
 
-        res.render("product.ejs", {messages: messages, title:"Product"});
+        res.render("product.ejs", {messages: messages, title: "Product"});
     });
 
     app.get('/register', function (req, res) {
         var messages = generateMessageBlock();
-        res.render("register.ejs", {messages: messages, title:"Registo"});
+        res.render("register.ejs", {messages: messages, title: "Registo"});
     });
 
-    app.post('/login', function (req,res) {
+    app.post('/login', function (req, res) {
         res.send(200);
+    });
+
+    app.post('/register', function (req, res) {
+
+        if (req.body.password === req.body.confirmPassword) {
+            requestify.post('http://localhost:49445/api/Clients', {NumContribuinte: req.body.nib, Nome: req.body.nome, Email: req.body.email, Telefone: req.body.telefone, Morada: req.body.morada, Localidade: req.body.localidade, CodPostal: req.body.codPostal, Password: req.body.password}).
+                then(function (response) {
+                    console.log(response.getBody());
+                });
+        } else {
+            res.status(400).send("Passwords must match!");
+        }
     });
 
     app.get('/teste-erro', function (req, res) {
@@ -75,17 +87,17 @@ exports.listen = function (app) {
 
     app.get('*', function (req, res) {
         if (req.session.user) {
-            res.render("dashboard-private.ejs", {title:"Dashboard"});
+            res.render("dashboard-private.ejs", {title: "Dashboard"});
         } else {
             res.render("dashboard-public.ejs", {title: "Dashboard"});
         }
     });
 };
 
-var generateMessageBlock = function() {
+var generateMessageBlock = function () {
     return {
         success: [],
-        info  : [],
+        info: [],
         warning: [],
         danger: []
     };
