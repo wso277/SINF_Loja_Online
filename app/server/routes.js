@@ -66,6 +66,22 @@ exports.listen = function (app) {
     });
 
     app.post('/login', function (req, res) {
+        if (req.body.email != "" && req.body.password != "") {
+
+            requestify.post('http://localhost:49445/api/sessions', {
+                email   : req.body.email,
+                password: req.body.password
+            })
+                .then(function (response) {
+                    if (response.statusCode() == 200) {
+                        console.log(response.getBody());
+                        req.session.user = response.getBody();
+                    } else {
+                        console.log("Status: " + response.statusCode() + " Bad request");
+                    }
+                });
+
+        }
         res.send(200);
     });
 
@@ -97,8 +113,8 @@ exports.listen = function (app) {
 var generateMessageBlock = function () {
     return {
         success: [],
-        info: [],
+        info   : [],
         warning: [],
-        danger: []
+        danger : []
     };
 }
