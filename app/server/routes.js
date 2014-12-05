@@ -74,11 +74,11 @@ exports.listen = function (app) {
                 password: req.body.password
             })
                 .then(function (response) {
-                    if (response.statusCode() == 200) {
+                    if (response.getCode() == 200) {
                         console.log(response.getBody());
                         req.session.user = response.getBody();
                     } else {
-                        console.log("Status: " + response.statusCode() + " Bad request");
+                        console.log("Status: " + response.getCode() + " Bad request");
                     }
                 });
 
