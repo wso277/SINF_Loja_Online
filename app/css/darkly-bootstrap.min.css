@@ -6563,3 +6563,13 @@ a.list-group-item-danger.active:focus {
 .homeButton {
     color: #ffffff;
 }
+
+.ng-invalid.ng-dirty {
+    border-color: #FA787E;
+    border-width: 3px;
+}
+
+.ng-valid.ng-dirty {
+    border-color: #78FA89;
+    border-width: 3px;
+}

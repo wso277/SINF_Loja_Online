@@ -12,6 +12,7 @@
         $scope.register = function () {
             $scope.loading = true;
             if ($scope.formData != undefined) {
+                console.log($scope.formData);
                 Register.create($scope.formData)
                     .success(function () {
                         $scope.loading = false;

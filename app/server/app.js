@@ -3,6 +3,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var path = require('path');
 var morgan = require('morgan');
+var bodyParser = require('body-parser');
 var routes = require('./routes.js');
 
 var app = express();
@@ -16,7 +17,9 @@ app.use("/images", express.static(path.join(__dirname, '../images')));
 app.use("/js", express.static(path.join(__dirname, '/../js')));
 app.use("/fonts", express.static(path.join(__dirname, '../fonts')));
 app.use(morgan('dev'));
-
+app.use(bodyParser.urlencoded({'extended': 'true'})); // parse application/x-www-form-urlencoded
+app.use(bodyParser.json()); // parse application/json
+app.use(bodyParser.json({type: 'application/vnd.api+json'})); // parse application/vnd.api+json as json
 app.use(cookieParser('shhhh, very very very secretzzzzz'));
 app.use(session({
     secret: 'shhhh, very very very secretzzzzz',
