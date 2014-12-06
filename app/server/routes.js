@@ -94,6 +94,8 @@ exports.listen = function (app) {
             }, dataType: 'form-url-encoded'})
                 .then(function (response) {
                     if (response.getCode() == "200") {
+                        console.log(response.getBody());
+                        console.log(response.getHeaders());
                         res.status(200).send(true);
                     } else {
                         res.status(400).send(false);
