@@ -10,11 +10,11 @@ exports.listen = function (app) {
         if (req.session.user) {
             req.session.destroy(function () {
                 messages.success.push({title: "Logged Out", content: "You are now logged out!"});
-                res.render("dashboard.ejs", {messages: messages, title: 'Dashboard'});
+                res.render("dashboard-private.ejs", {messages: messages, title: 'Dashboard'});
             });
         } else {
             messages.success.push({title: "Sign in first", content: "You are not logged in"});
-            res.render("dashboard.ejs", {messages: messages, title: 'Dashboard'});
+            res.render("dashboard-private.ejs", {messages: messages, title: 'Dashboard'});
         }
     });
 
@@ -38,8 +38,14 @@ exports.listen = function (app) {
 
     app.get('/products', function (req, res) {
         var messages = generateMessageBlock();
-        if (req.session.user) {
 
+        requestify.request('http://localhost:49445/api/artigos', {method: 'GET'})
+            .then(function (response) {
+                console.log(request.getBody());
+            });
+
+        if (req.session.user) {
+            res.render("products.ejs", {messages: messages, title: 'Products'});
         } else {
             res.render("products.ejs", {messages: messages, title: 'Products'});
         }
@@ -67,12 +73,9 @@ exports.listen = function (app) {
     });
 
     app.post('/register', function (req, res) {
-        console.log("começou");
         if (req.body.password === req.body.confirmPassword) {
-            console.log("entrou");
             requestify.request('http://localhost:49445/api/clients', {method: 'PUT', body: {NumContribuinte: req.body.nib, Nome: req.body.nome, Email: req.body.email, Telefone: req.body.telefone, Morada: req.body.morada, Localidade: req.body.localidade, CodPostal: req.body.codPostal, Password: req.body.password}, dataType: 'form-url-encoded'})
                 .then(function (response) {
-                    console.log("pedido");
                     if (response.getCode() == "201") {
                         res.status(200).send(true);
                     } else {
@@ -89,13 +92,14 @@ exports.listen = function (app) {
     app.post('/login', function (req, res) {
         if (req.body.email != "" && req.body.password != "") {
             requestify.request('http://localhost:49445/api/sessions', { method: 'POST', body: {
-                email   : req.body.email,
+                email: req.body.email,
                 password: req.body.password
             }, dataType: 'form-url-encoded'})
                 .then(function (response) {
                     if (response.getCode() == "200") {
                         req.session.regenerate(function () {
                             req.session.user = response.getBody();
+                            console.log(req.session.user);
                             res.status(200).send(true);
                         });
                     } else {
@@ -122,8 +126,8 @@ exports.listen = function (app) {
 var generateMessageBlock = function () {
     return {
         success: [],
-        info   : [],
+        info: [],
         warning: [],
-        danger : []
+        danger: []
     };
 }
