@@ -3,7 +3,7 @@ var requestify = require('requestify');
 
 exports.listen = function (app) {
 
-    app.post('/logout', function (req, res) {
+    app.get('/logout', function (req, res) {
         var messages = generateMessageBlock();
         // destroy the user's session to log them out
         // will be re-created next request
