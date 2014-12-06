@@ -44,16 +44,16 @@ exports.listen = function (app) {
             .then(function (response) {
                 if (response.getCode() == "200") {
                     produtos = response.getBody();
+                    console.log(produtos);
+                    if (req.session.user) {
+                        res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos});
+                    } else {
+                        res.render("products.ejs", {messages: messages, title: 'Produtos',  products: produtos});
+                    }
                 } else {
                     console.log("coco");
                 }
             });
-
-        if (req.session.user) {
-            res.render("products.ejs", {messages: messages, title: 'Products', products: produtos});
-        } else {
-            res.render("products.ejs", {messages: messages, title: 'Products',  products: produtos});
-        }
     });
 
     app.get('/profile', function (req, res) {
