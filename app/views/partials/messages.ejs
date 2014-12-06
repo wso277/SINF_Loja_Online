@@ -1,0 +1,37 @@
+<!--------Alerts Group-------------->
+<div class="alert-group">
+    <% if(messages.success.length > 0) { %>
+    <% messages.success.forEach(function(msg) { %>
+    <div class="alert alert-success">
+        <button type="button" class="close" aria-hidden="true">×</button>
+        <strong><%= msg.title %></strong> <%= msg.content %>
+    </div>
+    <% }); %>
+    <% } %>
+
+    <% if(messages.info.length > 0) { %>
+    <% messages.info.forEach(function(msg) { %>
+    <div class="alert alert-info">
+        <strong><%= msg.title %></strong> <%= msg.content %>
+    </div>
+    <% }); %>
+    <% } %>
+
+    <% if(messages.warning.length > 0) { %>
+    <% messages.warning.forEach(function(msg) { %>
+    <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" aria-hidden="true">×</button>
+        <strong><%= msg.title %></strong> <%= msg.content %>
+    </div>
+    <% }); %>
+    <% } %>
+
+    <% if(messages.danger.length > 0) { %>
+    <% messages.danger.forEach(function(msg) { %>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" aria-hidden="true">×</button>
+        <strong><%= msg.title %></strong> <%= msg.content %>
+    </div>
+    <% }); %>
+    <% } %>
+</div>

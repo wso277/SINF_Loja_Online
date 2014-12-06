@@ -124,7 +124,6 @@ exports.listen = function (app) {
         if (req.params.val == "logged-in") {
             messages.success.push({title: "Logged In", content: "You are now logged in!"});
             res.render("dashboard-private", {title: "Dashboard", messages: messages});
-            return;
         }
     });
 
