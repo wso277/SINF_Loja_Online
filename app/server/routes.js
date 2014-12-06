@@ -42,8 +42,8 @@ exports.listen = function (app) {
         requestify.request('http://localhost:49445/api/artigos', {method: 'GET'})
             .then(function (response) {
                 if (response.getCode() == "200") {
-                    console.log(request.getHeaders());
-                    console.log(request.getBody());
+                    console.log(response.getHeaders());
+                    console.log(response.getBody());
                 } else {
 
                 }
