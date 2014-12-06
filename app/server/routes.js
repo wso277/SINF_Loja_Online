@@ -73,16 +73,14 @@ exports.listen = function (app) {
                     produto = response.getBody();
                     console.log(produto);
                     if (req.session.user) {
-                        res.render("products.ejs", {messages: messages, title: 'Produtos', product: produto});
+                        res.render("product.ejs", {messages: messages, title: 'Produto', product: produto});
                     } else {
-                        res.render("products.ejs", {messages: messages, title: 'Produtos',  product: produto});
+                        res.render("product.ejs", {messages: messages, title: 'Produto',  product: produto});
                     }
                 } else {
                     console.log("coco");
                 }
             });
-
-        res.render("product.ejs", {messages: messages, title: "Product"});
     });
 
     app.get('/register', function (req, res) {
