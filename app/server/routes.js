@@ -10,11 +10,11 @@ exports.listen = function (app) {
         if (req.session.user) {
             req.session.destroy(function () {
                 messages.success.push({title: "Logged Out", content: "You are now logged out!"});
-                res.render("teste.ejs", {messages: messages, title: 'Landing'});
+                res.render("dashboard.ejs", {messages: messages, title: 'Dashboard'});
             });
         } else {
             messages.success.push({title: "Sign in first", content: "You are not logged in"});
-            res.render("teste.ejs", {messages: messages, title: 'Landing'});
+            res.render("dashboard.ejs", {messages: messages, title: 'Dashboard'});
         }
     });
 
@@ -94,9 +94,10 @@ exports.listen = function (app) {
             }, dataType: 'form-url-encoded'})
                 .then(function (response) {
                     if (response.getCode() == "200") {
-                        console.log(response.getBody());
-                        console.log(response.getHeaders());
-                        res.status(200).send(true);
+                        req.session.regenerate(function () {
+                            req.session.user = response.getBody();
+                            res.status(200).send(true);
+                        });
                     } else {
                         res.status(400).send(false);
                     }
