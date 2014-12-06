@@ -9,11 +9,28 @@ namespace MvcApplication1.Controllers
 {
     public class EncomendasController : ApiController
     {
-
         // GET api/encomendas/5
-        public string Get(int id) //id = Primary key cliente
+        [HttpGet]
+        public Lib_Primavera.Models.EncomendaExtended Get(string id)
         {
-            return "value";
+            Lib_Primavera.Models.EncomendaExtended enc = Lib_Primavera.EncomendasHelper.GetEncomenda(id);
+            if (enc == null)
+            {
+                throw new HttpResponseException(
+                        Request.CreateResponse(HttpStatusCode.NotFound));
+
+            }
+            else
+            {
+                return enc;
+            }
+        }
+
+        // GET api/encomendas
+        [HttpGet]
+        public IEnumerable<Lib_Primavera.Models.EncomendaExtended> GetByClient([FromUri]string CodigoCliente)
+        {
+            return Lib_Primavera.EncomendasHelper.GetEncomendasCliente(CodigoCliente);
         }
 
         // PUT api/encomendas

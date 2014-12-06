@@ -279,7 +279,9 @@
     <Compile Include="Lib_Primavera\Models\Client.cs" />
     <Compile Include="Lib_Primavera\InformacaoEmpresa.cs" />
     <Compile Include="Lib_Primavera\Models\Encomenda.cs" />
+    <Compile Include="Lib_Primavera\Models\EncomendaExtended.cs" />
     <Compile Include="Lib_Primavera\Models\LinhaEncomenda.cs" />
+    <Compile Include="Lib_Primavera\Models\LinhaEncomendaExtended.cs" />
     <Compile Include="Lib_Primavera\Models\Resposta.cs" />
     <Compile Include="Lib_Primavera\Models\Session.cs" />
     <Compile Include="Lib_Primavera\PriEngine.cs" />
