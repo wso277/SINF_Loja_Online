@@ -119,6 +119,15 @@ exports.listen = function (app) {
         res.render("teste-erro.ejs");
     });
 
+    app.get('/:val', function (req, res) {
+        var messages = generateMessageBlock();
+        if (req.params.val == "logged-in") {
+            messages.success.push({title: "Logged In", content: "You are now logged in!"});
+            res.render("dashboard-private", {title: "Dashboard", messages: messages});
+            return;
+        }
+    });
+
     app.get('*', function (req, res) {
         if (req.session.user) {
             res.render("dashboard-private.ejs", {title: "Dashboard"});
