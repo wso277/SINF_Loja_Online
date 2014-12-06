@@ -34,5 +34,20 @@ namespace MvcApplication1.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
+
+        public Client Get(string id)
+        {
+            Lib_Primavera.Models.Client cliente = Lib_Primavera.ClientHelper.GetCliente(id);
+            if (cliente == null)
+            {
+                throw new HttpResponseException(
+                        Request.CreateResponse(HttpStatusCode.NotFound));
+
+            }
+            else
+            {
+                return cliente;
+            }
+        }
     }
 }
