@@ -70,7 +70,7 @@ exports.listen = function (app) {
         console.log("começou");
         if (req.body.password === req.body.confirmPassword) {
             console.log("entrou");
-            requestify.put('http://localhost:49445/api/Clients', {NumContribuinte: req.body.nib, Nome: req.body.nome, Email: req.body.email, Telefone: req.body.telefone, Morada: req.body.morada, Localidade: req.body.localidade, CodPostal: req.body.codPostal, Password: req.body.password})
+            requestify.put('http://localhost:49445/api/clients', {NumContribuinte: req.body.nib, Nome: req.body.nome, Email: req.body.email, Telefone: req.body.telefone, Morada: req.body.morada, Localidade: req.body.localidade, CodPostal: req.body.codPostal, Password: req.body.password})
                 .then(function (response) {
                     console.log("pedido");
                     console.log(response.getBody());
