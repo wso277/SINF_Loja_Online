@@ -89,21 +89,19 @@ exports.listen = function (app) {
     app.post('/login', function (req, res) {
         if (req.body.email != "" && req.body.password != "") {
 
-            requestify.post('http://localhost:49445/api/sessions', {
+            requestify.post('http://localhost:49445/api/sessions', { method: 'POST', body: {
                 email   : req.body.email,
                 password: req.body.password
-            })
+            }, dataType: 'form-url-encoded'})
                 .then(function (response) {
-                    if (response.getCode() == 200) {
-                        console.log(response.getBody());
-                        req.session.user = response.getBody();
+                    if (response.getCode() == "200") {
+                        res.status(200).send(true);
                     } else {
-                        console.log("Status: " + response.getCode() + " Bad request");
+                        res.status(400).send(false);
                     }
                 });
 
         }
-        res.send(200);
     });
 
     app.get('/teste-erro', function (req, res) {

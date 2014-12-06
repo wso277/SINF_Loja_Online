@@ -19,7 +19,7 @@
                         $window.location.href = '/';
                     })
                     .error(function (data) {
-                        $window.location.href = '/teste-erro';
+                        alert("failed");
                     });
             }
         };
