@@ -38,21 +38,21 @@ exports.listen = function (app) {
 
     app.get('/products', function (req, res) {
         var messages = generateMessageBlock();
+        var produtos = {};
 
-        requestify.request('http://localhost:49445/api/artigos', {method: 'GET'})
+        requestify.request('http://localhost:49445/api/artigos', {method: 'GET', body: {page: 0}, dataType: 'form-url-encoded'})
             .then(function (response) {
                 if (response.getCode() == "200") {
-                    console.log(response.getHeaders());
-                    console.log(response.getBody());
+                    produtos = response.getBody();
                 } else {
-
+                    console.log("coco");
                 }
             });
 
         if (req.session.user) {
-            res.render("products.ejs", {messages: messages, title: 'Products'});
+            res.render("products.ejs", {messages: messages, title: 'Products', products: produtos});
         } else {
-            res.render("products.ejs", {messages: messages, title: 'Products'});
+            res.render("products.ejs", {messages: messages, title: 'Products',  products: produtos});
         }
     });
 

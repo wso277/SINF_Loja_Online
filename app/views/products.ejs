@@ -18,6 +18,7 @@
                     </hgroup>
 
                     <section class="col-xs-12 col-sm-6 col-md-12">
+                        <% products.forEach(function(product) { %>
                         <article class="search-result row" style="background-color: #222222">
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <a href="/product/1" title="Lorem ipsum" class="thumbnail"><img
@@ -26,32 +27,33 @@
                             <div class="col-xs-12 col-sm-12 col-md-2">
                                 <ul class="meta-search">
                                     <li><i class="fa fa-android"></i>
-                                        <span>Android</span>
+                                        <span><%= product.NomeSistemaOperativo %></span>
                                     </li>
                                     <li><i class="fa fa-mobile"></i>
-                                        <span>5'0 polegadas</span>
+                                        <span><%= product.TamanhoEcra %> polegadas</span>
                                     </li>
                                     <li><i class="fa fa-mobile"></i>
-                                        <span>100 in stock</span>
+                                        <span><%= product.StockAtual %> em stock</span>
                                     </li>
                                     <li id="preco"><i class="fa fa-euro"></i>
-                                        <span>129,99</span>
+                                        <span><%= product.PVP * (1-product.Desconto) %></span>
                                     </li>
                                 </ul>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-                                <h3><a href="/product/1" title="">Produto x</a></h3>
+                                <h3><a href="/product/1" title=""><%= product.Nome %></a></h3>
 
-                                <p>Processador: zxc</p>
+                                <p>Processador: <%= product.CPU %></p>
 
-                                <p>Processador: zxc</p>
+                                <p>Armazenamento: <%= product.Armazenamento %></p>
 
-                                <p>Processador: zxc</p>
+                                <p>Data de Lançamento: <%= product.Lancamento %></p>
 
                                 <p>Processador: zxc</p>
                             </div>
                             <span class="clearfix borda"></span>
                         </article>
+                        <% }); %>
                     </section>
                 </div>
             </div>
