@@ -88,8 +88,7 @@ exports.listen = function (app) {
 
     app.post('/login', function (req, res) {
         if (req.body.email != "" && req.body.password != "") {
-
-            requestify.post('http://localhost:49445/api/sessions', { method: 'POST', body: {
+            requestify.request('http://localhost:49445/api/sessions', { method: 'POST', body: {
                 email   : req.body.email,
                 password: req.body.password
             }, dataType: 'form-url-encoded'})
