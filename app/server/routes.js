@@ -73,7 +73,8 @@ exports.listen = function (app) {
             requestify.request('http://localhost:49445/api/clients', {method: 'PUT', body: {NumContribuinte: req.body.nib, Nome: req.body.nome, Email: req.body.email, Telefone: req.body.telefone, Morada: req.body.morada, Localidade: req.body.localidade, CodPostal: req.body.codPostal, Password: req.body.password}, dataType: 'form-url-encoded'})
                 .then(function (response) {
                     console.log("pedido");
-                    console.log(response.getBody());
+                    console.log(response.getCode());
+                    console.log(response.getHeaders());
                 });
         } else {
             console.log("peido");
