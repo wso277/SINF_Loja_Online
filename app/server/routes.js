@@ -10,11 +10,11 @@ exports.listen = function (app) {
         if (req.session.user) {
             req.session.destroy(function () {
                 messages.success.push({title: "Logged Out", content: "You are now logged out!"});
-                res.render("dashboard-private.ejs", {messages: messages, title: 'Dashboard'});
+                res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
             });
         } else {
             messages.success.push({title: "Sign in first", content: "You are not logged in"});
-            res.render("dashboard-private.ejs", {messages: messages, title: 'Dashboard'});
+            res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
         }
     });
 
@@ -41,7 +41,12 @@ exports.listen = function (app) {
 
         requestify.request('http://localhost:49445/api/artigos', {method: 'GET'})
             .then(function (response) {
-                console.log(request.getBody());
+                if (response.getCode() == "200") {
+                    console.log(request.getHeaders());
+                    console.log(request.getBody());
+                } else {
+
+                }
             });
 
         if (req.session.user) {
