@@ -59,17 +59,29 @@ exports.listen = function (app) {
     app.get('/profile', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
-
-        } else {
             res.render("profile.ejs", {messages: messages, title: 'Profile'});
+        } else {
         }
     });
 
     app.get('/product/:id', function (req, res) {
         var messages = generateMessageBlock();
-        var id = parseInt(req.params.id);
 
-        res.render("product.ejs", {messages: messages, title: "Product"});
+        requestify.request('http://localhost:49445/api/artigos/'+req.params.id, {method: 'GET', dataType: 'form-url-encoded'})
+            .then(function (response) {
+                if (response.getCode() == "200") {
+                    produto = response.getBody();
+                    console.log(produto);
+                    console.log(response.getHeaders());
+                    if (req.session.user) {
+                        res.render("product.ejs", {messages: messages, title: 'Produto', product: produto});
+                    } else {
+                        res.render("product.ejs", {messages: messages, title: 'Produto',  product: produto});
+                    }
+                } else {
+                    console.log("coco");
+                }
+            });
     });
 
     app.get('/register', function (req, res) {
@@ -119,11 +131,20 @@ exports.listen = function (app) {
         res.render("teste-erro.ejs");
     });
 
+    app.get('/:val', function (req, res) {
+        var messages = generateMessageBlock();
+        if (req.params.val == "logged-in") {
+            messages.success.push({title: "Logged In", content: "You are now logged in!"});
+            res.render("dashboard-private", {title: "Dashboard", messages: messages});
+        }
+    });
+
     app.get('*', function (req, res) {
+        var messages = generateMessageBlock();
         if (req.session.user) {
-            res.render("dashboard-private.ejs", {title: "Dashboard"});
+            res.render("dashboard-private.ejs", {title: "Dashboard", messages: messages});
         } else {
-            res.render("dashboard-public.ejs", {title: "Dashboard"});
+            res.render("dashboard-public.ejs", {title: "Dashboard", messages: messages});
         }
     });
 };
