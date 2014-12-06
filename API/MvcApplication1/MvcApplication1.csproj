@@ -264,18 +264,22 @@
     <Compile Include="Controllers\ArtigoController.cs" />
     <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\EncomendasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Lib_Primavera\ArtigoHelper.cs" />
+    <Compile Include="Lib_Primavera\EncomendasHelper.cs" />
     <Compile Include="Lib_Primavera\Models\ArtigoShort.cs" />
     <Compile Include="Lib_Primavera\ClientHelper.cs" />
     <Compile Include="Lib_Primavera\Models\Artigo.cs" />
     <Compile Include="Lib_Primavera\Models\ArtigoShowcase.cs" />
     <Compile Include="Lib_Primavera\Models\Client.cs" />
     <Compile Include="Lib_Primavera\InformacaoEmpresa.cs" />
+    <Compile Include="Lib_Primavera\Models\Encomenda.cs" />
+    <Compile Include="Lib_Primavera\Models\LinhaEncomenda.cs" />
     <Compile Include="Lib_Primavera\Models\Resposta.cs" />
     <Compile Include="Lib_Primavera\Models\Session.cs" />
     <Compile Include="Lib_Primavera\PriEngine.cs" />
