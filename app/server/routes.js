@@ -3,7 +3,7 @@ var requestify = require('requestify');
 
 exports.listen = function (app) {
 
-    app.get('/logout', function (req, res) {
+    app.post('/logout', function (req, res) {
         var messages = generateMessageBlock();
         // destroy the user's session to log them out
         // will be re-created next request
@@ -66,7 +66,21 @@ exports.listen = function (app) {
 
     app.get('/product/:id', function (req, res) {
         var messages = generateMessageBlock();
-        var id = parseInt(req.params.id);
+
+        requestify.request('http://localhost:49445/api/artigos/'+req.params.id, {method: 'GET', dataType: 'form-url-encoded'})
+            .then(function (response) {
+                if (response.getCode() == "200") {
+                    produto = response.getBody();
+                    console.log(produto);
+                    if (req.session.user) {
+                        res.render("products.ejs", {messages: messages, title: 'Produtos', product: produto});
+                    } else {
+                        res.render("products.ejs", {messages: messages, title: 'Produtos',  product: produto});
+                    }
+                } else {
+                    console.log("coco");
+                }
+            });
 
         res.render("product.ejs", {messages: messages, title: "Product"});
     });
