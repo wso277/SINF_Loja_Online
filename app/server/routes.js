@@ -59,9 +59,8 @@ exports.listen = function (app) {
     app.get('/profile', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
-
-        } else {
             res.render("profile.ejs", {messages: messages, title: 'Profile'});
+        } else {
         }
     });
 
@@ -128,10 +127,11 @@ exports.listen = function (app) {
     });
 
     app.get('*', function (req, res) {
+        var messages = generateMessageBlock();
         if (req.session.user) {
-            res.render("dashboard-private.ejs", {title: "Dashboard"});
+            res.render("dashboard-private.ejs", {title: "Dashboard", messages: messages});
         } else {
-            res.render("dashboard-public.ejs", {title: "Dashboard"});
+            res.render("dashboard-public.ejs", {title: "Dashboard", messages: messages});
         }
     });
 };
