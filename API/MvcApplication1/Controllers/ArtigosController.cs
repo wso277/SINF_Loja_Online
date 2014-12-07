@@ -24,8 +24,8 @@ namespace MvcApplication1.Controllers
             else if (id == "oportunidade")
                 artigo = Lib_Primavera.ArtigoHelper.oportunidade();
 
-            else if (id == "antigo")
-                artigo = Lib_Primavera.ArtigoHelper.antigo();
+            else if (id == "maisvendido")
+                artigo = Lib_Primavera.ArtigoHelper.maisvendido();
 
             else if( id == "stock" )
                 artigo = Lib_Primavera.ArtigoHelper.stock();
@@ -43,9 +43,9 @@ namespace MvcApplication1.Controllers
 
         
         // GET api/artigos
-        public IEnumerable<Lib_Primavera.Models.ArtigoShort> Get(int page=0)
+        public IEnumerable<Lib_Primavera.Models.ArtigoShort> Get(int page=0, bool promocao=false)
         {
-            return Lib_Primavera.ArtigoHelper.ListaArtigos(page);
+            return Lib_Primavera.ArtigoHelper.ListaArtigos(page, promocao);
         }
 
         
