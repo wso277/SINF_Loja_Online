@@ -30,7 +30,7 @@ exports.listen = function (app) {
     app.get('/orders', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
-            requestify.request('http://localhost:49445/api/encomendas?CodigoCliente='+req.session.user.CodigoCliente, {method: 'GET', dataType: 'form-url-encoded'})
+            requestify.request('http://localhost:49445/api/encomendas?CodigoCliente=CL000001'/*+req.session.user.CodigoCliente*/, {method: 'GET', dataType: 'form-url-encoded'})
                 .then(function (response) {
                     if (response.getCode() == "200") {
                         orders = response.getBody();
