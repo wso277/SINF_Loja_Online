@@ -57,7 +57,7 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         var id = parseInt(req.params.id);
         if (req.session.user) {
-            requestify.request('http://localhost:49445/api/encomendas', {method: 'GET', params: id,dataType: 'form-url-encoded'})
+            requestify.request('http://localhost:49445/api/encomendas/'+id, {method: 'GET', dataType: 'form-url-encoded'})
                 .then(function (response) {
                     if (response.getCode() == "200") {
                         var order = response.getBody();
