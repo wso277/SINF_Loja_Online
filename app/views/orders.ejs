@@ -37,7 +37,7 @@
                 <% orders.forEach(function(order) { %>
                 <tr class="link-cursor tr-border tr-hover" data-href="encomenda/<%= order.NumDoc %>">
                     <td>Encomenda feita em <%= order.Data %></td>
-                    <td><%= order.LinhasEncomendasExtended.length %></td>
+                    <td><%= order.LinhasEncomendaExtended.length %></td>
                     <td><%= order.Total %>%</td>
                 </tr>
                 <% }); %>
