@@ -29,18 +29,18 @@
                 <thead>
                 <tr class="thead-border">
                     <th>Descrição</th>
-                    <th>Desconto</th>
                     <th>Preço Unitário</th>
+                    <th>Desconto</th>
                     <th>Quantidade</th>
                     <th>Total</th>
                 </tr>
                 </thead>
                 <tbody>
                 <% orders.forEach(function(order) { %>
-                <tr class="link-cursor tr-border tr-hover" data-href="#">
+                <tr class="link-cursor tr-border tr-hover" data-href="encomenda">
                     <td><%= order.DescricaoArtigo %></td>
-                    <td><%= order.Desconto %></td>
                     <td><%= order.PrecoUnitario %></td>
+                    <td><%= order.Desconto %>%</td>
                     <td><%= order.Quantidade %></td>
                     <td><%= order.TotalLiquido %></td>
                 </tr>
