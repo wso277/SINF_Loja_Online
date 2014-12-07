@@ -28,39 +28,23 @@
             <table class="table table-list-search">
                 <thead>
                 <tr class="thead-border">
-                    <th>Entry</th>
-                    <th>Entry</th>
-                    <th>Entry</th>
-                    <th>Entry</th>
-                    <th>Entry</th>
-                    <th>Entry</th>
+                    <th>Descrição</th>
+                    <th>Desconto</th>
+                    <th>Preço Unitário</th>
+                    <th>Quantidade</th>
+                    <th>Total</th>
                 </tr>
                 </thead>
                 <tbody>
+                <% orders.forEach(function(order) { %>
                 <tr class="link-cursor tr-border tr-hover" data-href="#">
-                    <td>Sample</td>
-                    <td>Filter</td>
-                    <td>12-11-2011 11:11</td>
-                    <td>OK</td>
-                    <td>123</td>
-                    <td>Do some other</td>
+                    <td><%= order.DescricaoArtigo %></td>
+                    <td><%= order.Desconto %></td>
+                    <td><%= order.PrecoUnitario %></td>
+                    <td><%= order.Quantidade %></td>
+                    <td><%= order.TotalLiquido %></td>
                 </tr>
-                <tr class="link-cursor tr-border tr-hover" data-href="#">
-                    <td>Try</td>
-                    <td>It</td>
-                    <td>11-20-2013 08:56</td>
-                    <td>It</td>
-                    <td>Works</td>
-                    <td>Do some FILTERME</td>
-                </tr>
-                <tr class="link-cursor tr-border tr-hover" data-href="#">
-                    <td>§</td>
-                    <td>$</td>
-                    <td>%</td>
-                    <td>&</td>
-                    <td>/</td>
-                    <td>!</td>
-                </tr>
+                <% }); %>
                 </tbody>
             </table>
         </div>
