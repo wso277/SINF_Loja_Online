@@ -35,14 +35,10 @@ exports.listen = function (app) {
                     if (response.getCode() == "200") {
                         var orders = response.getBody();
                         var total = 0;
-                        console.log("ciclo");
                         for (var i = 0; i < orders.length; i++) {
-                            console.log("ciclo1");
                             for (var j = 0; j < orders[i]['LinhasEncomendaExtended'].length; j++) {
-                                console.log("ciclo2");
-                                console.log(orders[i]);
-                                console.log(orders[i]['LinhasEncomendaExtended']['TotalLiquido']);
-                                total += orders[i]['LinhasEncomendaExtended']['TotalLiquido'] * (1- (orders[i]['LinhasEncomendaExtended']['Desconto'] / 100));
+                                console.log(orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido']);
+                                total += orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido'] * (1- (orders[i]['LinhasEncomendaExtended'][j]['Desconto'] / 100));
                             }
                             orders[i]['Total'] = total;
                             total = 0;
