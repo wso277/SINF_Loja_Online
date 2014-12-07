@@ -34,8 +34,16 @@ exports.listen = function (app) {
                 .then(function (response) {
                     if (response.getCode() == "200") {
                         var orders = response.getBody();
-                        console.log(orders[0]['LinhasEncomendaExtended']);
-                        res.render("orders.ejs", {messages: messages, title: 'Orders', orders: orders[0]['LinhasEncomendaExtended']});
+                        var total = 0;
+                        for (var i = 0; i < order.length; i++) {
+                            for (var j = 0; j < order[i]['LinhasEncomendaExtended'].length; j++) {
+                                total += order[i]['LinhasEncomendaExtended']['TotalLiquido'] * (1- (order[i]['LinhasEncomendaExtended']['Desconto'] / 100));
+                            }
+                            order[i]['Total'] = total;
+                            total = 0;
+                        }
+                        console.log(orders);
+                        res.render("orders.ejs", {messages: messages, title: 'Orders', orders: orders});
                     } else {
                         console.log("coco");
                     }
