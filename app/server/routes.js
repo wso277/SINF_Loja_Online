@@ -33,8 +33,8 @@ exports.listen = function (app) {
             requestify.request('http://localhost:49445/api/encomendas?CodigoCliente=CL000001'/*+req.session.user.CodigoCliente*/, {method: 'GET', dataType: 'form-url-encoded'})
                 .then(function (response) {
                     if (response.getCode() == "200") {
-                        orders = response.getBody();
-                        console.log(orders);
+                        var orders = response.getBody();
+                        console.log(orders['LinhasEncomendaExtended']);
                         res.render("orders.ejs", {messages: messages, title: 'Orders', orders: orders});
                     } else {
                         console.log("coco");
@@ -78,7 +78,7 @@ exports.listen = function (app) {
         requestify.request('http://localhost:49445/api/artigos/'+req.params.id, {method: 'GET', dataType: 'form-url-encoded'})
             .then(function (response) {
                 if (response.getCode() == "200") {
-                    produto = response.getBody();
+                    var produto = response.getBody();
                     console.log(produto);
                     console.log(response.getHeaders());
                     if (req.session.user) {
