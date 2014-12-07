@@ -35,8 +35,11 @@ exports.listen = function (app) {
                     if (response.getCode() == "200") {
                         var orders = response.getBody();
                         var total = 0;
+                        console.log("ciclo");
                         for (var i = 0; i < order.length; i++) {
+                            console.log("ciclo1");
                             for (var j = 0; j < order[i]['LinhasEncomendaExtended'].length; j++) {
+                                console.log("ciclo2");
                                 total += order[i]['LinhasEncomendaExtended']['TotalLiquido'] * (1- (order[i]['LinhasEncomendaExtended']['Desconto'] / 100));
                             }
                             order[i]['Total'] = total;
