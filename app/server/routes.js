@@ -34,7 +34,7 @@ exports.listen = function (app) {
                 .then(function (response) {
                     if (response.getCode() == "200") {
                         var orders = response.getBody();
-                        console.log(orders['LinhasEncomendaExtended']);
+                        console.log(orders[0]['LinhasEncomendaExtended']);
                         res.render("orders.ejs", {messages: messages, title: 'Orders', orders: orders});
                     } else {
                         console.log("coco");
