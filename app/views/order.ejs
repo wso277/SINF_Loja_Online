@@ -8,7 +8,7 @@
 <body>
 <% include partials/messages %>
 <% include partials/header.ejs %>
-<h1 style="margin-left: 9.8em">Consulte as suas encomendas</h1>
+<h1 style="margin-left: 9.8em">Encomenda de <%= order.Data %></h1>
 <div class="container" style="margin-top: 3em">
     <div class="row">
         <div id="searchForm" class="col-md-3">
@@ -29,16 +29,20 @@
                 <thead>
                 <tr class="thead-border">
                     <th>Descrição</th>
-                    <th>Número de Artigos</th>
+                    <th>Desconto</th>
+                    <th>Preço Unitário</th>
+                    <th>Quantidade</th>
                     <th>Total</th>
                 </tr>
                 </thead>
                 <tbody>
-                <% orders.forEach(function(order) { %>
-                <tr class="link-cursor tr-border tr-hover" data-href="order/<%= order.NumDoc %>">
-                    <td>Encomenda feita em <%= order.Data %></td>
-                    <td><%= order.LinhasEncomendaExtended.length %></td>
-                    <td><%= order.Total %></td>
+                <% (order.LinhasEncomendaExtended).forEach(function(o) { %>
+                <tr class="link-cursor tr-border tr-hover" data-href="">
+                    <td><%= o.DescricaoArtigo %></td>
+                    <td><%= o.Desconto %>%</td>
+                    <td><%= o.PrecoUnitario %></td>
+                    <td><%= o.Quantidade %></td>
+                    <td><%= o.TotalLiquido %></td>
                 </tr>
                 <% }); %>
                 </tbody>

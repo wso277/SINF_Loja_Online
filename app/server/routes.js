@@ -10,11 +10,11 @@ exports.listen = function (app) {
         if (req.session.user) {
             req.session.destroy(function () {
                 messages.success.push({title: "Logged Out", content: "You are now logged out!"});
-                res.render("teste.ejs", {messages: messages, title: 'Landing'});
+                res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
             });
         } else {
             messages.success.push({title: "Sign in first", content: "You are not logged in"});
-            res.render("teste.ejs", {messages: messages, title: 'Landing'});
+            res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
         }
     });
 
@@ -30,35 +30,93 @@ exports.listen = function (app) {
     app.get('/orders', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
-
+            requestify.request('http://localhost:49445/api/encomendas', {method: 'GET', params: {CodigoCliente: 'CL000001'},dataType: 'form-url-encoded'})
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        var orders = response.getBody();
+                        var total = 0;
+                        for (var i = 0; i < orders.length; i++) {
+                            for (var j = 0; j < orders[i]['LinhasEncomendaExtended'].length; j++) {
+                                console.log(orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido']);
+                                total += orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido'] * (1- (orders[i]['LinhasEncomendaExtended'][j]['Desconto'] / 100));
+                            }
+                            orders[i]['Total'] = total;
+                            total = 0;
+                        }
+                        console.log(orders);
+                        res.render("orders.ejs", {messages: messages, title: 'Encomendas', orders: orders});
+                    } else {
+                        console.log("coco");
+                    }
+                });
         } else {
-            res.render("orders.ejs", {messages: messages, title: 'Orders'});
+        }
+    });
+
+    app.get('/order/:id', function (req, res) {
+        var messages = generateMessageBlock();
+        var id = parseInt(req.params.id);
+        if (req.session.user) {
+            requestify.request('http://localhost:49445/api/encomendas/'+id, {method: 'GET', dataType: 'form-url-encoded'})
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        var order = response.getBody();
+                        console.log(order);
+                        res.render("order.ejs", {messages: messages, title: 'Encomenda', order: order});
+                    } else {
+                        console.log("coco");
+                    }
+                });
+        } else {
         }
     });
 
     app.get('/products', function (req, res) {
         var messages = generateMessageBlock();
-        if (req.session.user) {
+        var produtos = {};
 
-        } else {
-            res.render("products.ejs", {messages: messages, title: 'Products'});
-        }
+        requestify.request('http://localhost:49445/api/artigos', {method: 'GET', body: {page: 0}, dataType: 'form-url-encoded'})
+            .then(function (response) {
+                if (response.getCode() == "200") {
+                    produtos = response.getBody();
+                    console.log(produtos);
+                    if (req.session.user) {
+                        res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos});
+                    } else {
+                        res.render("products.ejs", {messages: messages, title: 'Produtos',  products: produtos});
+                    }
+                } else {
+                    console.log("coco");
+                }
+            });
     });
 
     app.get('/profile', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
-
-        } else {
             res.render("profile.ejs", {messages: messages, title: 'Profile'});
+        } else {
         }
     });
 
     app.get('/product/:id', function (req, res) {
         var messages = generateMessageBlock();
-        var id = parseInt(req.params.id);
 
-        res.render("product.ejs", {messages: messages, title: "Product"});
+        requestify.request('http://localhost:49445/api/artigos/'+req.params.id, {method: 'GET', dataType: 'form-url-encoded'})
+            .then(function (response) {
+                if (response.getCode() == "200") {
+                    var produto = response.getBody();
+                    console.log(produto);
+                    console.log(response.getHeaders());
+                    if (req.session.user) {
+                        res.render("product.ejs", {messages: messages, title: 'Produto', product: produto});
+                    } else {
+                        res.render("product.ejs", {messages: messages, title: 'Produto',  product: produto});
+                    }
+                } else {
+                    console.log("coco");
+                }
+            });
     });
 
     app.get('/register', function (req, res) {
@@ -67,13 +125,14 @@ exports.listen = function (app) {
     });
 
     app.post('/register', function (req, res) {
-        console.log("começou");
         if (req.body.password === req.body.confirmPassword) {
-            console.log("entrou");
-            requestify.put('http://localhost:49445/api/Clients', {NumContribuinte: req.body.nib, Nome: req.body.nome, Email: req.body.email, Telefone: req.body.telefone, Morada: req.body.morada, Localidade: req.body.localidade, CodPostal: req.body.codPostal, Password: req.body.password})
+            requestify.request('http://localhost:49445/api/clients', {method: 'PUT', body: {NumContribuinte: req.body.nib, Nome: req.body.nome, Email: req.body.email, Telefone: req.body.telefone, Morada: req.body.morada, Localidade: req.body.localidade, CodPostal: req.body.codPostal, Password: req.body.password}, dataType: 'form-url-encoded'})
                 .then(function (response) {
-                    console.log("pedido");
-                    console.log(response.getBody());
+                    if (response.getCode() == "201") {
+                        res.status(200).send(true);
+                    } else {
+                        res.status(400).send(false);
+                    }
                 });
         } else {
             console.log("peido");
@@ -84,33 +143,43 @@ exports.listen = function (app) {
 
     app.post('/login', function (req, res) {
         if (req.body.email != "" && req.body.password != "") {
-
-            requestify.post('http://localhost:49445/api/sessions', {
-                email   : req.body.email,
+            requestify.request('http://localhost:49445/api/sessions', { method: 'POST', body: {
+                email: req.body.email,
                 password: req.body.password
-            })
+            }, dataType: 'form-url-encoded'})
                 .then(function (response) {
-                    if (response.getCode() == 200) {
-                        console.log(response.getBody());
-                        req.session.user = response.getBody();
+                    if (response.getCode() == "200") {
+                        req.session.regenerate(function () {
+                            req.session.user = response.getBody();
+                            console.log(req.session.user);
+                            res.status(200).send(true);
+                        });
                     } else {
-                        console.log("Status: " + response.getCode() + " Bad request");
+                        res.status(400).send(false);
                     }
                 });
 
         }
-        res.send(200);
     });
 
     app.get('/teste-erro', function (req, res) {
         res.render("teste-erro.ejs");
     });
 
+    app.get('/:val', function (req, res) {
+        var messages = generateMessageBlock();
+        if (req.params.val == "logged-in") {
+            messages.success.push({title: "Logged In", content: "You are now logged in!"});
+            res.render("dashboard-private", {title: "Dashboard", messages: messages});
+        }
+    });
+
     app.get('*', function (req, res) {
+        var messages = generateMessageBlock();
         if (req.session.user) {
-            res.render("dashboard-private.ejs", {title: "Dashboard"});
+            res.render("dashboard-private.ejs", {title: "Dashboard", messages: messages});
         } else {
-            res.render("dashboard-public.ejs", {title: "Dashboard"});
+            res.render("dashboard-public.ejs", {title: "Dashboard", messages: messages});
         }
     });
 };
@@ -118,8 +187,8 @@ exports.listen = function (app) {
 var generateMessageBlock = function () {
     return {
         success: [],
-        info   : [],
+        info: [],
         warning: [],
-        danger : []
+        danger: []
     };
 }

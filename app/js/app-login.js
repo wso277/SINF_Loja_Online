@@ -16,10 +16,10 @@
                     .success(function () {
                         $scope.loading = false;
                         $scope.formData = {};
-                        $window.location.href = '/';
+                        $window.location.href = '/logged-in';
                     })
                     .error(function (data) {
-                        $window.location.href = '/teste-erro';
+                        alert("failed");
                     });
             }
         };
