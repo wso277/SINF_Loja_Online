@@ -53,6 +53,24 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/order/:id', function (req, res) {
+        var messages = generateMessageBlock();
+        var id = parseInt(req.params.id);
+        if (req.session.user) {
+            requestify.request('http://localhost:49445/api/encomendas', {method: 'GET', params: id,dataType: 'form-url-encoded'})
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        var order = response.getBody();
+                        console.log(order);
+                        res.render("order.ejs", {messages: messages, title: 'Encomenda', order: order});
+                    } else {
+                        console.log("coco");
+                    }
+                });
+        } else {
+        }
+    });
+
     app.get('/products', function (req, res) {
         var messages = generateMessageBlock();
         var produtos = {};
