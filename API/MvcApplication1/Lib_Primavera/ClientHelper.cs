@@ -19,6 +19,42 @@ namespace MvcApplication1.Lib_Primavera
         static string USER = InformacaoEmpresa.USER;
         static string PASS = InformacaoEmpresa.PASS;
 
+
+        public static Lib_Primavera.Models.Client GetCliente(string codCliente)
+        {
+            ErpBS objMotor = new ErpBS();
+
+            GcpBECliente objCli = new GcpBECliente();
+
+
+            Models.Client myCli = new Models.Client();
+
+            if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
+            {
+
+                if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == true)
+                {
+                    objCli = PriEngine.Engine.Comercial.Clientes.Edita(codCliente);
+                    myCli.CodigoCliente = objCli.get_Cliente();
+                    myCli.Nome = objCli.get_Nome();
+                    myCli.NumContribuinte = objCli.get_NumContribuinte();
+                    myCli.Telefone = objCli.get_Telefone();
+                    myCli.Email = objCli.get_EnderecoWeb();
+                    myCli.Morada = objCli.get_Morada();
+                    myCli.Localidade = objCli.get_Localidade();
+                    myCli.CodPostal = objCli.get_CodigoPostal();
+                    //missing return password because doesn't make any sense
+                    return myCli;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
+
         private static string getNovoCodigoCliente()
         {
             //ErpBS objMotor = new ErpBS();
