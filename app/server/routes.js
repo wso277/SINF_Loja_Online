@@ -40,7 +40,7 @@ exports.listen = function (app) {
                             console.log("ciclo1");
                             for (var j = 0; j < orders[i]['LinhasEncomendaExtended'].length; j++) {
                                 console.log("ciclo2");
-                                total += orders[i]['LinhasEncomendaExtended']['TotalLiquido'] * (1- (order[i]['LinhasEncomendaExtended']['Desconto'] / 100));
+                                total += orders[i]['LinhasEncomendaExtended']['TotalLiquido'] * (1- (orders[i]['LinhasEncomendaExtended']['Desconto'] / 100));
                             }
                             orders[i]['Total'] = total;
                             total = 0;
