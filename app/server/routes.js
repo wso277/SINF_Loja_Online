@@ -41,7 +41,7 @@ exports.listen = function (app) {
                             for (var j = 0; j < orders[i]['LinhasEncomendaExtended'].length; j++) {
                                 console.log("ciclo2");
                                 console.log(orders[i]);
-                                console.log(orders[i]['LinhasEncomendaExtended']['TotalLiquido']]);
+                                console.log(orders[i]['LinhasEncomendaExtended']['TotalLiquido']);
                                 total += orders[i]['LinhasEncomendaExtended']['TotalLiquido'] * (1- (orders[i]['LinhasEncomendaExtended']['Desconto'] / 100));
                             }
                             orders[i]['Total'] = total;
