@@ -30,9 +30,17 @@ exports.listen = function (app) {
     app.get('/orders', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
-
+            requestify.request('http://localhost:49445/api/encomendas', {method: 'GET', body: {CodigoCliente: req.session.user.CodigoCliente}, dataType: 'form-url-encoded'})
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        orders = response.getBody();
+                        console.log(orders);
+                        res.render("orders.ejs", {messages: messages, title: 'Orders', orders: orders});
+                    } else {
+                        console.log("coco");
+                    }
+                });
         } else {
-            res.render("orders.ejs", {messages: messages, title: 'Orders'});
         }
     });
 
