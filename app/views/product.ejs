@@ -24,9 +24,6 @@
 
                 <div class="col-md-6" style="float:right;">
                     <div class="product-title"><%= product.Nome %></div>
-                    <div class="product-desc">The Corsair Gaming Series GS600 is the ideal price/performance choice for
-                        mid-spec gaming PC
-                    </div>
                     <hr>
                     <div class="product-price"><%= product.PVP * (1-(product.Desconto/100)) %>€</div>
                     <div class="product-stock"><% if(product.Stock <= 0) { %> Sem Stock <% } else { %> Em Stock <% }
@@ -45,148 +42,154 @@
             <div class="col-md-12 product-info">
                 <ul id="myTab" class="nav nav-tabs nav_tabs">
 
-                    <li class="active"><a href="#service-one" data-toggle="tab">DESCRIPTION</a></li>
+                    <li class="active"><a href="#descricao" data-toggle="tab">DESCRIÇÃO</a></li>
 
                 </ul>
                 <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade in active" id="service-one">
+                    <div class="tab-pane fade in active" id="descricao">
 
                         <section class="container product-info">
 
+                            <div style="padding-left: 2em">
+
                                 <div class="form-group">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <span class="input-group-addon">
                                             Marca
                                         </span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <%= product.Marca %>
                                     </div>
                                 </div>
 
                                 <br/>
+                                <br/>
+                                <br/>
 
                                 <div class="form-group">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <span class="input-group-addon">
                                             Data de Lançamento
                                         </span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <%= product.Lancamento %>
                                     </div>
                                 </div>
 
                                 <br/>
+                                <br/>
 
                                 <div class="form-group">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <span class="input-group-addon">
                                             Sistema Operativo
                                         </span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <%= product.NomeSistemaOperativo %> <%= product.VersaoSistemaOperativo %>
                                     </div>
                                 </div>
 
                                 <br/>
-                            <br/>
+                                <br/>
 
                                 <div class="form-group">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <span class="input-group-addon">
                                             CPU
                                         </span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <%= product.CPU %>
                                     </div>
                                 </div>
 
                                 <br/>
-                            <br/>
+                                <br/>
 
                                 <div class="form-group">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <span class="input-group-addon">
                                             GPU
                                         </span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <%= product.GPU %>
                                     </div>
                                 </div>
 
                                 <br/>
-                            <br/>
+                                <br/>
 
                                 <div class="form-group">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <span class="input-group-addon">
                                             Capacidade de Armazenamento
                                         </span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <%= product.Armazenamento %> GB
                                     </div>
                                 </div>
 
                                 <br/>
-                            <br/>
+                                <br/>
 
                                 <div class="form-group">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <span class="input-group-addon">
                                             Tamanho do ecrã
                                         </span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <%= product.TamanhoEcra %> polegadas
                                     </div>
                                 </div>
 
                                 <br/>
-                            <br/>
+                                <br/>
 
                                 <div class="form-group">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <span class="input-group-addon">
                                             Camara Traseira
                                         </span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <%= product.CamaraTraseira %> Mega Pixeis
                                     </div>
                                 </div>
 
                                 <br/>
-                            <br/>
+                                <br/>
 
                                 <div class="form-group">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <span class="input-group-addon">
                                             Autonomia
                                         </span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <%= product.Autonomia %> horas
                                     </div>
                                 </div>
 
                                 <br/>
-                            <br/>
+                                <br/>
 
                                 <div class="form-group">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <span class="input-group-addon">
                                             Peso
                                         </span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <%= product.Peso %>
                                     </div>
                                 </div>
+                            </div>
 
                         </section>
 
