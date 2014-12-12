@@ -28,7 +28,7 @@
                     </div>
                     <hr>
                     <div class="product-price"><%= product.PVP * (1-(product.Desconto/100)) %>€</div>
-                    <div class="product-stock" ></div>
+                    <div class="product-stock"><% if(product.Stock <= 0) { %> Em Stock <% } else { %> Sem Stock <% } %></div>
                     <hr>
                     <div class="btn-group cart">
                         <button type="button" class="btn btn-fresh text-uppercase">
@@ -49,28 +49,7 @@
                     <div class="tab-pane fade in active" id="service-one">
 
                         <section class="container product-info">
-                            Marca: <%= product.Marca %>
-                            <br>
-                            Data de Lançamento: <%= product.Lancamento %>
-                            <br>
-                            Sistema Operativo: <%= product.NomeSistemaOperativo> <%= VersaoSistemaOperativo %>
-                            <br>
-                            CPU: <%= product.CPU %>
-                            <br>
-                            GPU: <%= product.GPU %>
-                            <br>
-                            Memória RAM: <%= product.RAM %> MB
-                            <br>
-                            Capacidade de Armazenamento: <%= product.Armazenamento %> GB
-                            <br>
-                            Tamanho do ecrã: <%= product.TamanhoEcra %> polegadas
-                            <br>
-                            Camara Traseira: <%= product.CamaraTraseira %> Mega Pixeis
-                            <br>
-                            Autonomia: <%= product.Autonomia %> horas
-                            <br>
-                            Peso: <%= product.Peso %> gramas
-                            <br>
+
 
                         </section>
 
