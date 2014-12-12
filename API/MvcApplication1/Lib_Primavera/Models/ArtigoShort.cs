@@ -23,5 +23,8 @@ namespace MvcApplication1.Lib_Primavera.Models
         public int Armazenamento { get; set; } //gb - CDU_ARMAZENAMENTO
         public string fotoURL { get; set; } // CDU_FOTO
         public string Lancamento { get; set; } //CDU_Lancamento
+
+        //ordenacao
+        public float avaliacao;
     }
 }

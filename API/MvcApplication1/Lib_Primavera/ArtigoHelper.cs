@@ -135,6 +135,7 @@ namespace MvcApplication1.Lib_Primavera
                     
 
                     art = new Models.ArtigoShort();
+                    DateTime hoje = DateTime.Today;
 
                     //Codigo do Artigo
                     art.CodigoArtigo = objList.Valor("artigo");
@@ -179,13 +180,25 @@ namespace MvcApplication1.Lib_Primavera
                     //Data de Lancamento
                     DateTime d= camposUser.DaValorAtributo(art.CodigoArtigo, "CDU_Lancamento");
                     art.Lancamento = d.ToShortDateString();
+
+                    //Avaliacao
+                    int anos = hoje.Year - d.Year;
+                    float peso_anos = 0;
+
+                    if (anos >= 3)
+                        peso_anos = (Math.Abs(3 - anos) + 1);
+                    else if (anos < 3)
+                        peso_anos = (anos + 1);
+
+                                      
+                    art.avaliacao = 100 * art.Desconto + 400 / peso_anos +  art.StockAtual;
   
                     listArts.Add(art);
                     i++;
                     objList.Seguinte();
                 }
 
-                return listArts;
+                return listArts.OrderByDescending(a => a.avaliacao).ToList();
 
             }
             else
