@@ -102,7 +102,7 @@ exports.listen = function (app) {
     app.get('/product/:id', function (req, res) {
         var messages = generateMessageBlock();
 
-        requestify.request('http://localhost:49445/api/artigos/'+req.params.id, {method: 'GET', dataType: 'form-url-encoded'})
+        requestify.request('http://localhost:49445/api/artigo/'+req.params.id, {method: 'GET', dataType: 'form-url-encoded'})
             .then(function (response) {
                 if (response.getCode() == "200") {
                     var produto = response.getBody();
