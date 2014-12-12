@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <% include partials/head %>
     <link rel="stylesheet" type="text/css" href="/css/product.css">
-    <link rel="stylesheet" type="text/css" href="/css/register.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
 </head>
 <body>
 <% include partials/messages %>
@@ -15,11 +15,11 @@
             <div class="container">
                 <div class="col-md-5">
 
-                        <div style="text-align: center">
-                            <img class="img-responsive"
-                                 src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png"
-                                 alt=""/>
-                        </div>
+                    <div style="text-align: center">
+                        <img class="img-responsive"
+                             src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png"
+                             alt=""/>
+                    </div>
                 </div>
 
                 <div class="col-md-6" style="float:right;">
@@ -29,7 +29,9 @@
                     </div>
                     <hr>
                     <div class="product-price"><%= product.PVP * (1-(product.Desconto/100)) %>€</div>
-                    <div class="product-stock"><% if(product.Stock <= 0) { %> Sem Stock <% } else { %> Em Stock <% } %></div>
+                    <div class="product-stock"><% if(product.Stock <= 0) { %> Sem Stock <% } else { %> Em Stock <% }
+                        %>
+                    </div>
                     <hr>
                     <div class="btn-group cart">
                         <button type="button" class="btn btn-fresh text-uppercase">
@@ -50,127 +52,136 @@
                     <div class="tab-pane fade in active" id="service-one">
 
                         <section class="container product-info">
-
-                            <div class="form-group">
-                                <div class="col-sm-4">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-3">
                                         <span class="input-group-addon">
                                             Marca
                                         </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <%= product.Marca %>
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <%= product.Marca %>
-                                </div>
-                            </div>
 
-                            <br/>
-                            <div class="form-group">
-                                <div class="col-sm-4">
+                                <br/>
+
+                                <div class="form-group">
+                                    <div class="col-sm-3">
                                         <span class="input-group-addon">
                                             Data de Lançamento
                                         </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <%= product.Lancamento %>
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <%= product.Lancamento %>
-                                </div>
-                            </div>
 
-                            <br/>
-                            <div class="form-group">
-                                <div class="col-sm-4">
+                                <br/>
+
+                                <div class="form-group">
+                                    <div class="col-sm-3">
                                         <span class="input-group-addon">
                                             Sistema Operativo
                                         </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <%= product.NomeSistemaOperativo %> <%= product.VersaoSistemaOperativo %>
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <%= product.NomeSistemaOperativo %> <%= product.VersaoSistemaOperativo %>
-                                </div>
-                            </div>
 
-                            <br/>
-                            <div class="form-group">
-                                <div class="col-sm-4">
+                                <br/>
+
+                                <div class="form-group">
+                                    <div class="col-sm-3">
                                         <span class="input-group-addon">
                                             CPU
                                         </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <%= product.CPU %>
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <%= product.CPU %>
-                                </div>
-                            </div>
 
-                            <br/>
-                            <div class="form-group">
-                                <div class="col-sm-4">
+                                <br/>
+
+                                <div class="form-group">
+                                    <div class="col-sm-3">
                                         <span class="input-group-addon">
                                             GPU
                                         </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <%= product.GPU %>
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <%= product.GPU %>
-                                </div>
-                            </div>
 
-                            <br/>
-                            <div class="form-group">
-                                <div class="col-sm-4">
+                                <br/>
+
+                                <div class="form-group">
+                                    <div class="col-sm-3">
                                         <span class="input-group-addon">
                                             Capacidade de Armazenamento
                                         </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <%= product.Armazenamento %> GB
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <%= product.Armazenamento %> GB
-                                </div>
-                            </div>
 
-                            <br/>
-                            <div class="form-group">
-                                <div class="col-sm-4">
+                                <br/>
+
+                                <div class="form-group">
+                                    <div class="col-sm-3">
                                         <span class="input-group-addon">
                                             Tamanho do ecrã
                                         </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <%= product.TamanhoEcra %> polegadas
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <%= product.TamanhoEcra %> polegadas
-                                </div>
-                            </div>
 
-                            <br/>
-                            <div class="form-group">
-                                <div class="col-sm-4">
+                                <br/>
+
+                                <div class="form-group">
+                                    <div class="col-sm-3">
                                         <span class="input-group-addon">
                                             Camara Traseira
                                         </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <%= product.CamaraTraseira %> Mega Pixeis
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <%= product.CamaraTraseira %> Mega Pixeis
-                                </div>
-                            </div>
 
-                            <br/>
-                            <div class="form-group">
-                                <div class="col-sm-4">
+                                <br/>
+
+                                <div class="form-group">
+                                    <div class="col-sm-3">
                                         <span class="input-group-addon">
                                             Autonomia
                                         </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <%= product.Autonomia %> horas
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <%= product.Autonomia %> horas
-                                </div>
-                            </div>
 
-                            <br/>
-                            <div class="form-group">
-                                <div class="col-sm-4">
+                                <br/>
+
+                                <div class="form-group">
+                                    <div class="col-sm-3">
                                         <span class="input-group-addon">
                                             Peso
                                         </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <%= product.Peso %>
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <%= product.Peso %>
-                                </div>
+
                             </div>
-
-
                         </section>
 
                     </div>
