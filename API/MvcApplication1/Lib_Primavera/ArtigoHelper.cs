@@ -18,6 +18,7 @@ namespace MvcApplication1.Lib_Primavera
         static string COMPANHIA = InformacaoEmpresa.COMPANHIA;
         static string USER = InformacaoEmpresa.USER;
         static string PASS = InformacaoEmpresa.PASS;
+        static string ARMAZEM = "ARM01";
 
         public static Lib_Primavera.Models.Artigo GetArtigo(string codArtigo)
         {
@@ -42,7 +43,7 @@ namespace MvcApplication1.Lib_Primavera
                     myArt.Nome = objArtigo.get_Descricao();
 
                     //Stock
-                    myArt.StockAtual = (float) objArtigo.get_StkActual();
+                    myArt.StockAtual = getStockAtual(codArtigo);
 
                     //PVP
                     preco = PriEngine.Engine.Comercial.ArtigosPrecos.Edita(codArtigo, "EUR", "UN");
@@ -104,7 +105,7 @@ namespace MvcApplication1.Lib_Primavera
 
 
 
-        public static IEnumerable<Models.ArtigoShort> ListaArtigos(int page)
+        public static IEnumerable<Models.ArtigoShort> ListaArtigos(int page, bool promocao)
         {
             ErpBS objMotor = new ErpBS();
 
@@ -131,6 +132,8 @@ namespace MvcApplication1.Lib_Primavera
 
                 while (!objList.NoFim() && i != artigos_por_pagina)
                 {
+                    
+
                     art = new Models.ArtigoShort();
 
                     //Codigo do Artigo
@@ -139,11 +142,17 @@ namespace MvcApplication1.Lib_Primavera
                     GcpBEArtigo objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(art.CodigoArtigo);
                     IGcpBSArtigos camposUser = PriEngine.Engine.Comercial.Artigos;
 
+                    if (objArtigo.get_Desconto() == 0 && promocao == true) {
+                        objList.Seguinte();
+                        continue;
+                    }
+                        
+
                     //Nome
                     art.Nome = objArtigo.get_Descricao();
 
                     //Stock
-                    art.StockAtual = (float)objArtigo.get_StkActual();
+                    art.StockAtual = getStockAtual(art.CodigoArtigo);
 
                     //PVP
                     GcpBEArtigoMoeda preco = PriEngine.Engine.Comercial.ArtigosPrecos.Edita(art.CodigoArtigo, "EUR", "UN");
@@ -191,7 +200,7 @@ namespace MvcApplication1.Lib_Primavera
         {
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
-                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, CDU_Lancamento as data, stkactual FROM Artigo WHERE stkactual > 0 ORDER BY data DESC;";
+                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, CDU_Lancamento as data FROM Artigo ORDER BY data DESC;";
 
                 StdBELista objList = PriEngine.Engine.Consulta(query);
                 Models.ArtigoShowcase art = new Models.ArtigoShowcase();
@@ -215,7 +224,7 @@ namespace MvcApplication1.Lib_Primavera
         {
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
-                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, CDU_Lancamento as data, stkactual FROM Artigo WHERE desconto > 0 AND stkactual > 0 ORDER BY data DESC;";
+                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, CDU_Lancamento as data FROM Artigo WHERE desconto > 0 ORDER BY data DESC;";
 
                 StdBELista objList = PriEngine.Engine.Consulta(query);
                 Models.ArtigoShowcase art = new Models.ArtigoShowcase();
@@ -234,11 +243,11 @@ namespace MvcApplication1.Lib_Primavera
             else { return null; }
         }
 
-        public static Models.ArtigoShowcase antigo()
+        public static Models.ArtigoShowcase maisvendido()
         {
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
-                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, CDU_Lancamento as data, stkactual FROM Artigo WHERE stkactual > 0 ORDER BY data;";
+                String query = "SELECT TOP 1 Artigo.Artigo as CodigoArtigo, CDU_FOTO as fotoURL, ArtigoArmazem.QtReservada as quantidade FROM Artigo, ArtigoArmazem WHERE Artigo.Artigo = ArtigoArmazem.Artigo ORDER BY quantidade DESC;";
 
                 StdBELista objList = PriEngine.Engine.Consulta(query);
                 Models.ArtigoShowcase art = new Models.ArtigoShowcase();
@@ -261,7 +270,7 @@ namespace MvcApplication1.Lib_Primavera
         {
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
-                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, stkactual as stock FROM Artigo ORDER BY stock DESC;";
+                String query = "SELECT Artigo.Artigo as CodigoArtigo, CDU_FOTO as fotoURL, ArtigoArmazem.stkactual as stock FROM Artigo, ArtigoArmazem WHERE Artigo.Artigo = ArtigoArmazem.Artigo ORDER BY stock DESC;";
 
                 StdBELista objList = PriEngine.Engine.Consulta(query);
                 Models.ArtigoShowcase art = new Models.ArtigoShowcase();
@@ -278,6 +287,15 @@ namespace MvcApplication1.Lib_Primavera
 
             }
             else { return null; }
+        }
+
+        private static float getStockAtual(string codArtigo)
+        {
+
+            IGcpBSArtigosArmazens armazem;
+            armazem = PriEngine.Engine.Comercial.ArtigosArmazens;
+
+            return (float) armazem.DaStockDisponivelArtigo(codArtigo);
         }
     }
 }
