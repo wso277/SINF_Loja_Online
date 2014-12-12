@@ -107,7 +107,6 @@ exports.listen = function (app) {
                 if (response.getCode() == "200") {
                     var produto = response.getBody();
                     console.log(produto);
-                    console.log(response.getHeaders());
                     if (req.session.user) {
                         res.render("product.ejs", {messages: messages, title: 'Produto', product: produto});
                     } else {
