@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <% include partials/head %>
     <link rel="stylesheet" type="text/css" href="/css/product.css">
+    <link rel="stylesheet" type="text/css" href="/css/register.css">
 </head>
 <body>
 <% include partials/messages %>
@@ -50,7 +51,17 @@
 
                         <section class="container product-info">
 
-                            Marca: <%= product.Marca %>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                        <span class="input-group-addon">
+                                            Marca
+                                        </span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <%= product.Marca %>
+                                </div>
+                            </div>
+
                             <br/>
                             Data de Lançamento: <%= product.Lancamento %>
                             <br/>
