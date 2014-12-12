@@ -85,44 +85,38 @@
                                             <table class="table table-user-information">
                                                 <tbody>
                                                 <tr>
-                                                    <td>Department:</td>
-                                                    <td>Programming</td>
+                                                    <td>Nome</td>
+                                                    <td><%= user.Nome %></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Hire date:</td>
-                                                    <td>06/23/2013</td>
+                                                    <td>Telefone</td>
+                                                    <td><%= user.Telefone %></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Date of Birth</td>
-                                                    <td>01/24/1988</td>
-                                                </tr>
-
-                                                <tr>
-                                                <tr>
-                                                    <td>Gender</td>
-                                                    <td>Male</td>
+                                                    <td>Morada</td>
+                                                    <td><%= user.Morada %></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Home Address</td>
-                                                    <td>Metro Manila,Philippines</td>
+                                                    <td>Localidade</td>
+                                                    <td><%= user.Localidade %></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Email</td>
-                                                    <td><a href="mailto:info@support.com">info@support.com</a></td>
+                                                    <td>Código Postal</td>
+                                                    <td><%= user.CodPostal %></td>
                                                 </tr>
-                                                <td>Phone Number</td>
-                                                <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
-                                                </td>
-
+                                                <tr>
+                                                    <td>Número de Contribuinte</td>
+                                                    <td><%= user.NumContribuinte %></td>
                                                 </tr>
 
                                                 </tbody>
                                             </table>
 
-                                            <a href="#" class="btn btn-sunny btn-md text-uppercase"><i
-                                                        class="fa fa-shopping-cart fa-lg"></i> 14</a>
-                                            <a href="#" class="btn btn-sunny btn-md text-uppercase"><i
-                                                        class="fa fa-history fa-lg"></i> Ver histórico de encomendas</a>
+                                            <a href="" data-toggle="modal" data-target="#cart" title="Shopping Cart"
+                                               class="btn btn-sunny btn-md text-uppercase"><i
+                                                    class="fa fa-shopping-cart fa-lg"></i> 14</a>
+                                            <a href="/orders" class="btn btn-sunny btn-md text-uppercase"><i
+                                                    class="fa fa-history fa-lg"></i> Ver histórico de encomendas</a>
                                         </div>
                                     </div>
                                 </div>
@@ -170,7 +164,7 @@
                                                 <h4 class="media-heading"><a href="">Nome Produto</a></h4>
                                                 <h5 class="media-heading"> by <a href="">Marca</a></h5>
                                                 <span>Status: </span><span class="text-success"><strong>Em
-                                                        Stock</strong></span>
+                                                Stock</strong></span>
                                             </div>
                                         </div>
                                     </td>
@@ -194,7 +188,7 @@
                                                 <h4 class="media-heading"><a href="#">Nome Produto</a></h4>
                                                 <h5 class="media-heading"> by <a href="#">Marca</a></h5>
                                                 <span>Status: </span><span class="text-warning"><strong>Sai de stock em
-                                                        2 semanas</strong></span>
+                                                2 semanas</strong></span>
                                             </div>
                                         </div>
                                     </td>

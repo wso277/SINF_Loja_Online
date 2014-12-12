@@ -48,7 +48,7 @@ exports.listen = function (app) {
                             total = 0;
                         }
                         console.log(orders);
-                        res.render("orders.ejs", {messages: messages, title: 'Encomendas', orders: orders});
+                        res.render("orders.ejs", {messages: messages, title: 'Encomendas', orders: orders, user: req.session.user});
                     } else {
                         console.log("coco");
                     }
@@ -69,7 +69,7 @@ exports.listen = function (app) {
                     if (response.getCode() == "200") {
                         var order = response.getBody();
                         console.log(order);
-                        res.render("order.ejs", {messages: messages, title: 'Encomenda', order: order});
+                        res.render("order.ejs", {messages: messages, title: 'Encomenda', order: order, user: req.session.user});
                     } else {
                         console.log("coco");
                     }
@@ -92,7 +92,7 @@ exports.listen = function (app) {
                     produtos = response.getBody();
                     console.log(produtos);
                     if (req.session.user) {
-                        res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos});
+                        res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos, user: req.session.user});
                     } else {
                         res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos});
                     }
@@ -139,7 +139,7 @@ exports.listen = function (app) {
                     var produto = response.getBody();
                     console.log(produto);
                     if (req.session.user) {
-                        res.render("product.ejs", {messages: messages, title: 'Produto', product: produto});
+                        res.render("product.ejs", {messages: messages, title: 'Produto', product: produto, user: req.session.user});
                     } else {
                         res.render("product.ejs", {messages: messages, title: 'Produto', product: produto});
                     }
@@ -214,14 +214,25 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         if (req.params.val == "logged-in") {
             messages.success.push({title: "Logged In", content: "You are now logged in!"});
-            res.render("dashboard-private", {title: "Dashboard", messages: messages});
+            requestify.request('http://localhost:49445/api/clients/'+req.session.user.CodigoCliente, {
+                method  : 'GET',
+                dataType: 'form-url-encoded'
+            })
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        req.session.user = response.getBody();
+                    } else {
+
+                    }
+                });
+            res.render("dashboard-private", {title: "Dashboard", messages: messages, user: req.session.user});
         }
     });
 
     app.get('*', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
-            res.render("dashboard-private.ejs", {title: "Dashboard", messages: messages});
+            res.render("dashboard-private.ejs", {title: "Dashboard", messages: messages, user: req.session.user});
         } else {
             res.render("dashboard-public.ejs", {title: "Dashboard", messages: messages});
         }
