@@ -7,8 +7,8 @@
     app.controller('ProductsController', ['$http', function ($http) {
 
         var page = 0;
-
-        var getPage = function () {
+        alert("ksfdlk");
+        function getPage () {
             alert("cenas");
             page = page + 1;
 
