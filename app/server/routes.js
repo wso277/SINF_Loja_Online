@@ -30,7 +30,11 @@ exports.listen = function (app) {
     app.get('/orders', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
-            requestify.request('http://localhost:49445/api/encomendas', {method: 'GET', params: {CodigoCliente: 'CL000001'},dataType: 'form-url-encoded'})
+            requestify.request('http://localhost:49445/api/encomendas', {
+                method  : 'GET',
+                params  : {CodigoCliente: 'CL000001'},
+                dataType: 'form-url-encoded'
+            })
                 .then(function (response) {
                     if (response.getCode() == "200") {
                         var orders = response.getBody();
@@ -38,7 +42,7 @@ exports.listen = function (app) {
                         for (var i = 0; i < orders.length; i++) {
                             for (var j = 0; j < orders[i]['LinhasEncomendaExtended'].length; j++) {
                                 console.log(orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido']);
-                                total += orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido'] * (1- (orders[i]['LinhasEncomendaExtended'][j]['Desconto'] / 100));
+                                total += orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido'] * (1 - (orders[i]['LinhasEncomendaExtended'][j]['Desconto'] / 100));
                             }
                             orders[i]['Total'] = total;
                             total = 0;
@@ -57,7 +61,10 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         var id = parseInt(req.params.id);
         if (req.session.user) {
-            requestify.request('http://localhost:49445/api/encomendas/'+id, {method: 'GET', dataType: 'form-url-encoded'})
+            requestify.request('http://localhost:49445/api/encomendas/' + id, {
+                method  : 'GET',
+                dataType: 'form-url-encoded'
+            })
                 .then(function (response) {
                     if (response.getCode() == "200") {
                         var order = response.getBody();
@@ -75,7 +82,11 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         var produtos = {};
 
-        requestify.request('http://localhost:49445/api/artigos', {method: 'GET', body: {page: 0}, dataType: 'form-url-encoded'})
+        requestify.request('http://localhost:49445/api/artigos', {
+            method  : 'GET',
+            body    : {page: 0},
+            dataType: 'form-url-encoded'
+        })
             .then(function (response) {
                 if (response.getCode() == "200") {
                     produtos = response.getBody();
@@ -83,7 +94,7 @@ exports.listen = function (app) {
                     if (req.session.user) {
                         res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos});
                     } else {
-                        res.render("products.ejs", {messages: messages, title: 'Produtos',  products: produtos});
+                        res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos});
                     }
                 } else {
                     console.log("coco");
@@ -99,19 +110,38 @@ exports.listen = function (app) {
         }
     });
 
+    app.post('/get-page', function (req, res) {
+        requestify.request('http://localhost:49445/api/artigos', {
+            method  : 'GET',
+            body    : {page: req.body.page},
+            dataType: 'form-url-encoded'
+        })
+            .then(function (response) {
+                if (response.getCode() == "200") {
+                    produtos = response.getBody();
+                    console.log(produtos);
+                    res.status(200).send(produtos);
+                } else {
+                    console.log("coco");
+                }
+            });
+    });
+
     app.get('/product/:id', function (req, res) {
         var messages = generateMessageBlock();
 
-        requestify.request('http://localhost:49445/api/artigos/'+req.params.id, {method: 'GET', dataType: 'form-url-encoded'})
+        requestify.request('http://localhost:49445/api/artigo/' + req.params.id, {
+            method  : 'GET',
+            dataType: 'form-url-encoded'
+        })
             .then(function (response) {
                 if (response.getCode() == "200") {
                     var produto = response.getBody();
                     console.log(produto);
-                    console.log(response.getHeaders());
                     if (req.session.user) {
                         res.render("product.ejs", {messages: messages, title: 'Produto', product: produto});
                     } else {
-                        res.render("product.ejs", {messages: messages, title: 'Produto',  product: produto});
+                        res.render("product.ejs", {messages: messages, title: 'Produto', product: produto});
                     }
                 } else {
                     console.log("coco");
@@ -126,7 +156,20 @@ exports.listen = function (app) {
 
     app.post('/register', function (req, res) {
         if (req.body.password === req.body.confirmPassword) {
-            requestify.request('http://localhost:49445/api/clients', {method: 'PUT', body: {NumContribuinte: req.body.nib, Nome: req.body.nome, Email: req.body.email, Telefone: req.body.telefone, Morada: req.body.morada, Localidade: req.body.localidade, CodPostal: req.body.codPostal, Password: req.body.password}, dataType: 'form-url-encoded'})
+            requestify.request('http://localhost:49445/api/clients', {
+                method  : 'PUT',
+                body    : {
+                    NumContribuinte: req.body.nib,
+                    Nome           : req.body.nome,
+                    Email          : req.body.email,
+                    Telefone       : req.body.telefone,
+                    Morada         : req.body.morada,
+                    Localidade     : req.body.localidade,
+                    CodPostal      : req.body.codPostal,
+                    Password       : req.body.password
+                },
+                dataType: 'form-url-encoded'
+            })
                 .then(function (response) {
                     if (response.getCode() == "201") {
                         res.status(200).send(true);
@@ -140,13 +183,14 @@ exports.listen = function (app) {
         }
     });
 
-
     app.post('/login', function (req, res) {
         if (req.body.email != "" && req.body.password != "") {
-            requestify.request('http://localhost:49445/api/sessions', { method: 'POST', body: {
-                email: req.body.email,
-                password: req.body.password
-            }, dataType: 'form-url-encoded'})
+            requestify.request('http://localhost:49445/api/sessions', {
+                method     : 'POST', body: {
+                    email   : req.body.email,
+                    password: req.body.password
+                }, dataType: 'form-url-encoded'
+            })
                 .then(function (response) {
                     if (response.getCode() == "200") {
                         req.session.regenerate(function () {
@@ -187,8 +231,8 @@ exports.listen = function (app) {
 var generateMessageBlock = function () {
     return {
         success: [],
-        info: [],
+        info   : [],
         warning: [],
-        danger: []
+        danger : []
     };
 }
