@@ -31,8 +31,8 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         if (req.session.user) {
             requestify.request('http://localhost:49445/api/encomendas', {
-                method  : 'GET',
-                params  : {CodigoCliente: 'CL000001'},
+                method: 'GET',
+                params: {CodigoCliente: 'CL000001'},
                 dataType: 'form-url-encoded'
             })
                 .then(function (response) {
@@ -62,7 +62,7 @@ exports.listen = function (app) {
         var id = parseInt(req.params.id);
         if (req.session.user) {
             requestify.request('http://localhost:49445/api/encomendas/' + id, {
-                method  : 'GET',
+                method: 'GET',
                 dataType: 'form-url-encoded'
             })
                 .then(function (response) {
@@ -83,8 +83,8 @@ exports.listen = function (app) {
         var produtos = {};
 
         requestify.request('http://localhost:49445/api/artigos', {
-            method  : 'GET',
-            body    : {page: 0},
+            method: 'GET',
+            body: {page: 0},
             dataType: 'form-url-encoded'
         })
             .then(function (response) {
@@ -112,8 +112,8 @@ exports.listen = function (app) {
 
     app.post('/get-page', function (req, res) {
         requestify.request('http://localhost:49445/api/artigos', {
-            method  : 'GET',
-            body    : {page: req.body.page},
+            method: 'GET',
+            body: {page: req.body.page},
             dataType: 'form-url-encoded'
         })
             .then(function (response) {
@@ -131,7 +131,7 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
 
         requestify.request('http://localhost:49445/api/artigo/' + req.params.id, {
-            method  : 'GET',
+            method: 'GET',
             dataType: 'form-url-encoded'
         })
             .then(function (response) {
@@ -157,16 +157,16 @@ exports.listen = function (app) {
     app.post('/register', function (req, res) {
         if (req.body.password === req.body.confirmPassword) {
             requestify.request('http://localhost:49445/api/clients', {
-                method  : 'PUT',
-                body    : {
+                method: 'PUT',
+                body: {
                     NumContribuinte: req.body.nib,
-                    Nome           : req.body.nome,
-                    Email          : req.body.email,
-                    Telefone       : req.body.telefone,
-                    Morada         : req.body.morada,
-                    Localidade     : req.body.localidade,
-                    CodPostal      : req.body.codPostal,
-                    Password       : req.body.password
+                    Nome: req.body.nome,
+                    Email: req.body.email,
+                    Telefone: req.body.telefone,
+                    Morada: req.body.morada,
+                    Localidade: req.body.localidade,
+                    CodPostal: req.body.codPostal,
+                    Password: req.body.password
                 },
                 dataType: 'form-url-encoded'
             })
@@ -186,8 +186,8 @@ exports.listen = function (app) {
     app.post('/login', function (req, res) {
         if (req.body.email != "" && req.body.password != "") {
             requestify.request('http://localhost:49445/api/sessions', {
-                method     : 'POST', body: {
-                    email   : req.body.email,
+                method: 'POST', body: {
+                    email: req.body.email,
                     password: req.body.password
                 }, dataType: 'form-url-encoded'
             })
@@ -213,19 +213,23 @@ exports.listen = function (app) {
     app.get('/:val', function (req, res) {
         var messages = generateMessageBlock();
         if (req.params.val == "logged-in") {
-            messages.success.push({title: "Logged In", content: "You are now logged in!"});
-            requestify.request('http://localhost:49445/api/clients/'+req.session.user.CodigoCliente, {
-                method  : 'GET',
-                dataType: 'form-url-encoded'
-            })
-                .then(function (response) {
-                    if (response.getCode() == "200") {
-                        req.session.user = response.getBody();
-                    } else {
-
-                    }
-                });
-            res.render("dashboard-private", {title: "Dashboard", messages: messages, user: req.session.user});
+            if (req.session.user) {
+                messages.success.push({title: "Logged In", content: "You are now logged in!"});
+                requestify.request('http://localhost:49445/api/clients/' + req.session.user.CodigoCliente, {
+                    method: 'GET',
+                    dataType: 'form-url-encoded'
+                })
+                    .then(function (response) {
+                        if (response.getCode() == "200") {
+                            req.session.user = response.getBody();
+                            res.render("dashboard-private", {title: "Dashboard", messages: messages, user: req.session.user});
+                        } else {
+                        }
+                    });
+            } else {
+                messages.success.push({title: "Sign in first", content: "You are not logged in"});
+                res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
+            }
         }
     });
 
@@ -242,8 +246,8 @@ exports.listen = function (app) {
 var generateMessageBlock = function () {
     return {
         success: [],
-        info   : [],
+        info: [],
         warning: [],
-        danger : []
+        danger: []
     };
 }
