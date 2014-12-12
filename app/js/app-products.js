@@ -4,11 +4,11 @@
     /**
      * Controller that manages the login information of an user
      */
-    app.controller('ProductsController', ['$http', function ($http) {
+    app.controller('ProductsController', ['$http', '$scope', function ($http, $scope) {
 
         var page = 0;
         alert("ksfdlk");
-        function getPage () {
+        $scope.getPage = function () {
             alert("cenas");
             page = page + 1;
 
