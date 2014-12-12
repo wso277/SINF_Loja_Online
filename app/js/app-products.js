@@ -9,6 +9,7 @@
         var page = 0;
 
         var getPage = function () {
+            alert("cenas");
             page = page + 1;
 
             $http.get("http://localhost:49445/api/artigos", {page: page})
