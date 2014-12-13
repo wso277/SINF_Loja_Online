@@ -132,6 +132,31 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/finalize-order', function(req,res) {
+        var messages = generateMessageBlock();
+        if (req.session.user) {
+            var orderLines = [];
+            for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
+                orderLines.push({CodigoArtigo: req.session.shoppingCart['products']['CodigoArtigo'], Quantidade: req.session.shoppingCart['products']['quantidade']});
+            }
+            var order = {Entidade: req.session.user.CodigoArtigo, LinhasEncomenda: orderLines};
+            console.log(order);
+            requestify.request('http://localhost:49445/api/encomendas', {
+                method: 'PUT',
+                body: order,
+                dataType: 'json'
+            })
+                .then(function (response) {
+                    if (response.getCode() == "201") {
+                        messages.success.push({title: "Sucesso", content: "Encomenda criada com sucesso"});
+                        res.redirect('/orders');
+                    } else {
+                        console.log("error");
+                    }
+                });
+        }
+    });
+
     app.post('/get-page', function (req, res) {
         console.log(req.body.page);
         if (req.body.promocao) {
