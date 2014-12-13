@@ -23,7 +23,7 @@ exports.listen = function (app) {
         if (req.session.user) {
 
         } else {
-            res.render("login.ejs", {messages: messages, title: 'Login'});
+            res.render("login.ejs", {messages: messages, title: 'Login', user: null, cart: null});
         }
     });
 
