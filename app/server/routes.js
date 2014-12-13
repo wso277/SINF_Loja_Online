@@ -204,6 +204,7 @@ exports.listen = function (app) {
                     messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
                     var totalItems = 0;
                     console.log("antes");
+                    console.log(req.session.shoppingCart);
                     for (var i = 0; i < 0 < req.session.shoppingCart.length; i++) {
                         totalItems += req.session.shoppingCart[i]['quantidade'];
                     }
