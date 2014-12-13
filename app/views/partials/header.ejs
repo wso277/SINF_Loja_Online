@@ -17,6 +17,7 @@
                 </div>
             </div>
         </a>
+        <% if (user != null) {%>
         <a href="" data-toggle="modal" data-target="#profile" title="Profile">
             <div class="row">
                 <div class="col-sm-8 navElem">
@@ -27,6 +28,7 @@
                 </div>
             </div>
         </a>
+        <% } %>
         <a href="" data-toggle="modal" data-target="#lastOrder" title="Last Order">
             <div class="row">
                 <div class="col-sm-8 navElem">
@@ -37,6 +39,7 @@
                 </div>
             </div>
         </a>
+        <% if (cart != null) {%>
         <a href="" data-toggle="modal" data-target="#cart" title="Shopping Cart">
             <div class="row">
                 <div class="col-sm-8 navElem">
@@ -47,6 +50,7 @@
                 </div>
             </div>
         </a>
+        <% } %>
 
         <a href="/logout" title="Log out">
             <div class="row">
@@ -61,6 +65,7 @@
     </section>
 </section>
 
+<% if (user != null) {%>
 <!-- Modal -->
 <div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -131,7 +136,9 @@
         </div>
     </div>
 </div>
+<% } %>
 
+<% if (cart != null) {%>
 <!-- Modal -->
 <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 65em">
@@ -152,6 +159,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <% (cart.products).forEach(function(product) { %>
                                 <tr>
                                     <td class="col-sm-4">
                                         <div class="media">
@@ -161,65 +169,42 @@
                                             </a>
 
                                             <div class="media-body">
-                                                <h4 class="media-heading"><a href="">Nome Produto</a></h4>
-                                                <h5 class="media-heading"> by <a href="">Marca</a></h5>
-                                                <span>Status: </span><span class="text-success"><strong>Em
+                                                <h4 class="media-heading"><a href=""><%= product.Nome %></a></h4>
+                                                <h5 class="media-heading"> by <a href=""><%= product.Marca %></a></h5>
+                                                <span>Estado: </span><span class="text-success"><strong>Em
                                                 Stock</strong></span>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="col-sm-1 text-center"><strong>$4.87</strong></td>
-                                    <td class="col-sm-1 text-center">2</td>
+                                    <td class="col-sm-1 text-center"><strong><%= product.PVP * (1-(product.Desconto/100)) %>€</strong></td>
+                                    <td class="col-sm-1 text-center"><%= product.quantidade %></td>
                                     <td class="col-sm-1">
                                         <button type="button" class="btn btn-danger">
                                             <span class="glyphicon glyphicon-remove"></span> Remover
                                         </button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="col-sm-4">
-                                        <div class="media">
-                                            <a class="thumbnail pull-left" href="#"> <img class="media-object"
-                                                                                          src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-                                                                                          style="width: 72px; height: 72px;">
-                                            </a>
-
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">Nome Produto</a></h4>
-                                                <h5 class="media-heading"> by <a href="#">Marca</a></h5>
-                                                <span>Status: </span><span class="text-warning"><strong>Sai de stock em
-                                                2 semanas</strong></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="col-sm-1 text-center"><strong>$4.99</strong></td>
-                                    <td class="col-sm-1 text-center">1</td>
-                                    <td class="col-sm-1">
-                                        <button type="button" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove"></span> Remover
-                                        </button>
-                                    </td>
-                                </tr>
+                                <% }); %>
                                 <tr>
                                     <td><h4>Subtotal</h4></td>
-                                    <td class="text-center"><h5><strong>$24.59</strong></h5></td>
+                                    <td class="text-center"><h5><strong><%= cart.total %>€</strong></h5></td>
                                 </tr>
                                 <tr>
-                                    <td><h4>Estimated shipping</h4></td>
-                                    <td class="text-center"><h5><strong>$6.94</strong></h5></td>
+                                    <td><h4>Custos de Envio</h4></td>
+                                    <td class="text-center"><h5><strong><%= cart.totalItems * 2 %></strong></h5></td>
                                 </tr>
                                 <tr>
                                     <td><h3>Total</h3></td>
-                                    <td class="text-center"><h3><strong>$31.53</strong></h3></td>
+                                    <td class="text-center"><h3><strong><%= cart.total + cart.totalItems * 2 %></strong></h3></td>
                                     <td>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
                                             <span class="fa fa-shopping-cart"></span> Continuar
                                         </button>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-success">
-                                            Checkout <span class="fa fa-play"></span>
-                                        </button>
+                                        <a href="/finalize-order" class="btn btn-success">
+                                            Efetuar Encomenda <span class="fa fa-play"></span>
+                                        </a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -231,6 +216,7 @@
         </div>
     </div>
 </div>
+<% } %>
 
 <!-- Modal -->
 <div class="modal fade" id="lastOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
