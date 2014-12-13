@@ -90,7 +90,6 @@ exports.listen = function (app) {
             .then(function (response) {
                 if (response.getCode() == "200") {
                     produtos = response.getBody();
-                    console.log(produtos);
                     if (req.session.user) {
                         res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
@@ -138,7 +137,6 @@ exports.listen = function (app) {
             .then(function (response) {
                 if (response.getCode() == "200") {
                     var produto = response.getBody();
-                    console.log(produto);
                     if (req.session.user) {
                         res.render("product.ejs", {messages: messages, title: 'Produto', product: produto, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
