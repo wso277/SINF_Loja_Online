@@ -203,14 +203,11 @@ exports.listen = function (app) {
                         console.log(req.session.shoppingCart);
                     }
                     messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
-                    var totalItems = 0;
-                    console.log("antes");
                     console.log(req.session.shoppingCart);
                     for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
-                        totalItems += req.session.shoppingCart['products'][i]['quantidade'];
+                        req.session.shoppingCart['totalItems'] += req.session.shoppingCart['products'][i]['quantidade'];
+                        req.session.shoppingCart['total'] += (req.session.shoppingCart['products'][i]['PVP'] * (1-(req.session.shoppingCart['products'][i]['Desconto']/100)));
                     }
-                    console.log("depois");
-                    req.session.shoppingCart['total'] = totalItems;
                     console.log(req.session.shoppingCart);
                     hasAmount = false;
                     res.status(200).send(true);
@@ -259,7 +256,7 @@ exports.listen = function (app) {
                     .then(function (response) {
                         if (response.getCode() == "200") {
                             req.session.user = response.getBody();
-                            req.session.shoppingCart = {products: [], total: 0};
+                            req.session.shoppingCart = {products: [], totalItems: 0, total: 0};
                             console.log(req.session.shoppingCart);
                             console.log(req.session.shoppingCart['products']);
                             res.render("dashboard-private", {title: "Dashboard", messages: messages, user: req.session.user, cart: req.session.shoppingCart});
