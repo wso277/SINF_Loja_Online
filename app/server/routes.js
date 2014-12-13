@@ -314,13 +314,13 @@ exports.listen = function (app) {
                 //console.log(typeof  req.session.shoppingCart['products'][i]['CodigoArtigo']);
 
                 if (req.params.id == products[i]['CodigoArtigo']) {
+                    req.session.shoppingCart['totalItems'] -= req.session.shoppingCart['products'][i]['quantidade'];
+                    req.session.shoppingCart['total'] -= (req.session.shoppingCart['products'][i]['PVP'] * (1 - (req.session.shoppingCart['products'][i]['Desconto'] / 100)));
                     products.splice(i, 1);
                     req.session.shoppingCart['products'] = products;
                     break;
                 }
 
-                req.session.shoppingCart['totalItems'] += req.session.shoppingCart['products'][i]['quantidade'];
-                req.session.shoppingCart['total'] += (req.session.shoppingCart['products'][i]['PVP'] * (1 - (req.session.shoppingCart['products'][i]['Desconto'] / 100)));
             }
 
             req.session.shoppingCart['total'].toFixed(2);
