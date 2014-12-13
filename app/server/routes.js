@@ -191,8 +191,8 @@ exports.listen = function (app) {
                 if (response.getCode() == "200") {
                     console.log(response.getBody());
                     if (req.session.shoppingCart.push(response.getBody())) {
+                        res.status(200).send(true);
                         messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
-                        res.status(200).render("product.ejs", {messages: messages, title: 'Produto', product: response.getBody(), user: req.session.user, cart: req.session.shoppingCart});
                     } else {
                         res.status(400).send(false);
                     }

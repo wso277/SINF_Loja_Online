@@ -17,6 +17,7 @@
                 </div>
             </div>
         </a>
+        <% if (user != null) {%>
         <a href="" data-toggle="modal" data-target="#profile" title="Profile">
             <div class="row">
                 <div class="col-sm-8 navElem">
@@ -27,6 +28,7 @@
                 </div>
             </div>
         </a>
+        <% } %>
         <a href="" data-toggle="modal" data-target="#lastOrder" title="Last Order">
             <div class="row">
                 <div class="col-sm-8 navElem">
@@ -37,6 +39,7 @@
                 </div>
             </div>
         </a>
+        <% if (cart != null) {%>
         <a href="" data-toggle="modal" data-target="#cart" title="Shopping Cart">
             <div class="row">
                 <div class="col-sm-8 navElem">
@@ -47,6 +50,7 @@
                 </div>
             </div>
         </a>
+        <% } %>
 
         <a href="/logout" title="Log out">
             <div class="row">
@@ -61,6 +65,7 @@
     </section>
 </section>
 
+<% if (user != null) {%>
 <!-- Modal -->
 <div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -131,7 +136,9 @@
         </div>
     </div>
 </div>
+<% } %>
 
+<% if (cart != null) {%>
 <!-- Modal -->
 <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 65em">
@@ -209,6 +216,7 @@
         </div>
     </div>
 </div>
+<% } %>
 
 <!-- Modal -->
 <div class="modal fade" id="lastOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

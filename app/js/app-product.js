@@ -15,6 +15,7 @@
                 Product.addToCart(id)
                     .success(function () {
                         $scope.loading = false;
+                        $window.location.reload();
                     })
                     .error(function (data) {
                         alert("failed");
