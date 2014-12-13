@@ -201,14 +201,12 @@ exports.listen = function (app) {
                         product['quantidade'] = 1;
                         if (req.session.shoppingCart.length == 0) {
                             console.log("null");
-                            req.session.shoppingCart.push({products: product});
+                            var products = [];
+                            products.push(product);
+                            req.session.shoppingCart.push(products);
                         } else {
                             console.log("null2");
-                            var array = JSON.parse(req.session.shoppingCart);
-                            console.log(array);
-                            array['products'].push(product);
-                            console.log(array);
-                            req.session.shoppingCart = JSON.stringify(array);
+                            req.session.shoppingCart['products'].push(product);
                             console.log(req.session.shoppingCart);
                         }
                     }
