@@ -186,7 +186,7 @@ exports.listen = function (app) {
     app.post('/add-to-cart', function (req, res) {
         var messages = generateMessageBlock();
         var hasAmount = false;
-        requestify.request('http://localhost:49445/api/artigo/'+req.body.id, {method: 'GET', dataType: 'form-url-encoded'})
+        requestify.request('http://localhost:49445/api/artigo/' + req.body.id, {method: 'GET', dataType: 'form-url-encoded'})
             .then(function (response) {
                 if (response.getCode() == "200") {
                     for (var i = 0; i < req.session.shoppingCart.length; i++) {
@@ -199,16 +199,8 @@ exports.listen = function (app) {
                     if (!hasAmount) {
                         var product = response.getBody();
                         product['quantidade'] = 1;
-                        if (req.session.shoppingCart.length == 0) {
-                            console.log("null");
-                            var products = [];
-                            products.push(product);
-                            req.session.shoppingCart.push({products: products});
-                        } else {
-                            console.log("null2");
-                            req.session.shoppingCart['products'].push(product);
-                            console.log(req.session.shoppingCart);
-                        }
+                        req.session.shoppingCart['products'].push(product);
+                        console.log(req.session.shoppingCart);
                     }
                     messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
                     var totalItems = 0;
@@ -268,6 +260,8 @@ exports.listen = function (app) {
                         if (response.getCode() == "200") {
                             req.session.user = response.getBody();
                             req.session.shoppingCart = [];
+                            var products = [];
+                            req.session.shoppingCart.push({products: products});
                             res.render("dashboard-private", {title: "Dashboard", messages: messages, user: req.session.user, cart: req.session.shoppingCart});
                         } else {
                         }
