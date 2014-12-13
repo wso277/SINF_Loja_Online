@@ -192,17 +192,22 @@ exports.listen = function (app) {
                 if (response.getCode() == "200") {
                     for (var i = 0; i < req.session.shoppingCart.length; i++) {
                         if (response.getBody().CodigoArtigo == req.session.shoppingCart[i].CodigoArtigo) {
-                            req.session.shoppingCart[i]['Quantidade'] += 1;
+                            req.session.shoppingCart[i]['quantidade'] += 1;
                             hasAmount = true;
                             break;
                         }
                     }
                     if (!hasAmount) {
                         var product = response.getBody();
-                        product['Quantidade'] = 1;
+                        product['quantidade'] = 1;
                         req.session.shoppingCart.push(product);
                     }
                     messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
+                    var totalItems = 0;
+                    for (var i = 0; i < 0 < req.session.shoppingCart.length; i++) {
+                        totalItems += req.session.shoppingCart['quantidade'];
+                    }
+                    req.session.shoppingCart['total'] = totalItems;
                     console.log(req.session.shoppingCart);
                     hasAmount = false;
                     res.status(200).send(true);
