@@ -255,7 +255,7 @@ exports.listen = function (app) {
         if (req.session.user) {
             for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
                 if (req.params.id == req.session.shoppingCart['products'][i]['CodigoArtigo']) {
-                    var products = req.session.shoppingCart['products'].splice(i, 1);
+                    var products = (req.session.shoppingCart['products']).splice(i, 1);
                     req.session.shoppingCart['products'] = products;
                     console.log(req.session.shoppingCart);
                     break;
