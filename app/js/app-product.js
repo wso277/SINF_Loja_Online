@@ -34,7 +34,7 @@
     app.factory('Product', ['$http', function ($http) {
         return{
             addToCart: function (id) {
-                return $http.post('/add-to-cart', id);
+                return $http.post('/add-to-cart', {id: id});
             }
         }
     }]);
