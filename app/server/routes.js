@@ -32,7 +32,7 @@ exports.listen = function (app) {
         if (req.session.user) {
             requestify.request('http://localhost:49445/api/encomendas', {
                 method: 'GET',
-                params: {CodigoCliente: 'CL000001'},
+                params: {CodigoCliente: req.session.user.CodigoCliente},
                 dataType: 'form-url-encoded'
             })
                 .then(function (response) {
