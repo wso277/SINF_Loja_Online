@@ -272,6 +272,7 @@
     </Compile>
     <Compile Include="Lib_Primavera\ArtigoHelper.cs" />
     <Compile Include="Lib_Primavera\EncomendasHelper.cs" />
+    <Compile Include="Lib_Primavera\Models\HomepageArticles.cs" />
     <Compile Include="Lib_Primavera\Models\ArtigoShort.cs" />
     <Compile Include="Lib_Primavera\ClientHelper.cs" />
     <Compile Include="Lib_Primavera\Models\Artigo.cs" />
