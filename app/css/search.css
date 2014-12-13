@@ -26,6 +26,11 @@ hgroup h2.lead { font: normal normal 1.125em; color: black; margin: 0; padding-b
 #preco > span, #preco > i {
     font-size: 3em;
 }
+#preco-antigo > span, #preco-antigo > i {
+    font-size: 3em;
+    text-decoration: line-through;
+}
 #preco {
     margin-top: 0.7em;
+    text-decoration: blink;
 }
