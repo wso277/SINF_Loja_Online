@@ -199,7 +199,7 @@ exports.listen = function (app) {
                     if (!hasAmount) {
                         var product = response.getBody();
                         product['quantidade'] = 1;
-                        if (req.session.shoppingCart == null) {
+                        if (req.session.shoppingCart == []) {
                             console.log("null");
                             req.session.shoppingCart.push({products: product});
                         } else {
