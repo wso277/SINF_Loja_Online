@@ -262,9 +262,9 @@ exports.listen = function (app) {
                 //console.log(typeof  req.session.shoppingCart['products'][i]['CodigoArtigo']);
 
                 if (req.params.id == products[i]['CodigoArtigo']) {
-                    var products1 = products.splice(i, 1);
-                    req.session.shoppingCart['products'] = products1;
-                    console.log(products1);
+                    products.splice(i, 1);
+                    req.session.shoppingCart['products'] = products;
+                    console.log(products);
                     console.log(req.session.shoppingCart);
                     break;
                 }
