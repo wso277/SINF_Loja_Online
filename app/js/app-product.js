@@ -11,10 +11,10 @@
         var id = angular.element($('input[name=id]')).val();
         var nUnits = angular.element($('input[name=nUnits]')).val();
 
-        alert(nUnits);
 
         $scope.addToCart = function () {
             $scope.loading = true;
+            alert(nUnits);
             if (nUnits > 0 && nUnits != null && nUnits != "") {
                 Product.addToCart(id, nUnits)
                     .success(function () {
