@@ -186,16 +186,26 @@ exports.listen = function (app) {
     app.post('/add-to-cart', function (req, res) {
         var messages = generateMessageBlock();
         console.log(req.body);
+        var hasAmount = false;
         requestify.request('http://localhost:49445/api/artigo/'+req.body.id, {method: 'GET', dataType: 'form-url-encoded'})
             .then(function (response) {
                 if (response.getCode() == "200") {
-                    console.log(response.getBody());
-                    if (req.session.shoppingCart.push(response.getBody())) {
-                        res.status(200).send(true);
-                        messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
-                    } else {
-                        res.status(400).send(false);
+                    for (var i = 0; i < req.session.shoppingCart.length; i++) {
+                        if (response.getBody().CodigoArtigo == req.session.shoppingCart[i].CodigoArtigo) {
+                            req.session.shoppingCart[i]['Quantidade'] += 1;
+                            hasAmount = true;
+                            break;
+                        }
                     }
+                    if (!hasAmount) {
+                        var product = response.getBody();
+                        product['Quantidade'] = 1;
+                        req.session.shoppingCart.push(product);
+                    }
+                    messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
+                    console.log(req.session.shoppingCart);
+                    hasAmount = false;
+                    res.status(200).send(true);
                 } else {
                     res.status(400).send(false);
                 }
