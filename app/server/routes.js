@@ -204,7 +204,10 @@ exports.listen = function (app) {
                             req.session.shoppingCart.push({products: product});
                         } else {
                             console.log("null2");
-                            req.session.shoppingCart['products'].push(product);
+                            var array = JSON.parse(req.session.shoppingCart);
+                            array['products'].push(product);
+                            req.session.shoppingCart = JSON.stringify(array);
+                            console.log(req.session.shoppingCart);
                         }
                     }
                     messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
