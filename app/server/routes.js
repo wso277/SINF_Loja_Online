@@ -218,7 +218,7 @@ exports.listen = function (app) {
 
     app.get('/register', function (req, res) {
         var messages = generateMessageBlock();
-        res.render("register.ejs", {messages: messages, title: "Registo"});
+        res.render("register.ejs", {messages: messages, title: "Registo", user: null, cart: null});
     });
 
     app.post('/register', function (req, res) {
