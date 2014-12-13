@@ -78,6 +78,29 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/sales', function (req, res) {
+        var messages = generateMessageBlock();
+        var produtos = {};
+
+        requestify.request('http://localhost:49445/api/artigos', {
+            method: 'GET',
+            params: {page: 0, promocao: true},
+            dataType: 'form-url-encoded'
+        })
+            .then(function (response) {
+                if (response.getCode() == "200") {
+                    produtos = response.getBody();
+                    if (req.session.user) {
+                        res.render("sales.ejs", {messages: messages, title: 'Produtos', products: produtos, user: req.session.user, cart: req.session.shoppingCart});
+                    } else {
+                        res.render("sales.ejs", {messages: messages, title: 'Produtos', products: produtos, user: null, cart: null});
+                    }
+                } else {
+                    console.log("coco");
+                }
+            });
+    });
+
     app.get('/products', function (req, res) {
         var messages = generateMessageBlock();
         var produtos = {};
@@ -135,20 +158,38 @@ exports.listen = function (app) {
 
     app.post('/get-page', function (req, res) {
         console.log(req.body.page);
-        requestify.request('http://localhost:49445/api/artigos', {
-            method: 'GET',
-            params: {page: req.body.page},
-            dataType: 'form-url-encoded'
-        })
-            .then(function (response) {
-                if (response.getCode() == "200") {
-                    produtos = response.getBody();
-                    console.log(produtos);
-                    res.status(200).send(produtos);
-                } else {
-                    console.log("coco");
-                }
-            });
+        if (req.body.promocao) {
+            requestify.request('http://localhost:49445/api/artigos', {
+                method: 'GET',
+                params: {page: req.body.page, promocao: req.body.promocao},
+                dataType: 'form-url-encoded'
+            })
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        produtos = response.getBody();
+                        console.log(produtos);
+                        res.status(200).send(produtos);
+                    } else {
+                        console.log("coco");
+                    }
+                });
+        } else {
+            requestify.request('http://localhost:49445/api/artigos', {
+                method: 'GET',
+                params: {page: req.body.page},
+                dataType: 'form-url-encoded'
+            })
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        produtos = response.getBody();
+                        console.log(produtos);
+                        res.status(200).send(produtos);
+                    } else {
+                        console.log("coco");
+                    }
+                });
+        }
+
     });
 
     app.get('/product/:id', function (req, res) {
