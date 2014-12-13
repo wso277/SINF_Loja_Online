@@ -206,7 +206,7 @@ exports.listen = function (app) {
                             req.session.shoppingCart.push(products);
                         } else {
                             console.log("null2");
-                            req.session.shoppingCart['products'].push(product);
+                            req.session.shoppingCart[0].push(product);
                             console.log(req.session.shoppingCart);
                         }
                     }
