@@ -10,6 +10,7 @@
         $scope.loading = true;
 
         var id = angular.element($('input[name=id]')).val();
+        alert(id);
 
         $scope.addToCart = function () {
             $scope.loading = true;
