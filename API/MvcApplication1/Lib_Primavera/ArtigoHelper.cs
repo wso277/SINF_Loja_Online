@@ -123,10 +123,22 @@ namespace MvcApplication1.Lib_Primavera
                 int i = 0;
                 int j = 0;
 
-                while (!objList.NoFim() && j != artigos_por_pagina * page)
-                {
-                    j++;
-                    objList.Seguinte();
+                while (!objList.NoFim() && j != artigos_por_pagina * page){
+                    
+                    if( promocao == true ){
+                        art = new Models.ArtigoShort();
+                        art.CodigoArtigo = objList.Valor("artigo");
+                        GcpBEArtigo objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(art.CodigoArtigo);
+
+                        if (objArtigo.get_Desconto() > 0) {
+                            j++;
+                        }
+                        objList.Seguinte();
+                        
+                    } else {
+                        j++;
+                        objList.Seguinte();
+                    }
                 }
 
 
