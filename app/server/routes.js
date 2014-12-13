@@ -94,7 +94,7 @@ exports.listen = function (app) {
                     if (req.session.user) {
                         res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
-                        res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos});
+                        res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos, user: null, cart: null});
                     }
                 } else {
                     console.log("coco");
@@ -141,7 +141,7 @@ exports.listen = function (app) {
                     if (req.session.user) {
                         res.render("product.ejs", {messages: messages, title: 'Produto', product: produto, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
-                        res.render("product.ejs", {messages: messages, title: 'Produto', product: produto});
+                        res.render("product.ejs", {messages: messages, title: 'Produto', product: produto, user: null, cart: null});
                     }
                 } else {
                     console.log("coco");
@@ -191,9 +191,8 @@ exports.listen = function (app) {
                 if (response.getCode() == "200") {
                     console.log(response.getBody());
                     if (req.session.shoppingCart.push(response.getBody())) {
-                        res.status(200).send(true);
                         messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
-                        res.render("product.ejs", {messages: messages, title: 'Produto', product: response.getBody(), user: req.session.user, cart: req.session.shoppingCart});
+                        res.status(200).render("product.ejs", {messages: messages, title: 'Produto', product: response.getBody(), user: req.session.user, cart: req.session.shoppingCart});
                     } else {
                         res.status(400).send(false);
                     }
