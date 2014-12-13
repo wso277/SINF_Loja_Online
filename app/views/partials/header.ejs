@@ -29,16 +29,7 @@
             </div>
         </a>
         <% } %>
-        <a href="" data-toggle="modal" data-target="#lastOrder" title="Last Order">
-            <div class="row">
-                <div class="col-sm-8 navElem">
-                    Last Order
-                </div>
-                <div class="col-sm-4">
-                    <span class="fa fa-thumb-tack"></span>
-                </div>
-            </div>
-        </a>
+
         <% if (cart != null) {%>
         <a href="" data-toggle="modal" data-target="#cart" title="Shopping Cart">
             <div class="row">
@@ -220,84 +211,3 @@
 </div>
 <% } %>
 
-<!-- Modal -->
-<div class="modal fade" id="lastOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 65em">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="label"><i class="fa fa-thumb-tack"></i> Last Order</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-10">
-                            <table class="table ">
-                                <thead>
-                                <tr>
-                                    <th>Produto</th>
-                                    <th>Quantidade</th>
-                                    <th class="text-center">Preço</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="col-sm-4">
-                                        <div class="media">
-                                            <a class="thumbnail pull-left" href=""> <img class="media-object"
-                                                                                         src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-                                                                                         style="width: 72px; height: 72px;">
-                                            </a>
-
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="">Nome Produto</a></h4>
-                                                <h5 class="media-heading"> by <a href="">Marca</a></h5>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <td class="col-sm-1 text-center">2</td>
-                                    <td class="col-sm-1 text-center"><strong>$4.87</strong></td>
-                                </tr>
-                                <tr>
-                                    <td class="col-sm-4">
-                                        <div class="media">
-                                            <a class="thumbnail pull-left" href="#"> <img class="media-object"
-                                                                                          src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
-                                                                                          style="width: 72px; height: 72px;">
-                                            </a>
-
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="#">Nome Produto</a></h4>
-                                                <h5 class="media-heading"> by <a href="#">Marca</a></h5>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <td class="col-sm-1 text-center">1</td>
-                                    <td class="col-sm-1 text-center"><strong>$4.99</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><h4>Subtotal</h4></td>
-                                    <td></td>
-                                    <td class="text-center"><h5><strong>$24.59</strong></h5></td>
-                                </tr>
-                                <tr>
-                                    <td><h4>Shipping Cost</h4></td>
-                                    <td></td>
-                                    <td class="text-center"><h5><strong>$6.94</strong></h5></td>
-                                </tr>
-                                <tr>
-                                    <td><h3>Total</h3></td>
-                                    <td></td>
-                                    <td class="text-center"><h3><strong>$31.53</strong></h3></td>
-
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
