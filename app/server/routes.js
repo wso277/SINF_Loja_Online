@@ -253,36 +253,40 @@ exports.listen = function (app) {
     app.post('/add-to-cart', function (req, res) {
         var messages = generateMessageBlock();
         var hasAmount = false;
-        requestify.request('http://localhost:49445/api/artigo/' + req.body.id, {method: 'GET', dataType: 'form-url-encoded'})
-            .then(function (response) {
-                if (response.getCode() == "200") {
-                    for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
-                        if (response.getBody().CodigoArtigo == req.session.shoppingCart['products'][i].CodigoArtigo) {
-                            req.session.shoppingCart['products'][i]['quantidade'] += req.body.nUnits;
-                            hasAmount = true;
-                            break;
+        if (req.session.user) {
+            requestify.request('http://localhost:49445/api/artigo/' + req.body.id, {method: 'GET', dataType: 'form-url-encoded'})
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
+                            if (response.getBody().CodigoArtigo == req.session.shoppingCart['products'][i].CodigoArtigo) {
+                                req.session.shoppingCart['products'][i]['quantidade'] += req.body.nUnits;
+                                hasAmount = true;
+                                break;
+                            }
                         }
-                    }
-                    if (!hasAmount) {
-                        var product = response.getBody();
-                        product['quantidade'] = req.body.nUnits;
-                        req.session.shoppingCart['products'].push(product);
+                        if (!hasAmount) {
+                            var product = {CodigoArtigo: response.getBody()['CodigoArtigo'], Nome: response.getBody()['Nome'], Marca: response.getBody()['Marca'], PVP:
+                                response.getBody()['PVP'], Desconto: response.getBody()['Desconto'], fotoURL: response.getBody()['fotoURL']};
+                            product['quantidade'] = req.body.nUnits;
+                            req.session.shoppingCart['products'].push(product);
+                            console.log(req.session.shoppingCart);
+                        }
+                        for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
+                            req.session.shoppingCart['totalItems'] += req.session.shoppingCart['products'][i]['quantidade'];
+                            req.session.shoppingCart['total'] += (req.session.shoppingCart['products'][i]['PVP'] * (1 - (req.session.shoppingCart['products'][i]['Desconto'] / 100)));
+                        }
+                        req.session.shoppingCart['total'].toFixed(2);
                         console.log(req.session.shoppingCart);
+                        hasAmount = false;
+                        res.status(200).send(true);
+                    } else {
+                        res.status(400).send(false);
                     }
-                    messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
-                    console.log(req.session.shoppingCart);
-                    for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
-                        req.session.shoppingCart['totalItems'] += req.session.shoppingCart['products'][i]['quantidade'];
-                        req.session.shoppingCart['total'] += (req.session.shoppingCart['products'][i]['PVP'] * (1-(req.session.shoppingCart['products'][i]['Desconto']/100)));
-                    }
-                    req.session.shoppingCart['total'].toFixed(2);
-                    console.log(req.session.shoppingCart);
-                    hasAmount = false;
-                    res.status(200).send(true);
-                } else {
-                    res.status(400).send(false);
-                }
-            });
+                });
+        } else {
+            messages.success.push({title: "Sign in first", content: "You are not logged in"});
+            res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
+        }
     });
 
     app.post('/login', function (req, res) {
