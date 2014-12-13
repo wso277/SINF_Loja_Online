@@ -256,13 +256,17 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         if (req.session.user) {
             for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
-                console.log(typeof req.params.id);
-                console.log(typeof  req.session.shoppingCart['products'][i]['CodigoArtigo']);
+                //console.log(typeof req.params.id);
+                //console.log(typeof  req.session.shoppingCart['products'][i]['CodigoArtigo']);
 
                 if (req.params.id == req.session.shoppingCart['products'][i]['CodigoArtigo']) {
+                    console.log("cena");
                     var products = req.session.shoppingCart['products'].splice(i, 1);
+                    console.log("cena1");
                     req.session.shoppingCart['products'] = products;
+                    console.log("cena2");
                     console.log(req.session.shoppingCart);
+                    console.log("cena3");
                     break;
                 }
             }
