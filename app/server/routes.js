@@ -9,11 +9,11 @@ exports.listen = function (app) {
         // will be re-created next request
         if (req.session.user) {
             req.session.destroy(function () {
-                messages.success.push({title: "Logged Out", content: "You are now logged out!"});
+                messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
                 res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
             });
         } else {
-            messages.success.push({title: "Sign in first", content: "You are not logged in"});
+            messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
             res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
         }
     });
@@ -23,7 +23,7 @@ exports.listen = function (app) {
         if (req.session.user) {
 
         } else {
-            res.render("login.ejs", {messages: messages, title: 'Login'});
+            res.render("login.ejs", {messages: messages, title: 'Login', user: null, cart: null});
         }
     });
 
@@ -218,7 +218,7 @@ exports.listen = function (app) {
 
     app.get('/register', function (req, res) {
         var messages = generateMessageBlock();
-        res.render("register.ejs", {messages: messages, title: "Registo"});
+        res.render("register.ejs", {messages: messages, title: "Registo", user: null, cart: null});
     });
 
     app.post('/register', function (req, res) {
@@ -250,39 +250,64 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/remove-order/:id', function (req,res) {
+        var messages = generateMessageBlock();
+        if (req.session.user) {
+            for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
+                if (req.params.id == req.session.shoppingCart['products'][i]['CodigoArtigo']) {
+                    var products = req.session.shoppingCart['products'].splice(i, 1);
+                    req.session.shoppingCart['products'] = products;
+                    console.log(req.session.shoppingCart);
+                    break;
+                }
+            }
+            messages.success.push({title: "Sucesso", content: "Produto removido do carrinho com sucesso"});
+            res.redirect('/products');
+
+        } else {
+            messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
+            res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
+        }
+
+    });
+
     app.post('/add-to-cart', function (req, res) {
         var messages = generateMessageBlock();
         var hasAmount = false;
-        requestify.request('http://localhost:49445/api/artigo/' + req.body.id, {method: 'GET', dataType: 'form-url-encoded'})
-            .then(function (response) {
-                if (response.getCode() == "200") {
-                    for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
-                        if (response.getBody().CodigoArtigo == req.session.shoppingCart['products'][i].CodigoArtigo) {
-                            req.session.shoppingCart['products'][i]['quantidade'] += req.body.nUnits;
-                            hasAmount = true;
-                            break;
+        if (req.session.user) {
+            requestify.request('http://localhost:49445/api/artigo/' + req.body.id, {method: 'GET', dataType: 'form-url-encoded'})
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
+                            if (response.getBody().CodigoArtigo == req.session.shoppingCart['products'][i].CodigoArtigo) {
+                                req.session.shoppingCart['products'][i]['quantidade'] += parseInt(req.body.nUnits);
+                                hasAmount = true;
+                                break;
+                            }
                         }
-                    }
-                    if (!hasAmount) {
-                        var product = response.getBody();
-                        product['quantidade'] = req.body.nUnits;
-                        req.session.shoppingCart['products'].push(product);
+                        if (!hasAmount) {
+                            var product = {CodigoArtigo: response.getBody()['CodigoArtigo'], Nome: response.getBody()['Nome'], Marca: response.getBody()['Marca'], PVP:
+                                response.getBody()['PVP'], Desconto: response.getBody()['Desconto'], fotoURL: response.getBody()['fotoURL']};
+                            product['quantidade'] = parseInt(req.body.nUnits);
+                            req.session.shoppingCart['products'].push(product);
+                            console.log(req.session.shoppingCart);
+                        }
+                        for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
+                            req.session.shoppingCart['totalItems'] += req.session.shoppingCart['products'][i]['quantidade'];
+                            req.session.shoppingCart['total'] += (req.session.shoppingCart['products'][i]['PVP'] * (1 - (req.session.shoppingCart['products'][i]['Desconto'] / 100)));
+                        }
+                        req.session.shoppingCart['total'].toFixed(2);
                         console.log(req.session.shoppingCart);
+                        hasAmount = false;
+                        res.status(200).send(true);
+                    } else {
+                        res.status(400).send(false);
                     }
-                    messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
-                    console.log(req.session.shoppingCart);
-                    for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
-                        req.session.shoppingCart['totalItems'] += req.session.shoppingCart['products'][i]['quantidade'];
-                        req.session.shoppingCart['total'] += (req.session.shoppingCart['products'][i]['PVP'] * (1-(req.session.shoppingCart['products'][i]['Desconto']/100)));
-                    }
-                    req.session.shoppingCart['total'].toFixed(2);
-                    console.log(req.session.shoppingCart);
-                    hasAmount = false;
-                    res.status(200).send(true);
-                } else {
-                    res.status(400).send(false);
-                }
-            });
+                });
+        } else {
+            messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
+            res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
+        }
     });
 
     app.post('/login', function (req, res) {
@@ -308,15 +333,12 @@ exports.listen = function (app) {
         }
     });
 
-    app.get('/teste-erro', function (req, res) {
-        res.render("teste-erro.ejs");
-    });
-
     app.get('/:val', function (req, res) {
         var messages = generateMessageBlock();
         if (req.params.val == "logged-in") {
             if (req.session.user) {
-                messages.success.push({title: "Logged In", content: "You are now logged in!"});
+                messages.success.push({title: "Sucesso", content: "Está agora auntenticado!"});
+                messages.success.push({title: "Bem-vindo", content: ""});
                 requestify.request('http://localhost:49445/api/clients/' + req.session.user.CodigoCliente, {
                     method: 'GET',
                     dataType: 'form-url-encoded'
@@ -332,7 +354,7 @@ exports.listen = function (app) {
                         }
                     });
             } else {
-                messages.success.push({title: "Sign in first", content: "You are not logged in"});
+                messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
                 res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
             }
         }
