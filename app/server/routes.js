@@ -137,9 +137,9 @@ exports.listen = function (app) {
         if (req.session.user) {
             var orderLines = [];
             for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
-                orderLines.push({CodigoArtigo: req.session.shoppingCart['products']['CodigoArtigo'], Quantidade: req.session.shoppingCart['products']['quantidade']});
+                orderLines.push({CodigoArtigo: req.session.shoppingCart['products'][i]['CodigoArtigo'], Quantidade: req.session.shoppingCart['products'][i]['quantidade']});
             }
-            var order = {Entidade: req.session.user.CodigoArtigo, LinhasEncomenda: orderLines};
+            var order = {Entidade: req.session.user.CodigoCliente, LinhasEncomenda: orderLines};
             console.log(order);
             requestify.request('http://localhost:49445/api/encomendas', {
                 method: 'PUT',
@@ -154,6 +154,8 @@ exports.listen = function (app) {
                         console.log("error");
                     }
                 });
+        } else {
+
         }
     });
 
