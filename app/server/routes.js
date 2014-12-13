@@ -70,6 +70,8 @@ exports.listen = function (app) {
                     if (response.getCode() == "200") {
                         var order = response.getBody();
                         console.log(order);
+                        var date = order['Data'].split("T");
+                        order['Data'] = date[0];
                         res.render("order.ejs", {messages: messages, title: 'Encomenda', order: order, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
                         console.log("error");
