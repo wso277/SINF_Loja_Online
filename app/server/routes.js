@@ -259,7 +259,7 @@ exports.listen = function (app) {
                     if (response.getCode() == "200") {
                         for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
                             if (response.getBody().CodigoArtigo == req.session.shoppingCart['products'][i].CodigoArtigo) {
-                                req.session.shoppingCart['products'][i]['quantidade'] += req.body.nUnits;
+                                req.session.shoppingCart['products'][i]['quantidade'] += parseInt(req.body.nUnits);
                                 hasAmount = true;
                                 break;
                             }
@@ -267,7 +267,7 @@ exports.listen = function (app) {
                         if (!hasAmount) {
                             var product = {CodigoArtigo: response.getBody()['CodigoArtigo'], Nome: response.getBody()['Nome'], Marca: response.getBody()['Marca'], PVP:
                                 response.getBody()['PVP'], Desconto: response.getBody()['Desconto'], fotoURL: response.getBody()['fotoURL']};
-                            product['quantidade'] = req.body.nUnits;
+                            product['quantidade'] = parseInt(req.body.nUnits);
                             req.session.shoppingCart['products'].push(product);
                             console.log(req.session.shoppingCart);
                         }
