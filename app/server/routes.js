@@ -189,9 +189,9 @@ exports.listen = function (app) {
         requestify.request('http://localhost:49445/api/artigo/' + req.body.id, {method: 'GET', dataType: 'form-url-encoded'})
             .then(function (response) {
                 if (response.getCode() == "200") {
-                    for (var i = 0; i < req.session.shoppingCart.length; i++) {
-                        if (response.getBody().CodigoArtigo == req.session.shoppingCart[i].CodigoArtigo) {
-                            req.session.shoppingCart[i]['quantidade'] += 1;
+                    for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
+                        if (response.getBody().CodigoArtigo == req.session.shoppingCart['products'][i].CodigoArtigo) {
+                            req.session.shoppingCart['products'][i]['quantidade'] += 1;
                             hasAmount = true;
                             break;
                         }
@@ -206,8 +206,8 @@ exports.listen = function (app) {
                     var totalItems = 0;
                     console.log("antes");
                     console.log(req.session.shoppingCart);
-                    for (var i = 0; i < req.session.shoppingCart[0].length; i++) {
-                        totalItems += req.session.shoppingCart[0][i]['quantidade'];
+                    for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
+                        totalItems += req.session.shoppingCart['products'][i]['quantidade'];
                     }
                     console.log("depois");
                     req.session.shoppingCart['total'] = totalItems;
@@ -259,9 +259,7 @@ exports.listen = function (app) {
                     .then(function (response) {
                         if (response.getCode() == "200") {
                             req.session.user = response.getBody();
-                            req.session.shoppingCart = [];
-                            var products = [];
-                            req.session.shoppingCart.push({products: products});
+                            req.session.shoppingCart = {products: [], total: 0};
                             console.log(req.session.shoppingCart);
                             console.log(req.session.shoppingCart['products']);
                             res.render("dashboard-private", {title: "Dashboard", messages: messages, user: req.session.user, cart: req.session.shoppingCart});
