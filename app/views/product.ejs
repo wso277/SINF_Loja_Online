@@ -6,10 +6,10 @@
     <link rel="stylesheet" type="text/css" href="/css/product.css">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
 </head>
-<body>
+<body ng-app="product-app">
 <% include partials/messages %>
 <% include partials/header.ejs %>
-<div class="container-fluid" style="background-color: #222222;">
+<div class="container-fluid" style="background-color: #222222;" ng-controller="ProductController as ctrl">
     <div class="content-wrapper" style="background-color: #222222;">
         <div class="item-container">
             <div class="container">
@@ -31,7 +31,7 @@
                     </div>
                     <hr>
                     <div class="btn-group cart">
-                        <button type="button" class="btn btn-fresh text-uppercase">
+                        <button type="button" class="btn btn-fresh text-uppercase" ng-click="addToCart()">
                             Adicionar ao carrinho
                         </button>
                     </div>
@@ -204,5 +204,6 @@
 </div>
 
 <% include partials/scripts %>
+<script type="text/javascript" src="/js/app-product.js"></script>
 </body>
 </html>
