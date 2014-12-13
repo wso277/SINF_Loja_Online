@@ -48,7 +48,7 @@ exports.listen = function (app) {
                             total = 0;
                         }
                         console.log(orders);
-                        res.render("orders.ejs", {messages: messages, title: 'Encomendas', orders: orders, user: req.session.user});
+                        res.render("orders.ejs", {messages: messages, title: 'Encomendas', orders: orders, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
                         console.log("coco");
                     }
@@ -69,7 +69,7 @@ exports.listen = function (app) {
                     if (response.getCode() == "200") {
                         var order = response.getBody();
                         console.log(order);
-                        res.render("order.ejs", {messages: messages, title: 'Encomenda', order: order, user: req.session.user});
+                        res.render("order.ejs", {messages: messages, title: 'Encomenda', order: order, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
                         console.log("coco");
                     }
@@ -92,7 +92,7 @@ exports.listen = function (app) {
                     produtos = response.getBody();
                     console.log(produtos);
                     if (req.session.user) {
-                        res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos, user: req.session.user});
+                        res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
                         res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos});
                     }
@@ -139,7 +139,7 @@ exports.listen = function (app) {
                     var produto = response.getBody();
                     console.log(produto);
                     if (req.session.user) {
-                        res.render("product.ejs", {messages: messages, title: 'Produto', product: produto, user: req.session.user});
+                        res.render("product.ejs", {messages: messages, title: 'Produto', product: produto, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
                         res.render("product.ejs", {messages: messages, title: 'Produto', product: produto});
                     }
@@ -193,7 +193,7 @@ exports.listen = function (app) {
                     if (req.session.shoppingCart.push(response.getBody())) {
                         res.status(200).send(true);
                         messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
-                        res.render("product.ejs", {messages: messages, title: 'Produto', product: response.getBody(), user: req.session.user});
+                        res.render("product.ejs", {messages: messages, title: 'Produto', product: response.getBody(), user: req.session.user, cart: req.session.shoppingCart});
                     } else {
                         res.status(400).send(false);
                     }
@@ -243,7 +243,7 @@ exports.listen = function (app) {
                         if (response.getCode() == "200") {
                             req.session.user = response.getBody();
                             req.session.shoppingCart = [];
-                            res.render("dashboard-private", {title: "Dashboard", messages: messages, user: req.session.user});
+                            res.render("dashboard-private", {title: "Dashboard", messages: messages, user: req.session.user, cart: req.session.shoppingCart});
                         } else {
                         }
                     });
@@ -257,7 +257,7 @@ exports.listen = function (app) {
     app.get('*', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
-            res.render("dashboard-private.ejs", {title: "Dashboard", messages: messages, user: req.session.user});
+            res.render("dashboard-private.ejs", {title: "Dashboard", messages: messages, user: req.session.user, cart: req.session.shoppingCart});
         } else {
             res.render("dashboard-public.ejs", {title: "Dashboard", messages: messages});
         }
