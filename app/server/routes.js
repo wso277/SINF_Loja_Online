@@ -185,7 +185,6 @@ exports.listen = function (app) {
 
     app.post('/add-to-cart', function (req, res) {
         var messages = generateMessageBlock();
-        console.log(req.body);
         var hasAmount = false;
         requestify.request('http://localhost:49445/api/artigo/'+req.body.id, {method: 'GET', dataType: 'form-url-encoded'})
             .then(function (response) {
@@ -204,9 +203,11 @@ exports.listen = function (app) {
                     }
                     messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
                     var totalItems = 0;
+                    console.log("antes");
                     for (var i = 0; i < 0 < req.session.shoppingCart.length; i++) {
                         totalItems += req.session.shoppingCart[i]['quantidade'];
                     }
+                    console.log("depois");
                     req.session.shoppingCart['total'] = totalItems;
                     console.log(req.session.shoppingCart);
                     hasAmount = false;
