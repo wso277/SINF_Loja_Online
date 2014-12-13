@@ -262,6 +262,7 @@ exports.listen = function (app) {
                             req.session.shoppingCart = [];
                             var products = [];
                             req.session.shoppingCart.push({products: products});
+                            console.log(req.session.shoppingCart);
                             res.render("dashboard-private", {title: "Dashboard", messages: messages, user: req.session.user, cart: req.session.shoppingCart});
                         } else {
                         }
