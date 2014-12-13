@@ -183,6 +183,25 @@ exports.listen = function (app) {
         }
     });
 
+    app.post('/add-to-cart', function (req, res) {
+        var messages = generateMessageBlock();
+        console.log(req.body);
+        requestify.request('http://localhost:49445/api/artigo'+req.body, {method: 'GET', dataType: 'form-url-encoded'})
+            .then(function (response) {
+                if (response.getCode() == "200") {
+                    console.log(response.getBody());
+                    if (req.session.shoppingCart.push(response.getBody())) {
+                        res.status(200).send(true);
+                        messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
+                    } else {
+                        res.status(400).send(false);
+                    }
+                } else {
+                    res.status(400).send(false);
+                }
+            });
+    });
+
     app.post('/login', function (req, res) {
         if (req.body.email != "" && req.body.password != "") {
             requestify.request('http://localhost:49445/api/sessions', {
@@ -222,6 +241,7 @@ exports.listen = function (app) {
                     .then(function (response) {
                         if (response.getCode() == "200") {
                             req.session.user = response.getBody();
+                            req.session.shoppingCart = [];
                             res.render("dashboard-private", {title: "Dashboard", messages: messages, user: req.session.user});
                         } else {
                         }
