@@ -193,6 +193,7 @@ exports.listen = function (app) {
                     if (req.session.shoppingCart.push(response.getBody())) {
                         res.status(200).send(true);
                         messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
+                        res.render("product.ejs", {messages: messages, title: 'Produto', product: response.getBody(), user: req.session.user});
                     } else {
                         res.status(400).send(false);
                     }
