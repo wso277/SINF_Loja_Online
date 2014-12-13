@@ -119,7 +119,7 @@ namespace MvcApplication1.Lib_Primavera
 
                 objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
-                int artigos_por_pagina = 15;
+                int artigos_por_pagina = 4;
                 int i = 0;
                 int j = 0;
 
