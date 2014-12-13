@@ -64,7 +64,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user"></i> Profile</h4>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user"></i> Perfil</h4>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -72,7 +72,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding-right: 2.5em">
                             <div class="panel panel-info">
                                 <div class="panel-heading" style="background-color: #393939; border-color: #393939">
-                                    <h3 class="panel-title">Sheena Kristin A.Eschor</h3>
+                                    <h3 class="panel-title"><%= user.Nome %></h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
@@ -82,10 +82,6 @@
                                         <div class=" col-md-9 col-lg-9 ">
                                             <table class="table table-user-information">
                                                 <tbody>
-                                                <tr>
-                                                    <td>Nome</td>
-                                                    <td><%= user.Nome %></td>
-                                                </tr>
                                                 <tr>
                                                     <td>Telefone</td>
                                                     <td><%= user.Telefone %></td>
