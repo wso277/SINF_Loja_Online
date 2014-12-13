@@ -9,11 +9,11 @@ exports.listen = function (app) {
         // will be re-created next request
         if (req.session.user) {
             req.session.destroy(function () {
-                messages.success.push({title: "Logged Out", content: "You are now logged out!"});
+                messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
                 res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
             });
         } else {
-            messages.success.push({title: "Sign in first", content: "You are not logged in"});
+            messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
             res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
         }
     });
@@ -250,6 +250,24 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/remove-order/:id', function (req,res) {
+        var messages = generateMessageBlock();
+        if (req.session.user) {
+            for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
+                if (req.params.id == req.session.shoppingCart['products'][i]['CodigoArtigo']) {
+                    var products = req.session.shoppingCart['products'].splice(i, 1);
+                    req.session.shoppingCart['products'] = products;
+                    console.log(req.session.shoppingCart);
+                    break;
+                }
+            }
+        } else {
+            messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
+            res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
+        }
+
+    });
+
     app.post('/add-to-cart', function (req, res) {
         var messages = generateMessageBlock();
         var hasAmount = false;
@@ -284,7 +302,7 @@ exports.listen = function (app) {
                     }
                 });
         } else {
-            messages.success.push({title: "Sign in first", content: "You are not logged in"});
+            messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
             res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
         }
     });
@@ -312,15 +330,12 @@ exports.listen = function (app) {
         }
     });
 
-    app.get('/teste-erro', function (req, res) {
-        res.render("teste-erro.ejs");
-    });
-
     app.get('/:val', function (req, res) {
         var messages = generateMessageBlock();
         if (req.params.val == "logged-in") {
             if (req.session.user) {
-                messages.success.push({title: "Logged In", content: "You are now logged in!"});
+                messages.success.push({title: "Sucesso", content: "Está agora auntenticado!"});
+                messages.success.push({title: "Bem-vindo", content: ""});
                 requestify.request('http://localhost:49445/api/clients/' + req.session.user.CodigoCliente, {
                     method: 'GET',
                     dataType: 'form-url-encoded'
@@ -336,7 +351,7 @@ exports.listen = function (app) {
                         }
                     });
             } else {
-                messages.success.push({title: "Sign in first", content: "You are not logged in"});
+                messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
                 res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
             }
         }

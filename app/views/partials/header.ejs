@@ -52,6 +52,7 @@
         </a>
         <% } %>
 
+        <% if (user != null) {%>
         <a href="/logout" title="Log out">
             <div class="row">
                 <div class="col-sm-8 navElem">
@@ -62,6 +63,7 @@
                 </div>
             </div>
         </a>
+        <% } %>
     </section>
 </section>
 
@@ -179,9 +181,9 @@
                                     <td class="col-sm-1 text-center"><strong><%= product.PVP * (1-(product.Desconto/100)) %>€</strong></td>
                                     <td class="col-sm-1 text-center"><%= product.quantidade %></td>
                                     <td class="col-sm-1">
-                                        <button type="button" class="btn btn-danger">
+                                        <a href="/remove-order/<%= product.CodigoArtigo %>" class="btn btn-danger">
                                             <span class="glyphicon glyphicon-remove"></span> Remover
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 <% }); %>
