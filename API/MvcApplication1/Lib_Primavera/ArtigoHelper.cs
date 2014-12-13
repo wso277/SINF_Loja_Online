@@ -209,7 +209,7 @@ namespace MvcApplication1.Lib_Primavera
         }
 
         /** Retorna o produto com a data de lancamento mais recente **/
-        public static Models.ArtigoShowcase novidade()
+        private static Models.ArtigoShowcase novidade()
         {
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
@@ -233,7 +233,7 @@ namespace MvcApplication1.Lib_Primavera
         }
 
         /** Retorna o produto em PROMOCAO com a data de lançamento mais antiga **/
-        public static Models.ArtigoShowcase oportunidade()
+        private static Models.ArtigoShowcase oportunidade()
         {
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
@@ -256,7 +256,7 @@ namespace MvcApplication1.Lib_Primavera
             else { return null; }
         }
 
-        public static Models.ArtigoShowcase maisvendido()
+        private static Models.ArtigoShowcase maisvendido()
         {
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
@@ -279,7 +279,7 @@ namespace MvcApplication1.Lib_Primavera
             else { return null; }
         }
 
-        public static Models.ArtigoShowcase stock()
+        private static Models.ArtigoShowcase stock()
         {
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
@@ -309,6 +309,18 @@ namespace MvcApplication1.Lib_Primavera
             armazem = PriEngine.Engine.Comercial.ArtigosArmazens;
 
             return (float) armazem.DaStockDisponivelArtigo(codArtigo);
+        }
+
+        public static Models.HomepageArticles homepage()
+        {
+            Models.HomepageArticles home = new Models.HomepageArticles();
+
+            home.maisvendido = maisvendido();
+            home.novidade = novidade();
+            home.oportunidade = oportunidade();
+            home.stock = stock();
+
+            return home;
         }
     }
 }

@@ -14,30 +14,26 @@ namespace MvcApplication1.Controllers
     {
 
         // GET api/artigos/acao
-        public Lib_Primavera.Models.ArtigoShowcase Get(string id)
+        public Lib_Primavera.Models.HomepageArticles Get(string id)
         {
-            Lib_Primavera.Models.ArtigoShowcase artigo = new ArtigoShowcase();
+            Lib_Primavera.Models.HomepageArticles homepage = new HomepageArticles();
 
-            if (id == "novidade")
-                artigo = Lib_Primavera.ArtigoHelper.novidade();
+            if (id == "homepage")
+                homepage = Lib_Primavera.ArtigoHelper.homepage();
+            else
+            {
+                throw new HttpResponseException(
+                  Request.CreateResponse(HttpStatusCode.NotFound));
+            }
 
-            else if (id == "oportunidade")
-                artigo = Lib_Primavera.ArtigoHelper.oportunidade();
-
-            else if (id == "maisvendido")
-                artigo = Lib_Primavera.ArtigoHelper.maisvendido();
-
-            else if( id == "stock" )
-                artigo = Lib_Primavera.ArtigoHelper.stock();
-
-            if (artigo == null)
+            if (homepage == null)
             {
                 throw new HttpResponseException(
                   Request.CreateResponse(HttpStatusCode.NotFound));
             }
             else
             {
-                return artigo;
+                return homepage;
             }
         }
 
