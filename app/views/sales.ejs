@@ -37,7 +37,7 @@
                                         <span><%= product.StockAtual %> em stock</span>
                                     </li>
                                     <li id="preco"><i class="fa fa-euro"></i>
-                                        <span><%= product.PVP * (1 - (product.Desconto / 100)) %></span>
+                                        <span><%= (product.PVP * (1 - (product.Desconto / 100))).toFixed(2) %></span>
                                     </li>
                                 </ul>
                             </div>
