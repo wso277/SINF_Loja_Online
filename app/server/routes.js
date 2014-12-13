@@ -186,7 +186,7 @@ exports.listen = function (app) {
     app.post('/add-to-cart', function (req, res) {
         var messages = generateMessageBlock();
         console.log(req.body);
-        requestify.request('http://localhost:49445/api/artigo'+req.body, {method: 'GET', dataType: 'form-url-encoded'})
+        requestify.request('http://localhost:49445/api/artigo'+req.body.id, {method: 'GET', dataType: 'form-url-encoded'})
             .then(function (response) {
                 if (response.getCode() == "200") {
                     console.log(response.getBody());
