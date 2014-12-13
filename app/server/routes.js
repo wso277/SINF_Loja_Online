@@ -47,6 +47,8 @@ exports.listen = function (app) {
                             orders[i]['Total'] = total;
                             total = 0;
                         }
+                        var date = orders['Data'].split("T");
+                        orders['Data'] = date[0];
                         console.log(orders);
                         res.render("orders.ejs", {messages: messages, title: 'Encomendas', orders: orders, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
