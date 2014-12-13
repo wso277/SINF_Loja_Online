@@ -140,6 +140,7 @@ exports.listen = function (app) {
                 orderLines.push({CodigoArtigo: req.session.shoppingCart['products']['CodigoArtigo'], Quantidade: req.session.shoppingCart['products']['quantidade']});
             }
             var order = {Entidade: req.session.user.CodigoArtigo, LinhasEncomenda: orderLines};
+            console.log(order);
             requestify.request('http://localhost:49445/api/encomendas', {
                 method: 'PUT',
                 body: order,
