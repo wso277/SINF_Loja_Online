@@ -208,6 +208,7 @@ exports.listen = function (app) {
                         req.session.shoppingCart['totalItems'] += req.session.shoppingCart['products'][i]['quantidade'];
                         req.session.shoppingCart['total'] += (req.session.shoppingCart['products'][i]['PVP'] * (1-(req.session.shoppingCart['products'][i]['Desconto']/100)));
                     }
+                    req.session.shoppingCart['total'].toFixed(2);
                     console.log(req.session.shoppingCart);
                     hasAmount = false;
                     res.status(200).send(true);

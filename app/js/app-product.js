@@ -16,6 +16,7 @@
                     .success(function () {
                         $scope.loading = false;
                         $window.location.reload();
+                        angular.element('.alert-group').append('<div class="alert alert-info"> <strong></strong>' + "Produto adicionado ao carrinho com sucesso" + '</div>');
                     })
                     .error(function (data) {
                         alert("failed");
