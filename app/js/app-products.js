@@ -9,6 +9,7 @@
         var page = 0;
         $scope.getPage = function () {
             page = page + 1;
+            alert(page);
             angular.element("#add").hide();
             $http.post("/get-page", {page: page})
                 .success(function (data) {
