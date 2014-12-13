@@ -200,8 +200,10 @@ exports.listen = function (app) {
                         var product = response.getBody();
                         product['quantidade'] = 1;
                         if (req.session.shoppingCart == null) {
+                            console.log("null");
                             req.session.shoppingCart.push({products: product});
                         } else {
+                            console.log("null2");
                             req.session.shoppingCart['products'].push(product);
                         }
                     }
