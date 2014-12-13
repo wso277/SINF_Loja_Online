@@ -199,12 +199,16 @@ exports.listen = function (app) {
                     if (!hasAmount) {
                         var product = response.getBody();
                         product['quantidade'] = 1;
-                        req.session.shoppingCart.push(product);
+                        if (req.session.shoppingCart == null) {
+                            req.session.shoppingCart.push({products: product});
+                        } else {
+                            req.session.shoppingCart['products'].push(product);
+                        }
                     }
                     messages.success.push({title: "Sucesso", content: "Produto adicionado ao carrinho"});
                     var totalItems = 0;
                     console.log("antes");
-                    console.log(req.session.shoppingCart[0]);
+                    console.log(req.session.shoppingCart);
                     for (var i = 0; i < req.session.shoppingCart.length; i++) {
                         totalItems += req.session.shoppingCart[i]['quantidade'];
                     }
