@@ -262,7 +262,7 @@ exports.listen = function (app) {
                 }
             }
             messages.success.push({title: "Sucesso", content: "Produto removido do carrinho com sucesso"});
-            res.render("product.ejs", {messages: messages, title: 'Produtos', user: req.session.user, cart: req.session.shoppingCart});
+            res.redirect('/products')
 
         } else {
             messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
