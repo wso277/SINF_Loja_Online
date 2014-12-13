@@ -14,7 +14,7 @@
             $http.post("/get-page", {page: page, promocao: true})
                 .success(function (data) {
                     //console.log(data);
-
+                    console.log(angular.element("#" + data[0].CodigoArtigo));
                     if (angular.element("#" + data[0].CodigoArtigo) == null) {
 
                         for (i = 0; i < data.length; i++) {
