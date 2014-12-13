@@ -258,14 +258,14 @@ exports.listen = function (app) {
                 if (response.getCode() == "200") {
                     for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
                         if (response.getBody().CodigoArtigo == req.session.shoppingCart['products'][i].CodigoArtigo) {
-                            req.session.shoppingCart['products'][i]['quantidade'] += 1;
+                            req.session.shoppingCart['products'][i]['quantidade'] += req.body.nUnits;
                             hasAmount = true;
                             break;
                         }
                     }
                     if (!hasAmount) {
                         var product = response.getBody();
-                        product['quantidade'] = 1;
+                        product['quantidade'] = req.body.nUnits;
                         req.session.shoppingCart['products'].push(product);
                         console.log(req.session.shoppingCart);
                     }

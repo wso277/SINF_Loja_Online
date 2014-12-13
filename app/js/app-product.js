@@ -9,10 +9,14 @@
         $scope.loading = true;
 
         var id = angular.element($('input[name=id]')).val();
+        var nUnits = angular.element($('input[name=nUnits]')).val();
+
 
         $scope.addToCart = function () {
             $scope.loading = true;
-                Product.addToCart(id)
+            alert(nUnits);
+            if (nUnits > 0 && nUnits != null && nUnits != "") {
+                Product.addToCart(id, nUnits)
                     .success(function () {
                         $scope.loading = false;
                         $window.location.reload();
@@ -21,6 +25,8 @@
                     .error(function (data) {
                         alert("failed");
                     });
+            }
+
         };
     }]);
 
@@ -29,8 +35,8 @@
      */
     app.factory('Product', ['$http', function ($http) {
         return{
-            addToCart: function (id) {
-                return $http.post('/add-to-cart', {id: id});
+            addToCart: function (id, nUnits) {
+                return $http.post('/add-to-cart', {id: id, nUnits: nUnits});
             }
         }
     }]);
