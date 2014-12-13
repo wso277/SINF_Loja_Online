@@ -44,13 +44,11 @@ exports.listen = function (app) {
                                 console.log(orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido']);
                                 total += orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido'] * (1 - (orders[i]['LinhasEncomendaExtended'][j]['Desconto'] / 100));
                             }
+                            var date = orders[i]['Data'].split("T");
+                            orders[i]['Data'] = date[0];
                             orders[i]['Total'] = total;
                             total = 0;
                         }
-                        /*console.log("oi");
-                        var date = orders['Data'].split("T");
-                        orders['Data'] = date[0];
-                        console.log(orders);*/
                         res.render("orders.ejs", {messages: messages, title: 'Encomendas', orders: orders, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
                         console.log("error");
