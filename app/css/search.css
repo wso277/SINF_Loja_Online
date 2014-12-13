@@ -25,10 +25,12 @@ hgroup h2.lead { font: normal normal 1.125em; color: black; margin: 0; padding-b
 .search-result span.border { display: block; width: 97%; margin: 0 15px; border-bottom: 1px dotted #ccc; }
 #preco > span, #preco > i {
     font-size: 3em;
+    color: green;
 }
 #preco-antigo > span, #preco-antigo > i {
     font-size: 1.5em;
     text-decoration: line-through;
+    color: red;
 }
 #preco {
     margin-top: 0.7em;
