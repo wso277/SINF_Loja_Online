@@ -44,15 +44,14 @@ exports.listen = function (app) {
                                 console.log(orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido']);
                                 total += orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido'] * (1 - (orders[i]['LinhasEncomendaExtended'][j]['Desconto'] / 100));
                             }
+                            var date = orders[i]['Data'].split("T");
+                            orders[i]['Data'] = date[0];
                             orders[i]['Total'] = total;
                             total = 0;
                         }
-                        var date = orders['Data'].split("T");
-                        orders['Data'] = date[0];
-                        console.log(orders);
                         res.render("orders.ejs", {messages: messages, title: 'Encomendas', orders: orders, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
-                        console.log("coco");
+                        console.log("error");
                     }
                 });
         } else {
@@ -71,9 +70,11 @@ exports.listen = function (app) {
                     if (response.getCode() == "200") {
                         var order = response.getBody();
                         console.log(order);
+                        var date = order['Data'].split("T");
+                        order['Data'] = date[0];
                         res.render("order.ejs", {messages: messages, title: 'Encomenda', order: order, user: req.session.user, cart: req.session.shoppingCart});
                     } else {
-                        console.log("coco");
+                        console.log("error");
                     }
                 });
         } else {
@@ -98,7 +99,7 @@ exports.listen = function (app) {
                         res.render("sales.ejs", {messages: messages, title: 'Produtos', products: produtos, user: null, cart: null});
                     }
                 } else {
-                    console.log("coco");
+                    console.log("error");
                 }
             });
     });
@@ -121,7 +122,7 @@ exports.listen = function (app) {
                         res.render("products.ejs", {messages: messages, title: 'Produtos', products: produtos, user: null, cart: null});
                     }
                 } else {
-                    console.log("coco");
+                    console.log("error");
                 }
             });
     });
@@ -190,7 +191,7 @@ exports.listen = function (app) {
                         console.log(produtos);
                         res.status(200).send(produtos);
                     } else {
-                        console.log("coco");
+                        console.log("error");
                     }
                 });
         }
@@ -213,7 +214,7 @@ exports.listen = function (app) {
                         res.render("product.ejs", {messages: messages, title: 'Produto', product: produto, user: null, cart: null});
                     }
                 } else {
-                    console.log("coco");
+                    console.log("error");
                 }
             });
     });
@@ -247,7 +248,6 @@ exports.listen = function (app) {
                     }
                 });
         } else {
-            console.log("peido");
             res.status(400).send("Passwords must match!");
         }
     });
