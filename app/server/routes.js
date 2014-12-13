@@ -47,6 +47,7 @@ exports.listen = function (app) {
                             var date = orders[i]['Data'].split("T");
                             orders[i]['Data'] = date[0];
                             orders[i]['Total'] = total;
+                            orders[i]['Total'].toFixed(2);
                             total = 0;
                         }
                         res.render("orders.ejs", {
