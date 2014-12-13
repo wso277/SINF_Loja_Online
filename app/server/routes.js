@@ -84,7 +84,7 @@ exports.listen = function (app) {
 
         requestify.request('http://localhost:49445/api/artigos', {
             method: 'GET',
-            body: {page: 0, promocao: true},
+            params: {page: 0, promocao: true},
             dataType: 'form-url-encoded'
         })
             .then(function (response) {
