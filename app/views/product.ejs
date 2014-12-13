@@ -31,7 +31,7 @@
                     </div>
                     <hr>
                     <div class="btn-group cart">
-                        Nº de unidades desejadas <input type="text" name="nUnits"/>
+                        Nº de unidades desejadas <input type="number"  min="1" max="<%= product.Stock %>" name="nUnits">
                         <button type="button" class="btn btn-fresh text-uppercase" ng-click="addToCart()">
                             Adicionar ao carrinho
                         </button>
