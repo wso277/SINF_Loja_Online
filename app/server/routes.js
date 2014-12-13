@@ -205,7 +205,7 @@ exports.listen = function (app) {
                     var totalItems = 0;
                     console.log("antes");
                     console.log(req.session.shoppingCart[0]);
-                    for (var i = 0; i < 0 < req.session.shoppingCart.length; i++) {
+                    for (var i = 0; i < req.session.shoppingCart.length; i++) {
                         totalItems += req.session.shoppingCart[i]['quantidade'];
                     }
                     console.log("depois");
