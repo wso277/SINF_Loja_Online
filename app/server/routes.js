@@ -203,10 +203,10 @@ exports.listen = function (app) {
                             console.log("null");
                             var products = [];
                             products.push(product);
-                            req.session.shoppingCart.push(products);
+                            req.session.shoppingCart.push({products: products});
                         } else {
                             console.log("null2");
-                            req.session.shoppingCart[0].push(product);
+                            req.session.shoppingCart['products'].push(product);
                             console.log(req.session.shoppingCart);
                         }
                     }
