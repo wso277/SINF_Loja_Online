@@ -31,12 +31,18 @@ namespace MvcApplication1.Lib_Primavera
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
 
-                string st = "SELECT id, Entidade, Data, NumDoc From CabecDoc where TipoDoc='ECL' and NumDoc='" + numdoc + "'";
+                string st = "SELECT id, Entidade, Data, NumDoc, Fechado From CabecDoc INNER JOIN CabecDocStatus ON CabecDoc.Id=CabecDocStatus.IdCabecDoc where TipoDoc='ECL' and NumDoc='" + numdoc + "'";
                 objListCab = PriEngine.Engine.Consulta(st);
                 dv = new Models.EncomendaExtended();
                 dv.Entidade = objListCab.Valor("Entidade");
                 dv.NumDoc = objListCab.Valor("NumDoc");
                 dv.Data = objListCab.Valor("Data");
+                bool fechado = objListCab.Valor("Fechado");
+                if (!fechado)
+                    dv.Estado = "Em processamento";
+                else
+                    dv.Estado = "Entregue";
+
                 objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + objListCab.Valor("id") + "' order By NumLinha");
                 listlindv = new List<Models.LinhaEncomendaExtended>();
 
@@ -73,7 +79,7 @@ namespace MvcApplication1.Lib_Primavera
 
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc From CabecDoc where TipoDoc='ECL' and Entidade='" + CodigoCliente + "'");
+                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, Fechado From CabecDoc INNER JOIN CabecDocStatus ON CabecDoc.Id=CabecDocStatus.IdCabecDoc where TipoDoc='ECL' and Entidade='" + CodigoCliente + "'");
                 while (!objListCab.NoFim())
                 {
                     dv = new Models.EncomendaExtended();
@@ -81,6 +87,11 @@ namespace MvcApplication1.Lib_Primavera
                     dv.Entidade = objListCab.Valor("Entidade");
                     dv.Data = objListCab.Valor("Data");
                     dv.NumDoc = objListCab.Valor("NumDoc");
+                    bool fechado = objListCab.Valor("Fechado");
+                    if (!fechado)
+                        dv.Estado = "Em processamento";
+                    else
+                        dv.Estado = "Entregue";
                     objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + objListCab.Valor("id") + "' order By NumLinha");
                     listlindv = new List<Models.LinhaEncomendaExtended>();
 

@@ -11,5 +11,6 @@ namespace MvcApplication1.Lib_Primavera.Models
         public string Entidade { get; set; }
         public DateTime Data { get; set; }
         public int NumDoc { get; set; }
+        public String Estado { get; set; }
     }
 }
