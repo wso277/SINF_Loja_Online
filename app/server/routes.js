@@ -97,7 +97,7 @@ exports.listen = function (app) {
     app.post('/filter', function (req, res) {
         var messages = generateMessageBlock();
         console.log(req.body);
-        console.log(req.data);
+        res.status(200).render("products.ejs",  {messages: messages, title: 'Produtos', products: null, user: null, cart: null})
         /*
         requestify.request('http://localhost:49445/api/encomendas/' + id, {
             method: 'GET',
