@@ -96,18 +96,35 @@ exports.listen = function (app) {
 
     app.post('/filter', function (req, res) {
         var messages = generateMessageBlock();
+        var url = "http://localhost:49445/api/artigos?page=0";
         console.log(req.body);
-        requestify.request('http://localhost:49445/api/artigos', {
+        if (req.body.filters.so != undefined) {
+            url += "&so="+req.filters.so;
+        }
+        if (req.body.filters.marca != undefined) {
+            url += "&marca="+req.filters.marca;
+        }
+        if (req.body.filters.limPrecoMin != undefined) {
+            url += "&precoLimiteInferior="+req.filters.limPrecoMin;
+        }
+        if (req.body.filters.limPrecoMax != undefined) {
+            url += "&precoLimiteSuperior="+req.filters.limPrecoMax;
+        }
+        if (req.body.filters.limEcraMin != undefined) {
+            url += "&ecraLimiteInferior="+req.filters.limEcraMin;
+        }
+        if (req.body.filters.limEcraMax != undefined) {
+            url += "&ecraLimiteSuperior="+req.filters.limEcraMax;
+        }
+        requestify.request(url, {
             method: 'GET',
-            params: {page: 0},
             dataType: 'form-url-encoded'
         })
             .then(function (response) {
                 if (response.getCode() == "200") {
-                    var produtos = response.getBody();
-                    res.status(200).render("products.ejs",  {messages: messages, title: 'Produtos', products: produtos, user: null, cart: null});
+                    res.status(200).send(response.getBody());
                 } else {
-                    console.log("error");
+                    res.status(400).send(false);
                 }
             });
         /*
@@ -146,12 +163,11 @@ exports.listen = function (app) {
         })
             .then(function (response) {
                 if (response.getCode() == "200") {
-                    produtos = response.getBody();
                     if (req.session.user) {
                         res.render("sales.ejs", {
                             messages: messages,
                             title: 'Produtos',
-                            products: produtos,
+                            products: response.getBody(),
                             user: req.session.user,
                             cart: req.session.shoppingCart
                         });
@@ -159,7 +175,7 @@ exports.listen = function (app) {
                         res.render("sales.ejs", {
                             messages: messages,
                             title: 'Produtos',
-                            products: produtos,
+                            products: response.getBody(),
                             user: null,
                             cart: null
                         });
@@ -181,12 +197,11 @@ exports.listen = function (app) {
         })
             .then(function (response) {
                 if (response.getCode() == "200") {
-                    produtos = response.getBody();
                     if (req.session.user) {
                         res.render("products.ejs", {
                             messages: messages,
                             title: 'Produtos',
-                            products: produtos,
+                            products:  response.getBody(),
                             user: req.session.user,
                             cart: req.session.shoppingCart
                         });
@@ -194,7 +209,7 @@ exports.listen = function (app) {
                         res.render("products.ejs", {
                             messages: messages,
                             title: 'Produtos',
-                            products: produtos,
+                            products: esponse.getBody(),
                             user: null,
                             cart: null
                         });

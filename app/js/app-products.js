@@ -37,7 +37,8 @@
             $http.post("/filter", {filters: $scope.formData})
                 .success(function (data) {
                     alert(data);
-                    angular.element("html").replaceWith(data);
+                    angular.element("#section").clear();
+                    angular.element("#sectiom").append(data);
                 })
                 .error(function (data) {
                     alert("failed");
