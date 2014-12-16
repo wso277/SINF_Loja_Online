@@ -14,7 +14,6 @@
         $scope.addToCart = function () {
             $scope.loading = true;
             var nUnits = angular.element($('input[name=nUnits]')).val();
-            alert(nUnits);
             if (nUnits > 0 && nUnits != null && nUnits != "") {
                 Product.addToCart(id, nUnits)
                     .success(function () {
