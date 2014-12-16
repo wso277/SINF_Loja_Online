@@ -163,11 +163,12 @@ exports.listen = function (app) {
         })
             .then(function (response) {
                 if (response.getCode() == "200") {
+                    produtos = response.getBody();
                     if (req.session.user) {
                         res.render("sales.ejs", {
                             messages: messages,
                             title: 'Produtos',
-                            products: response.getBody(),
+                            products: produtos,
                             user: req.session.user,
                             cart: req.session.shoppingCart
                         });
@@ -175,7 +176,7 @@ exports.listen = function (app) {
                         res.render("sales.ejs", {
                             messages: messages,
                             title: 'Produtos',
-                            products: response.getBody(),
+                            products: produtos,
                             user: null,
                             cart: null
                         });
@@ -197,11 +198,12 @@ exports.listen = function (app) {
         })
             .then(function (response) {
                 if (response.getCode() == "200") {
+                    produtos = response.getBody();
                     if (req.session.user) {
                         res.render("products.ejs", {
                             messages: messages,
                             title: 'Produtos',
-                            products:  response.getBody(),
+                            products: produtos,
                             user: req.session.user,
                             cart: req.session.shoppingCart
                         });
@@ -209,7 +211,7 @@ exports.listen = function (app) {
                         res.render("products.ejs", {
                             messages: messages,
                             title: 'Produtos',
-                            products: esponse.getBody(),
+                            products: produtos,
                             user: null,
                             cart: null
                         });
