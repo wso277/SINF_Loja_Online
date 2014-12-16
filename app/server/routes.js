@@ -97,7 +97,19 @@ exports.listen = function (app) {
     app.post('/filter', function (req, res) {
         var messages = generateMessageBlock();
         console.log(req.body);
-        res.status(200).render("products.ejs",  {messages: messages, title: 'Produtos', products: null, user: null, cart: null})
+        requestify.request('http://localhost:49445/api/artigos', {
+            method: 'GET',
+            params: {page: 0},
+            dataType: 'form-url-encoded'
+        })
+            .then(function (response) {
+                if (response.getCode() == "200") {
+                    produtos = response.getBody();
+                    res.status(200).render("products.ejs",  {messages: messages, title: 'Produtos', products: null, user: null, cart: null});
+                } else {
+                    console.log("error");
+                }
+            });
         /*
         requestify.request('http://localhost:49445/api/encomendas/' + id, {
             method: 'GET',
