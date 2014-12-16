@@ -37,6 +37,9 @@
             $http.post("/filter", {filters: $scope.formData})
                 .success(function (data) {
                     alert(data);
+                    angular.element("html").clear();
+                    alert("teste");
+                    angular.element("html").append(data);
                 })
                 .error(function (data) {
                     alert("failed");
