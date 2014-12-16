@@ -16,19 +16,19 @@
         Sistema Operativo: <input class="form-control" type="text" ng-model="formData.so"/>
         <br/>
         Limite mínimo de preço: <input class="form-control" type="range" value="200" min="1" max="1000" step="1" ng-model="formData.limPrecoMin"/>
-        <span style="padding-left:2em"> {{formData.limPrecoMin}} </span>
+        <span style="padding-left:3.2em"> {{formData.limPrecoMin}} </span>
         <br/>
         Limite máximo de preço: <input class="form-control" type="range" value="250" min="1" max="1000" step="1" ng-model="formData.limPrecoMax"/>
-        <span style="padding-left:2em"> {{formData.limPrecoMax}} </span>
+        <span style="padding-left:3.2em"> {{formData.limPrecoMax}} </span>
         <br/>
         Tamanho mínimo do ecrã: <input class="form-control" type="range" value="3" min="3" max="6" step="0.1" ng-model="formData.limEcraMin"/>
-        <span style="padding-left:2em"> {{formData.limEcraMin}} </span>
+        <span style="padding-left:3.2em"> {{formData.limEcraMin}} </span>
         <br/>
         Tamanho máximo do ecrã: <input class="form-control" type="range" value="3" min="3" max="6" step="0.1" ng-model="formData.limEcraMax"/>
-        <span style="padding-left:2em"> {{formData.limEcraMax}} </span>
+        <span style="padding-left:3.2em"> {{formData.limEcraMax}} </span>
         <br/>
 
-        <button style="margin: 0" class="btn btn-sky btn-md text-uppercase"
+        <button style="margin: 0" class="btn btn-sky btn-lg text-uppercase"
                 type="submit"
                 ng-click="filter()">
             Filtrar

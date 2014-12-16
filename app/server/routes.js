@@ -30,8 +30,8 @@ exports.listen = function (app) {
         var total = 0, totalItems = 0;
         if (req.session.user) {
             requestify.request('http://localhost:49445/api/encomendas', {
-                method  : 'GET',
-                params  : {CodigoCliente: req.session.user.CodigoCliente},
+                method: 'GET',
+                params: {CodigoCliente: req.session.user.CodigoCliente},
                 dataType: 'form-url-encoded'
             })
                 .then(function (response) {
@@ -52,10 +52,10 @@ exports.listen = function (app) {
                         }
                         res.render("orders.ejs", {
                             messages: messages,
-                            title   : 'Encomendas',
-                            orders  : orders,
-                            user    : req.session.user,
-                            cart    : req.session.shoppingCart
+                            title: 'Encomendas',
+                            orders: orders,
+                            user: req.session.user,
+                            cart: req.session.shoppingCart
                         });
                     } else {
                         console.log("error");
@@ -70,7 +70,7 @@ exports.listen = function (app) {
         var id = parseInt(req.params.id);
         if (req.session.user) {
             requestify.request('http://localhost:49445/api/encomendas/' + id, {
-                method  : 'GET',
+                method: 'GET',
                 dataType: 'form-url-encoded'
             })
                 .then(function (response) {
@@ -81,10 +81,10 @@ exports.listen = function (app) {
                         order['Data'] = date[0];
                         res.render("order.ejs", {
                             messages: messages,
-                            title   : 'Encomenda',
-                            order   : order,
-                            user    : req.session.user,
-                            cart    : req.session.shoppingCart
+                            title: 'Encomenda',
+                            order: order,
+                            user: req.session.user,
+                            cart: req.session.shoppingCart
                         });
                     } else {
                         console.log("error");
@@ -94,13 +94,41 @@ exports.listen = function (app) {
         }
     });
 
+    app.get('/filter', function (req, res) {
+        var messages = generateMessageBlock();
+        console.log(req.body);
+        /*
+        requestify.request('http://localhost:49445/api/encomendas/' + id, {
+            method: 'GET',
+            dataType: 'form-url-encoded'
+        })
+            .then(function (response) {
+                if (response.getCode() == "200") {
+                    var order = response.getBody();
+                    console.log(order);
+                    var date = order['Data'].split("T");
+                    order['Data'] = date[0];
+                    res.render("order.ejs", {
+                        messages: messages,
+                        title: 'Encomenda',
+                        order: order,
+                        user: req.session.user,
+                        cart: req.session.shoppingCart
+                    });
+                } else {
+                    console.log("error");
+                }
+            });
+            */
+    });
+
     app.get('/sales', function (req, res) {
         var messages = generateMessageBlock();
         var produtos = {};
 
         requestify.request('http://localhost:49445/api/artigos', {
-            method  : 'GET',
-            params  : {page: 0, promocao: true},
+            method: 'GET',
+            params: {page: 0, promocao: true},
             dataType: 'form-url-encoded'
         })
             .then(function (response) {
@@ -109,18 +137,18 @@ exports.listen = function (app) {
                     if (req.session.user) {
                         res.render("sales.ejs", {
                             messages: messages,
-                            title   : 'Produtos',
+                            title: 'Produtos',
                             products: produtos,
-                            user    : req.session.user,
-                            cart    : req.session.shoppingCart
+                            user: req.session.user,
+                            cart: req.session.shoppingCart
                         });
                     } else {
                         res.render("sales.ejs", {
                             messages: messages,
-                            title   : 'Produtos',
+                            title: 'Produtos',
                             products: produtos,
-                            user    : null,
-                            cart    : null
+                            user: null,
+                            cart: null
                         });
                     }
                 } else {
@@ -134,8 +162,8 @@ exports.listen = function (app) {
         var produtos = {};
 
         requestify.request('http://localhost:49445/api/artigos', {
-            method  : 'GET',
-            params  : {page: 0},
+            method: 'GET',
+            params: {page: 0},
             dataType: 'form-url-encoded'
         })
             .then(function (response) {
@@ -144,18 +172,18 @@ exports.listen = function (app) {
                     if (req.session.user) {
                         res.render("products.ejs", {
                             messages: messages,
-                            title   : 'Produtos',
+                            title: 'Produtos',
                             products: produtos,
-                            user    : req.session.user,
-                            cart    : req.session.shoppingCart
+                            user: req.session.user,
+                            cart: req.session.shoppingCart
                         });
                     } else {
                         res.render("products.ejs", {
                             messages: messages,
-                            title   : 'Produtos',
+                            title: 'Produtos',
                             products: produtos,
-                            user    : null,
-                            cart    : null
+                            user: null,
+                            cart: null
                         });
                     }
                 } else {
@@ -179,14 +207,14 @@ exports.listen = function (app) {
             for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
                 orderLines.push({
                     CodigoArtigo: req.session.shoppingCart['products'][i]['CodigoArtigo'],
-                    Quantidade  : req.session.shoppingCart['products'][i]['quantidade']
+                    Quantidade: req.session.shoppingCart['products'][i]['quantidade']
                 });
             }
             var order = {Entidade: req.session.user.CodigoCliente, LinhasEncomenda: orderLines};
             console.log(order);
             requestify.request('http://localhost:49445/api/encomendas', {
-                method  : 'PUT',
-                body    : order,
+                method: 'PUT',
+                body: order,
                 dataType: 'json'
             })
                 .then(function (response) {
@@ -206,8 +234,8 @@ exports.listen = function (app) {
         console.log(req.body.page);
         if (req.body.promocao) {
             requestify.request('http://localhost:49445/api/artigos', {
-                method  : 'GET',
-                params  : {page: req.body.page, promocao: req.body.promocao},
+                method: 'GET',
+                params: {page: req.body.page, promocao: req.body.promocao},
                 dataType: 'form-url-encoded'
             })
                 .then(function (response) {
@@ -221,8 +249,8 @@ exports.listen = function (app) {
                 });
         } else {
             requestify.request('http://localhost:49445/api/artigos', {
-                method  : 'GET',
-                params  : {page: req.body.page},
+                method: 'GET',
+                params: {page: req.body.page},
                 dataType: 'form-url-encoded'
             })
                 .then(function (response) {
@@ -242,7 +270,7 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
 
         requestify.request('http://localhost:49445/api/artigo/' + req.params.id, {
-            method  : 'GET',
+            method: 'GET',
             dataType: 'form-url-encoded'
         })
             .then(function (response) {
@@ -251,18 +279,18 @@ exports.listen = function (app) {
                     if (req.session.user) {
                         res.render("product.ejs", {
                             messages: messages,
-                            title   : 'Produto',
-                            product : produto,
-                            user    : req.session.user,
-                            cart    : req.session.shoppingCart
+                            title: 'Produto',
+                            product: produto,
+                            user: req.session.user,
+                            cart: req.session.shoppingCart
                         });
                     } else {
                         res.render("product.ejs", {
                             messages: messages,
-                            title   : 'Produto',
-                            product : produto,
-                            user    : null,
-                            cart    : null
+                            title: 'Produto',
+                            product: produto,
+                            user: null,
+                            cart: null
                         });
                     }
                 } else {
@@ -279,16 +307,16 @@ exports.listen = function (app) {
     app.post('/register', function (req, res) {
         if (req.body.password === req.body.confirmPassword) {
             requestify.request('http://localhost:49445/api/clients', {
-                method  : 'PUT',
-                body    : {
+                method: 'PUT',
+                body: {
                     NumContribuinte: req.body.nib,
-                    Nome           : req.body.nome,
-                    Email          : req.body.email,
-                    Telefone       : req.body.telefone,
-                    Morada         : req.body.morada,
-                    Localidade     : req.body.localidade,
-                    CodPostal      : req.body.codPostal,
-                    Password       : req.body.password
+                    Nome: req.body.nome,
+                    Email: req.body.email,
+                    Telefone: req.body.telefone,
+                    Morada: req.body.morada,
+                    Localidade: req.body.localidade,
+                    CodPostal: req.body.codPostal,
+                    Password: req.body.password
                 },
                 dataType: 'form-url-encoded'
             })
@@ -339,7 +367,7 @@ exports.listen = function (app) {
         var hasAmount = false;
         if (req.session.user) {
             requestify.request('http://localhost:49445/api/artigo/' + req.body.id, {
-                method  : 'GET',
+                method: 'GET',
                 dataType: 'form-url-encoded'
             })
                 .then(function (response) {
@@ -354,11 +382,11 @@ exports.listen = function (app) {
                         if (!hasAmount) {
                             var product = {
                                 CodigoArtigo: response.getBody()['CodigoArtigo'],
-                                Nome        : response.getBody()['Nome'],
-                                Marca       : response.getBody()['Marca'],
-                                PVP         : response.getBody()['PVP'],
-                                Desconto    : response.getBody()['Desconto'],
-                                fotoURL     : response.getBody()['fotoURL']
+                                Nome: response.getBody()['Nome'],
+                                Marca: response.getBody()['Marca'],
+                                PVP: response.getBody()['PVP'],
+                                Desconto: response.getBody()['Desconto'],
+                                fotoURL: response.getBody()['fotoURL']
                             };
                             product['quantidade'] = parseInt(req.body.nUnits);
                             req.session.shoppingCart['products'].push(product);
@@ -387,8 +415,8 @@ exports.listen = function (app) {
     app.post('/login', function (req, res) {
         if (req.body.email != "" && req.body.password != "") {
             requestify.request('http://localhost:49445/api/sessions', {
-                method     : 'POST', body: {
-                    email   : req.body.email,
+                method: 'POST', body: {
+                    email: req.body.email,
                     password: req.body.password
                 }, dataType: 'form-url-encoded'
             })
@@ -414,7 +442,7 @@ exports.listen = function (app) {
                 messages.success.push({title: "Sucesso", content: "Está agora auntenticado!"});
                 messages.success.push({title: "Bem-vindo", content: ""});
                 requestify.request('http://localhost:49445/api/clients/' + req.session.user.CodigoCliente, {
-                    method  : 'GET',
+                    method: 'GET',
                     dataType: 'form-url-encoded'
                 })
                     .then(function (response) {
@@ -424,10 +452,10 @@ exports.listen = function (app) {
                             console.log(req.session.shoppingCart);
                             console.log(req.session.shoppingCart['products']);
                             res.render("dashboard-private", {
-                                title   : "Dashboard",
+                                title: "Dashboard",
                                 messages: messages,
-                                user    : req.session.user,
-                                cart    : req.session.shoppingCart
+                                user: req.session.user,
+                                cart: req.session.shoppingCart
                             });
                         } else {
                         }
@@ -443,10 +471,10 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         if (req.session.user) {
             res.render("dashboard-private.ejs", {
-                title   : "Dashboard",
+                title: "Dashboard",
                 messages: messages,
-                user    : req.session.user,
-                cart    : req.session.shoppingCart
+                user: req.session.user,
+                cart: req.session.shoppingCart
             });
         } else {
             res.render("dashboard-public.ejs", {title: "Dashboard", messages: messages});
@@ -457,8 +485,8 @@ exports.listen = function (app) {
 var generateMessageBlock = function () {
     return {
         success: [],
-        info   : [],
+        info: [],
         warning: [],
-        danger : []
+        danger: []
     };
 }
