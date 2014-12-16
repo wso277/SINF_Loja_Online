@@ -34,15 +34,7 @@
 
         $scope.filter = function() {
             console.log($scope.formData);
-            var req = {
-                method: 'POST',
-                url: '/filter',
-                headers: {
-                    'Content-Type': undefined
-                },
-                data: { filters: $scope.formData }
-            };
-            $http(req)
+            $http.post("/filter", {filters: $scope.formData})
                 .success(function (data) {
                     alert(data);
                 })
