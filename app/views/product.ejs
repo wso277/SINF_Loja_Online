@@ -26,7 +26,7 @@
                     <div class="product-title"><%= product.Nome %></div>
                     <hr>
                     <div class="product-price"><%= product.PVP * (1-(product.Desconto/100)) %>€</div>
-                    <div class="product-stock"><% if(product.StockAtual <= 0) { %> Sem Stock <% } else { %> Em Stock <% }
+                    <% if(product.StockAtual <= 0) { %> <div class="product-stock" style="color:red"> Sem Stock </div> <% } else { %> <div class="product-stock"> Em Stock </div> <% }
                         %>
                     </div>
                     <hr>

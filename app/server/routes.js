@@ -27,7 +27,7 @@ exports.listen = function (app) {
 
     app.get('/orders', function (req, res) {
         var messages = generateMessageBlock();
-        var total = 0;
+        var total = 0, totalItems = 0;
         if (req.session.user) {
             requestify.request('http://localhost:49445/api/encomendas', {
                 method  : 'GET',
@@ -39,14 +39,16 @@ exports.listen = function (app) {
                         var orders = response.getBody();
                         for (var i = 0; i < orders.length; i++) {
                             for (var j = 0; j < orders[i]['LinhasEncomendaExtended'].length; j++) {
-                                console.log(orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido']);
+                                totalItems += orders[i]['LinhasEncomendaExtended'][j]['Quantidade'];
                                 total += orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido'] * (1 - (orders[i]['LinhasEncomendaExtended'][j]['Desconto'] / 100));
                             }
                             var date = orders[i]['Data'].split("T");
                             orders[i]['Data'] = date[0];
                             orders[i]['Total'] = total;
                             orders[i]['Total'].toFixed(2);
+                            orders[i]['TotalItems'] = totalItems;
                             total = 0;
+                            totalItems = 0;
                         }
                         res.render("orders.ejs", {
                             messages: messages,
