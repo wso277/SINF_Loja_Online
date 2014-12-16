@@ -105,7 +105,7 @@ namespace MvcApplication1.Lib_Primavera
 
 
 
-        public static IEnumerable<Models.ArtigoShort> ListaArtigos(int page, bool promocao)
+        public static IEnumerable<Models.ArtigoShort> ListaArtigos(int page, bool promocao, int precoLimiteSuperior, int precoLimiteInferior, int ecraLimiteSuperior, int ecraLimiteInferior, string marca, string SO)
         {
             ErpBS objMotor = new ErpBS();
 
@@ -119,33 +119,8 @@ namespace MvcApplication1.Lib_Primavera
 
                 objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
-                int artigos_por_pagina = 4;
-                int i = 0;
-                int j = 0;
-
-                while (!objList.NoFim() && j != artigos_por_pagina * page){
-                    
-                    if( promocao == true ){
-                        art = new Models.ArtigoShort();
-                        art.CodigoArtigo = objList.Valor("artigo");
-                        GcpBEArtigo objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(art.CodigoArtigo);
-
-                        if (objArtigo.get_Desconto() > 0) {
-                            j++;
-                        }
-                        objList.Seguinte();
-                        
-                    } else {
-                        j++;
-                        objList.Seguinte();
-                    }
-                }
-
-
-                while (!objList.NoFim() && i != artigos_por_pagina)
-                {
-                    
-
+                while (!objList.NoFim()){
+                   
                     art = new Models.ArtigoShort();
                     DateTime hoje = DateTime.Today;
 
@@ -171,14 +146,45 @@ namespace MvcApplication1.Lib_Primavera
                     GcpBEArtigoMoeda preco = PriEngine.Engine.Comercial.ArtigosPrecos.Edita(art.CodigoArtigo, "EUR", "UN");
                     art.PVP = (float)preco.get_PVP1();
 
+                    if (art.PVP > precoLimiteSuperior || art.PVP < precoLimiteInferior){
+                        objList.Seguinte();
+                        continue;
+                    }
+
                     //Desconto
                     art.Desconto = objArtigo.get_Desconto();
 
                     //Nome SO
                     art.NomeSistemaOperativo = PriEngine.Engine.Comercial.Familias.DaDescricao(objArtigo.get_Familia());
 
+                    if (SO != "all")
+                    {
+                        if (SO != art.NomeSistemaOperativo)
+                        {
+                            objList.Seguinte();
+                            continue;
+                        }
+                    }
+
+                    //Marca
+                    art.Marca = PriEngine.Engine.Comercial.Marcas.DaValorAtributo(objArtigo.get_Marca(), "descricao");
+                    if (marca != "all")
+                    {
+                        if (marca != art.Marca)
+                        {
+                            objList.Seguinte();
+                            continue;
+                        }
+                    }
+
                     //Tamanho Ecra
                     art.TamanhoEcra = (float)camposUser.DaValorAtributo(art.CodigoArtigo, "CDU_ECRA");
+
+                    if (art.TamanhoEcra > ecraLimiteSuperior || art.TamanhoEcra < ecraLimiteInferior)
+                    {
+                        objList.Seguinte();
+                        continue;
+                    }
 
                     //CPU
                     art.CPU = camposUser.DaValorAtributo(art.CodigoArtigo, "CDU_CPU");
@@ -206,11 +212,26 @@ namespace MvcApplication1.Lib_Primavera
                     art.avaliacao = 100 * art.Desconto + 400 / peso_anos +  art.StockAtual;
   
                     listArts.Add(art);
-                    i++;
                     objList.Seguinte();
                 }
 
-                return listArts.OrderByDescending(a => a.avaliacao).ToList();
+
+                //Ordena
+                List<Models.ArtigoShort> listaOrdenada = listArts.OrderByDescending(a => a.avaliacao).ToList();
+
+                //restringe pelas paginas
+                List<Models.ArtigoShort> resultado = new List<Models.ArtigoShort>();
+
+                int artigos_por_pagina = 4;
+                int offset = artigos_por_pagina * page;
+
+                for (int j = 0; j < artigos_por_pagina; j++)
+                {
+                    if (j + offset < listaOrdenada.Count())
+                        resultado.Add(listaOrdenada.ElementAt(offset + j));
+                }
+
+                    return resultado;
 
             }
             else
