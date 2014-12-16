@@ -8,6 +8,24 @@
 <body ng-app="products-app">
 <% include partials/messages %>
 <% include partials/header.ejs %>
+<div class="filters" style="float:left; padding-left:5em">
+    Filtrar por:
+    <form name="filterForm">
+        Marca: <input type="text" name="marca"/>
+        Sistema Operativo: <input type="text" name="so"/>
+        Limite mínimo de preço: <input type="text" name="limPrecoMin"/>
+        Limite mínimo de preço: <input type="text" name="limPrecoMax"/>
+        Tamanho mínimo do ecrã: <input type="text" name="limEcraMin"/>
+        Tamanho máximo do ecrã: <input type="text" name="limEcraMax"/>
+
+        <button style="margin: 0" class="btn btn-sky btn-md text-uppercase"
+                ng-disabled="!loginForm.$valid"
+                type="submit"
+                ng-click="filter()">
+            Filtrar
+        </button>
+    </form>
+</div>
 <div class="container">
     <section>
         <div class="container vertical-offset-100">
