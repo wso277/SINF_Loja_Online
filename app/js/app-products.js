@@ -7,6 +7,7 @@
     app.controller('ProductsController', ['$http', '$scope', function ($http, $scope) {
 
         var page = 0;
+        $scope.formData = {};
         $scope.getPage = function () {
             page = page + 1;
             //alert(page);
@@ -28,6 +29,16 @@
                     }
                     angular.element("#add").show();
                 })
+        };
+
+        $scope.filter = function() {
+            $http.get("/filter", {filters: $scope.formData})
+                .success(function (data) {
+                    alert(data);
+                })
+                .error(function (data) {
+                    alert("failed");
+                });
         };
 
     }]);
