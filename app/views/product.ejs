@@ -32,19 +32,19 @@
                     <hr>
                     <div class="btn-group cart">
                         Nº de unidades desejadas <input type="number"  value="1" min="1" max="<%= product.Stock %>" name="nUnits">
-                        <% if (user != null && product.Stock > 0) { %>
-                        <button type="button" class="btn btn-fresh text-uppercase" ng-click="addToCart()">
-                            Adicionar ao carrinho
-                        </button>
-                        <% } else if(product.Stock > 0) { %>
-                        <a href="/login" class="btn btn-fresh text-uppercase">
-                            Adicionar ao carrinho
-                        </a>
-                        <% } %>
-                        <% else { %>
+
+                        <% if (product.Stock == 0) { %>
                         <button type="button" class="btn btn-fresh text-uppercase" ng-disabled=true>
                             Adicionar ao carrinho
                         </button>
+                        <% } else if (user != null && product.Stock > 0) { %>
+                        <button type="button" class="btn btn-fresh text-uppercase" ng-click="addToCart()">
+                            Adicionar ao carrinho
+                        </button>
+                        <% } else { %>
+                        <a href="/login" class="btn btn-fresh text-uppercase">
+                            Adicionar ao carrinho
+                        </a>
                         <% } %>
                     </div>
                 </div>
