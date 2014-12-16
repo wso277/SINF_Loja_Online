@@ -30,6 +30,7 @@
                 <tr class="thead-border">
                     <th>Descrição</th>
                     <th>Número de Artigos</th>
+                    <th>Estado</th>
                     <th>Total</th>
                 </tr>
                 </thead>
@@ -38,6 +39,7 @@
                 <tr class="link-cursor tr-border tr-hover" data-href="order/<%= order.NumDoc %>">
                     <td>Encomenda feita em <%= order.Data %></td>
                     <td><%= order.LinhasEncomendaExtended.length %></td>
+                    <td><%= order.Estado %></td>
                     <td><%= order.Total %></td>
                 </tr>
                 <% }); %>

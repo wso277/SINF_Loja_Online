@@ -36,10 +36,15 @@
                         <button type="button" class="btn btn-fresh text-uppercase" ng-click="addToCart()">
                             Adicionar ao carrinho
                         </button>
-                        <% } else { %>
+                        <% } else if(product.Stock > 0) { %>
                         <a href="/login" class="btn btn-fresh text-uppercase">
                             Adicionar ao carrinho
                         </a>
+                        <% } %>
+                        <% else { %>
+                        <button type="button" class="btn btn-fresh text-uppercase" ng-disabled=true>
+                            Adicionar ao carrinho
+                        </button>
                         <% } %>
                     </div>
                 </div>

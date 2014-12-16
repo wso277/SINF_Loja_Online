@@ -5,8 +5,6 @@ exports.listen = function (app) {
 
     app.get('/logout', function (req, res) {
         var messages = generateMessageBlock();
-        // destroy the user's session to log them out
-        // will be re-created next request
         if (req.session.user) {
             req.session.destroy(function () {
                 messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
@@ -29,6 +27,7 @@ exports.listen = function (app) {
 
     app.get('/orders', function (req, res) {
         var messages = generateMessageBlock();
+        var total = 0;
         if (req.session.user) {
             requestify.request('http://localhost:49445/api/encomendas', {
                 method  : 'GET',
@@ -38,7 +37,6 @@ exports.listen = function (app) {
                 .then(function (response) {
                     if (response.getCode() == "200") {
                         var orders = response.getBody();
-                        var total = 0;
                         for (var i = 0; i < orders.length; i++) {
                             for (var j = 0; j < orders[i]['LinhasEncomendaExtended'].length; j++) {
                                 console.log(orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido']);
@@ -216,7 +214,7 @@ exports.listen = function (app) {
                         console.log(produtos);
                         res.status(200).send(produtos);
                     } else {
-                        console.log("coco");
+                        console.log("error");
                     }
                 });
         } else {
