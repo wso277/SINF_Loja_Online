@@ -4,7 +4,7 @@
     /**
      * Controller that manages the login information of an user
      */
-    app.controller('ProductsController', ['$http', '$scope', function ($http, $scope) {
+    app.controller('ProductsController', ['$http', '$scope', '$window', function ($http, $scope, $window) {
 
         var page = 0;
         $scope.formData = {};
@@ -33,6 +33,7 @@
         };
 
         $scope.filter = function() {
+            /*
             console.log($scope.formData);
             $http.post("/filter", {filters: $scope.formData})
                 .success(function (data) {
@@ -43,6 +44,8 @@
                 .error(function (data) {
                     alert("failed");
                 });
+                */
+            $window.location.href='/products/filter/'+$scope.formData.so+'/'+$scope.formData.marca+'/'+$scope.formData.limPrecoMin+'/'+ $scope.formData.limPrecoMax+'/'+$scope.formData.limEcraMin+'/'+$scope.formData.limEcraMax;
         };
 
     }]);
