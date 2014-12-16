@@ -96,7 +96,8 @@ exports.listen = function (app) {
 
     app.get('/filter', function (req, res) {
         var messages = generateMessageBlock();
-        console.log(req.params);
+        console.log(req.body);
+        console.log(req);
         /*
         requestify.request('http://localhost:49445/api/encomendas/' + id, {
             method: 'GET',
