@@ -28,7 +28,6 @@
                     <div class="product-price"><%= product.PVP * (1-(product.Desconto/100)) %>€</div>
                     <% if(product.StockAtual <= 0) { %> <div class="product-stock" style="color:red"> Sem Stock </div> <% } else { %> <div class="product-stock"> Em Stock </div> <% }
                         %>
-                    </div>
                     <hr>
                     <div class="btn-group cart">
                         Nº de unidades desejadas <input type="number"  value="1" min="1" max="<%= product.StockAtual %>" name="nUnits">
