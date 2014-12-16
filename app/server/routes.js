@@ -94,7 +94,7 @@ exports.listen = function (app) {
         }
     });
 
-    app.get('/filter', function (req, res) {
+    app.post('/filter', function (req, res) {
         var messages = generateMessageBlock();
         console.log(req.body);
         console.log(req.data);

@@ -35,7 +35,7 @@
         $scope.filter = function() {
             console.log($scope.formData);
             var req = {
-                method: 'GET',
+                method: 'POST',
                 url: '/filter',
                 headers: {
                     'Content-Type': undefined
