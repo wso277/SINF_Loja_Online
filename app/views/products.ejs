@@ -9,27 +9,27 @@
 <% include partials/messages %>
 <% include partials/header.ejs %>
 <div class="filters" style="float:left; padding-left:5em;display:inline">
-    Filtrar por:
-    <form name="filterForm">
-        Marca: <input type="text" ng-model="formData.marca"/>
+    <h2 style="color:#006600"> Filtrar por: </h2>
+    <form class="form-horizontal" name="filterForm">
+        Marca: <input class="form-control" type="text" ng-model="formData.marca"/>
         <br/>
-        Sistema Operativo: <input type="text" ng-model="formData.so"/>
+        Sistema Operativo: <input class="form-control" type="text" ng-model="formData.so"/>
         <br/>
-        Limite mínimo de preço: <input type="range" value="200" min="1" max="1000" step="1" ng-model="formData.limPrecoMin"/>
+        Limite mínimo de preço: <input class="form-control" type="range" value="200" min="1" max="1000" step="1" ng-model="formData.limPrecoMin"/>
         <br/>
-        {{{{formData.limPrecoMin}}
+        {{formData.limPrecoMin}}
         <br/>
-        Limite máximo de preço: <input type="range" value="250" min="1" max="1000" step="1" ng-model="formData.limPrecoMax"/>
+        Limite máximo de preço: <input class="form-control" type="range" value="250" min="1" max="1000" step="1" ng-model="formData.limPrecoMax"/>
         <br/>
-        {{{{formData.limPrecoMax}}
+        {{formData.limPrecoMax}}
         <br/>
-        Tamanho mínimo do ecrã: <input type="range" value="200" min="3" max="6" step="0.1" ng-model="formData.limEcraMin"/>
+        Tamanho mínimo do ecrã: <input class="form-control" type="range" value="3" min="3" max="6" step="0.1" ng-model="formData.limEcraMin"/>
         <br/>
-        {{{{formData.limEcraMin}}
+        {{formData.limEcraMin}}
         <br/>
-        Tamanho máximo do ecrã: <input type="range" value="200" min="3" max="6" step="0.1" ng-model="formData.limEcraMax"/>
+        Tamanho máximo do ecrã: <input class="form-control" type="range" value="3" min="3" max="6" step="0.1" ng-model="formData.limEcraMax"/>
         <br/>
-        {{{{formData.limEcraMax}}
+        {{formData.limEcraMax}}
 
         <button style="margin: 0" class="btn btn-sky btn-md text-uppercase"
                 type="submit"
