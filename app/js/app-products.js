@@ -33,7 +33,7 @@
         };
 
         $scope.filter = function() {
-            alert("ola");
+            console.log($scope.formData);
             $http.get("/filter", {filters: $scope.formData})
                 .success(function (data) {
                     alert(data);
