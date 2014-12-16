@@ -39,9 +39,9 @@ namespace MvcApplication1.Controllers
 
         
         // GET api/artigos
-        public IEnumerable<Lib_Primavera.Models.ArtigoShort> Get(int page=0, bool promocao=false)
+        public IEnumerable<Lib_Primavera.Models.ArtigoShort> Get(int page = 0, bool promocao = false, int precoLimiteSuperior = 9999, int precoLimiteInferior = 0, int ecraLimiteSuperior = 12, int ecraLimiteInferior = 0, string marca = "all", string SO ="all")
         {
-            return Lib_Primavera.ArtigoHelper.ListaArtigos(page, promocao);
+            return Lib_Primavera.ArtigoHelper.ListaArtigos(page, promocao, precoLimiteSuperior, precoLimiteInferior, ecraLimiteSuperior, ecraLimiteInferior, marca, SO);
         }
 
         

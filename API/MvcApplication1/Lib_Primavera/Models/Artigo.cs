@@ -9,7 +9,6 @@ namespace MvcApplication1.Lib_Primavera.Models
     {
 
         /* Especificacoes do utilizador */
-        public string Marca { get; set; }
         public string VersaoSistemaOperativo { get; set; } //SubFamilia
         public int RAM { get; set; } //megas - CDU_RAM
         public int Peso { get; set; } //gramas - CDU_PESO

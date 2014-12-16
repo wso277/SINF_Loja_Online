@@ -17,6 +17,7 @@ namespace MvcApplication1.Lib_Primavera.Models
         public float Desconto { get; set; }
 
         /* Especificacoes do utilizador */
+        public string Marca { get; set; }
         public string NomeSistemaOperativo { get; set; } //Familia
         public float TamanhoEcra { get; set; } //polegadas - CDU_ECRA
         public string CPU { get; set; } // CDU_CPU
