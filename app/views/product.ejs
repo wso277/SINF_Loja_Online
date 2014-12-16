@@ -26,18 +26,22 @@
                     <div class="product-title"><%= product.Nome %></div>
                     <hr>
                     <div class="product-price"><%= product.PVP * (1-(product.Desconto/100)) %>€</div>
-                    <div class="product-stock"><% if(product.Stock <= 0) { %> Sem Stock <% } else { %> Em Stock <% }
+                    <% if(product.StockAtual <= 0) { %> <div class="product-stock" style="color:red"> Sem Stock </div> <% } else { %> <div class="product-stock"> Em Stock </div> <% }
                         %>
-                    </div>
                     <hr>
                     <div class="btn-group cart">
-                        Nº de unidades desejadas <input type="number"  value="1" min="1" max="<%= product.Stock %>" name="nUnits">
-                        <% if (user != null && product.Stock > 0) { %>
+                        Nº de unidades desejadas <input type="number"  value="1" min="1" max="<%= product.StockAtual %>" name="nUnits">
+
+                        <% if (product.StockAtual == 0) { %>
+                        <button type="button" class="btn btn-fresh text-uppercase" ng-disabled=true>
+                            Adicionar ao carrinho
+                        </button>
+                        <% } else if (user != null && product.StockAtual > 0) { %>
                         <button type="button" class="btn btn-fresh text-uppercase" ng-click="addToCart()">
                             Adicionar ao carrinho
                         </button>
                         <% } else { %>
-                        <a href="/login" class="btn btn-fresh text-uppercase">
+                        <a href="/login" class="btn btn-hot text-uppercase">
                             Adicionar ao carrinho
                         </a>
                         <% } %>
