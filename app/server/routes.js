@@ -94,7 +94,7 @@ exports.listen = function (app) {
         }
     });
 
-    app.post('/products/filter/:so/:marca/:limPrecoMin/:limPrecoMax/:limEcraMin/:limEcraMax', function (req, res) {
+    app.get('/products/filter/:so/:marca/:limPrecoMin/:limPrecoMax/:limEcraMin/:limEcraMax', function (req, res) {
         var messages = generateMessageBlock();
         var url = "http://localhost:49445/api/artigos?page=0";
         console.log(req.params);
