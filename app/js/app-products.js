@@ -34,7 +34,7 @@
 
         $scope.filter = function() {
             console.log($scope.formData);
-            $http.get("/filter", {filters: $scope.formData})
+            $http.get("/filter", {params: $scope.formData})
                 .success(function (data) {
                     alert(data);
                 })
