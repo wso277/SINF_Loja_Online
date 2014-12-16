@@ -34,7 +34,15 @@
 
         $scope.filter = function() {
             console.log($scope.formData);
-            $http.get("/filter", [{params: $scope.formData}])
+            var req = {
+                method: 'GET',
+                url: '/filter',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: { filters: $scope.formData }
+            };
+            $http(req)
                 .success(function (data) {
                     alert(data);
                 })
