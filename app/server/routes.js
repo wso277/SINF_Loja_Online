@@ -98,22 +98,22 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         var url = "http://localhost:49445/api/artigos?page=0";
         console.log(req.params);
-        if (req.params.filters.so != undefined) {
+        if (req.params.so != undefined) {
             url += "&so="+req.params.so;
         }
-        if (req.params.filters.marca != undefined) {
+        if (req.params.marca != undefined) {
             url += "&marca="+req.params.marca;
         }
-        if (req.params.filters.limPrecoMin != undefined) {
+        if (req.params.limPrecoMin != undefined) {
             url += "&precoLimiteInferior="+req.params.limPrecoMin;
         }
-        if (req.params.filters.limPrecoMax != undefined) {
+        if (req.params.limPrecoMax != undefined) {
             url += "&precoLimiteSuperior="+req.params.limPrecoMax;
         }
-        if (req.params.filters.limEcraMin != undefined) {
+        if (req.params.limEcraMin != undefined) {
             url += "&ecraLimiteInferior="+req.params.limEcraMin;
         }
-        if (req.params.filters.limEcraMax != undefined) {
+        if (req.params.limEcraMax != undefined) {
             url += "&ecraLimiteSuperior="+req.params.limEcraMax;
         }
         requestify.request(url, {
