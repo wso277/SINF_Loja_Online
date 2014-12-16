@@ -16,20 +16,17 @@
         Sistema Operativo: <input class="form-control" type="text" ng-model="formData.so"/>
         <br/>
         Limite mínimo de preço: <input class="form-control" type="range" value="200" min="1" max="1000" step="1" ng-model="formData.limPrecoMin"/>
-        <br/>
-        {{formData.limPrecoMin}}
+        <span style="padding-left:2em"> {{formData.limPrecoMin}} </span>
         <br/>
         Limite máximo de preço: <input class="form-control" type="range" value="250" min="1" max="1000" step="1" ng-model="formData.limPrecoMax"/>
-        <br/>
-        {{formData.limPrecoMax}}
+        <span style="padding-left:2em"> {{formData.limPrecoMax}} </span>
         <br/>
         Tamanho mínimo do ecrã: <input class="form-control" type="range" value="3" min="3" max="6" step="0.1" ng-model="formData.limEcraMin"/>
-        <br/>
-        {{formData.limEcraMin}}
+        <span style="padding-left:2em"> {{formData.limEcraMin}} </span>
         <br/>
         Tamanho máximo do ecrã: <input class="form-control" type="range" value="3" min="3" max="6" step="0.1" ng-model="formData.limEcraMax"/>
+        <span style="padding-left:2em"> {{formData.limEcraMax}} </span>
         <br/>
-        {{formData.limEcraMax}}
 
         <button style="margin: 0" class="btn btn-sky btn-md text-uppercase"
                 type="submit"
