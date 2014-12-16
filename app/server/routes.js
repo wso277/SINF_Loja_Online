@@ -104,8 +104,8 @@ exports.listen = function (app) {
         })
             .then(function (response) {
                 if (response.getCode() == "200") {
-                    produtos = response.getBody();
-                    res.status(200).render("products.ejs",  {messages: messages, title: 'Produtos', products: null, user: null, cart: null});
+                    var produtos = response.getBody();
+                    res.status(200).render("products.ejs",  {messages: messages, title: 'Produtos', products: produtos, user: null, cart: null});
                 } else {
                     console.log("error");
                 }
