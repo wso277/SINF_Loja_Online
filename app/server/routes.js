@@ -94,27 +94,27 @@ exports.listen = function (app) {
         }
     });
 
-    app.post('/filter', function (req, res) {
+    app.post('/products/filter/:so/:marca/:limPrecoMin/:limPrecoMax/:limEcraMin/:limEcraMax', function (req, res) {
         var messages = generateMessageBlock();
         var url = "http://localhost:49445/api/artigos?page=0";
-        console.log(req.body);
-        if (req.body.filters.so) {
-            url += "&so="+req.filters.so;
+        console.log(req.params);
+        if (req.params.filters.so != undefined) {
+            url += "&so="+req.params.so;
         }
-        if (req.body.filters.marca) {
-            url += "&marca="+req.filters.marca;
+        if (req.params.filters.marca != undefined) {
+            url += "&marca="+req.params.marca;
         }
-        if (req.body.filters.limPrecoMin) {
-            url += "&precoLimiteInferior="+req.filters.limPrecoMin;
+        if (req.params.filters.limPrecoMin != undefined) {
+            url += "&precoLimiteInferior="+req.params.limPrecoMin;
         }
-        if (req.body.filters.limPrecoMax) {
-            url += "&precoLimiteSuperior="+req.filters.limPrecoMax;
+        if (req.params.filters.limPrecoMax != undefined) {
+            url += "&precoLimiteSuperior="+req.params.limPrecoMax;
         }
-        if (req.body.filters.limEcraMin) {
-            url += "&ecraLimiteInferior="+req.filters.limEcraMin;
+        if (req.params.filters.limEcraMin != undefined) {
+            url += "&ecraLimiteInferior="+req.params.limEcraMin;
         }
-        if (req.body.filters.limEcraMax) {
-            url += "&ecraLimiteSuperior="+req.filters.limEcraMax;
+        if (req.params.filters.limEcraMax != undefined) {
+            url += "&ecraLimiteSuperior="+req.params.limEcraMax;
         }
         requestify.request(url, {
             method: 'GET',
@@ -122,34 +122,29 @@ exports.listen = function (app) {
         })
             .then(function (response) {
                 if (response.getCode() == "200") {
-                    res.status(200).send(response.getBody());
+                    var produtos = response.getBody();
+                    if (req.session.user) {
+                        res.render("products.ejs", {
+                            messages: messages,
+                            title: 'Produtos',
+                            products: produtos,
+                            user: req.session.user,
+                            cart: req.session.shoppingCart
+                        });
+                    } else {
+                        res.render("products.ejs", {
+                            messages: messages,
+                            title: 'Produtos',
+                            products: produtos,
+                            user: null,
+                            cart: null
+                        });
+                    }
                 } else {
                     res.status(400).send(false);
                 }
             });
-        /*
-        requestify.request('http://localhost:49445/api/encomendas/' + id, {
-            method: 'GET',
-            dataType: 'form-url-encoded'
-        })
-            .then(function (response) {
-                if (response.getCode() == "200") {
-                    var order = response.getBody();
-                    console.log(order);
-                    var date = order['Data'].split("T");
-                    order['Data'] = date[0];
-                    res.render("order.ejs", {
-                        messages: messages,
-                        title: 'Encomenda',
-                        order: order,
-                        user: req.session.user,
-                        cart: req.session.shoppingCart
-                    });
-                } else {
-                    console.log("error");
-                }
-            });
-            */
+
     });
 
     app.get('/sales', function (req, res) {
