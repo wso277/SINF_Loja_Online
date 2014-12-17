@@ -40,7 +40,7 @@ exports.listen = function (app) {
                         for (var i = 0; i < orders.length; i++) {
                             for (var j = 0; j < orders[i]['LinhasEncomendaExtended'].length; j++) {
                                 totalItems += orders[i]['LinhasEncomendaExtended'][j]['Quantidade'];
-                                total += orders[i]['LinhasEncomendaExtended'][j]['TotalLiquido'] * (1 - (orders[i]['LinhasEncomendaExtended'][j]['Desconto'] / 100));
+                                total += orders[i]['LinhasEncomendaExtended'][j]['TotalILiquido'] * (1 - (orders[i]['LinhasEncomendaExtended'][j]['Desconto'] / 100));
                             }
                             var date = orders[i]['Data'].split("T");
                             orders[i]['Data'] = date[0];
@@ -521,6 +521,7 @@ exports.listen = function (app) {
         var messages = generateMessageBlock();
         if (req.params.val == "logged-in") {
             if (req.session.user) {
+
                 messages.success.push({title: "Sucesso", content: "Está agora auntenticado!"});
                 messages.success.push({title: "Bem-vindo", content: ""});
                 requestify.request('http://localhost:49445/api/clients/' + req.session.user.CodigoCliente, {
@@ -532,14 +533,24 @@ exports.listen = function (app) {
                             req.session.user = response.getBody();
                             req.session.shoppingCart = {products: [], totalItems: 0, total: 0};
                             console.log(req.session.shoppingCart);
-                            console.log(req.session.shoppingCart['products']);
+                        } else {
+                        }
+                    });
+                requestify.request('http://localhost:49445/api/artigos/homepage',
+                    {method: 'GET',dataType: 'form-url-encoded'})
+                    .then(function (response) {
+                        if (response.getCode() == "200") {
+                            var produtos = response.getBody();
+                            console.log(produtos);
                             res.render("dashboard-private", {
                                 title: "Dashboard",
                                 messages: messages,
                                 user: req.session.user,
-                                cart: req.session.shoppingCart
+                                cart: req.session.shoppingCart,
+                                products: produtos
                             });
                         } else {
+                            console.log("error");
                         }
                     });
             } else {
