@@ -8,11 +8,39 @@ exports.listen = function (app) {
         if (req.session.user) {
             req.session.destroy(function () {
                 messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
-                res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
+                requestify.request('http://localhost:49445/api/artigos/homepage',
+                    {method: 'GET',dataType: 'form-url-encoded'})
+                    .then(function (response) {
+                        if (response.getCode() == "200") {
+                            var produtos = response.getBody();
+                            console.log(produtos);
+                            res.render("dashboard-public.ejs", {
+                                title: "Dashboard",
+                                messages: messages,
+                                products: produtos
+                            });
+                        } else {
+                            console.log("error");
+                        }
+                    });
             });
         } else {
             messages.success.push({title: "Autentique-se primeiro", content: "Não está autenticado"});
-            res.render("dashboard-public.ejs", {messages: messages, title: 'Dashboard'});
+            requestify.request('http://localhost:49445/api/artigos/homepage',
+                {method: 'GET',dataType: 'form-url-encoded'})
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        var produtos = response.getBody();
+                        console.log(produtos);
+                        res.render("dashboard-public.ejs", {
+                            title: "Dashboard",
+                            messages: messages,
+                            products: produtos
+                        });
+                    } else {
+                        console.log("error");
+                    }
+                });
         }
     });
 
@@ -597,7 +625,7 @@ exports.listen = function (app) {
                     if (response.getCode() == "200") {
                         var produtos = response.getBody();
                         console.log(produtos);
-                        res.render("dashboard-private.ejs", {
+                        res.render("dashboard-public.ejs", {
                             title: "Dashboard",
                             messages: messages,
                             products: produtos
