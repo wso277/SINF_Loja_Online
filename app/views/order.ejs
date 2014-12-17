@@ -38,15 +38,15 @@
                 </thead>
                 <tbody>
                 <% (order.LinhasEncomendaExtended).forEach(function(o) { %>
-                <a href="/product/<%= o.CodigoArtigo%>">
-                    <tr class="link-cursor tr-border tr-hover" data-href="">
-                        <td><%= o.DescricaoArtigo %></td>
-                        <td><%= o.Desconto %>%</td>
-                        <td><%= o.PrecoUnitario %></td>
-                        <td><%= o.Quantidade %></td>
-                        <td><%= o.TotalLiquido %></td>
-                    </tr>
-                </a>
+
+                <tr class="link-cursor tr-border tr-hover" data-href="/product/<%= o.CodigoArtigo %>">
+                    <td><%= o.DescricaoArtigo %></td>
+                    <td><%= o.Desconto %>%</td>
+                    <td><%= o.PrecoUnitario %></td>
+                    <td><%= o.Quantidade %></td>
+                    <td><%= o.TotalLiquido %></td>
+                </tr>
+
                 <% }); %>
                 </tbody>
             </table>
