@@ -8,6 +8,12 @@
 
         var page = 0;
         $scope.formData = {};
+        $scope.formData.so = undefined;
+        $scope.formData.marca = undefined;
+        $scope.formData.limPrecoMin = undefined;
+        $scope.formData.limPrecoMax = undefined;
+        $scope.formData.limEcraMin = undefined;;
+        $scope.formData.limEcraMax = undefined;
 
         $scope.getPage = function () {
             page = page + 1;
