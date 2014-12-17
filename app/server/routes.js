@@ -523,7 +523,6 @@ exports.listen = function (app) {
             if (req.session.user) {
 
                 messages.success.push({title: "Sucesso", content: "Está agora auntenticado!"});
-                messages.success.push({title: "Bem-vindo", content: ""});
                 requestify.request('http://localhost:49445/api/clients/' + req.session.user.CodigoCliente, {
                     method: 'GET',
                     dataType: 'form-url-encoded'
@@ -531,6 +530,7 @@ exports.listen = function (app) {
                     .then(function (response) {
                         if (response.getCode() == "200") {
                             req.session.user = response.getBody();
+                            messages.success.push({title: "Bem-vindo", content: req.session.user.Nome});
                             req.session.shoppingCart = {products: [], totalItems: 0, total: 0};
                             console.log(req.session.shoppingCart);
                         } else {
@@ -542,7 +542,7 @@ exports.listen = function (app) {
                         if (response.getCode() == "200") {
                             var produtos = response.getBody();
                             console.log(produtos);
-                            res.render("dashboard-private", {
+                            res.render("dashboard-private.ejs", {
                                 title: "Dashboard",
                                 messages: messages,
                                 user: req.session.user,
