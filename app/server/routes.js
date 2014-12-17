@@ -97,6 +97,7 @@ exports.listen = function (app) {
     app.get('/products/filter/:so/:marca/:limPrecoMin/:limPrecoMax/:limEcraMin/:limEcraMax', function (req, res) {
         var messages = generateMessageBlock();
         var url = "http://localhost:49445/api/artigos?page=0";
+        var urlToSend =  '/' + req.params.so + "/" + req.params.marca + "/" + req.params.limPrecoMin + "/" + limPrecoMax + "/" + limEcraMin + "/" + limEcraMax;
         console.log(req.params);
         if (req.params.so != 'undefined') {
             url += "&so=" + req.params.so;
@@ -132,7 +133,7 @@ exports.listen = function (app) {
                             user: req.session.user,
                             cart: req.session.shoppingCart,
                             filter: 1,
-                            url: 'x'
+                            url: urlToSend
                         });
                     } else {
                         res.render("products.ejs", {
@@ -142,7 +143,7 @@ exports.listen = function (app) {
                             user: null,
                             cart: null,
                             filter: 1,
-                            url: 'x'
+                            url: urlToSend
                         });
                     }
                 } else {
