@@ -265,12 +265,12 @@ namespace MvcApplication1.Lib_Primavera
             else { return null; }
         }
 
-        /** Retorna o produto em PROMOCAO com a data de lançamento mais antiga **/
+        /** Retorna o produto com maior PROMOCAO **/
         private static Models.ArtigoShowcase oportunidade()
         {
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
-                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, CDU_Lancamento as data FROM Artigo WHERE desconto > 0 ORDER BY data DESC;";
+                String query = "SELECT TOP 1 Artigo as CodigoArtigo, CDU_FOTO as fotoURL, CDU_Lancamento as data FROM Artigo WHERE desconto > 0 ORDER BY desconto, data DESC;";
 
                 StdBELista objList = PriEngine.Engine.Consulta(query);
                 Models.ArtigoShowcase art = new Models.ArtigoShowcase();
@@ -293,7 +293,13 @@ namespace MvcApplication1.Lib_Primavera
         {
             if (PriEngine.InitializeCompany(COMPANHIA, USER, PASS) == true)
             {
-                String query = "SELECT TOP 1 Artigo.Artigo as CodigoArtigo, CDU_FOTO as fotoURL, ArtigoArmazem.QtReservada as quantidade FROM Artigo, ArtigoArmazem WHERE Artigo.Artigo = ArtigoArmazem.Artigo ORDER BY quantidade DESC;";
+                String query = "SELECT TOP 1 Artigo.Artigo as CodigoArtigo, CDU_FOTO as fotoURL, Sum(LinhasDoc.Quantidade) as quantidade " +
+                "FROM Artigo "+
+                "LEFT JOIN LinhasDoc ON Artigo.Artigo = LinhasDoc.Artigo "+
+                "LEFT JOIN LinhasDocStatus ON LinhasDocStatus.IdLinhasDoc = LinhasDoc.Id " +
+                "WHERE LinhasDocStatus.EstadoTrans='P' GROUP BY Artigo.Artigo, Artigo.CDU_FOTO ORDER BY quantidade DESC;";
+
+
 
                 StdBELista objList = PriEngine.Engine.Consulta(query);
                 Models.ArtigoShowcase art = new Models.ArtigoShowcase();
@@ -303,6 +309,7 @@ namespace MvcApplication1.Lib_Primavera
 
                     art.CodigoArtigo = objList.Valor("CodigoArtigo");
                     art.fotoURL = objList.Valor("fotoURL");
+                    double quantidade = objList.Valor("quantidade");
 
                     return art;
                 }
