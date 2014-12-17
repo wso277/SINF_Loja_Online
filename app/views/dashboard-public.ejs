@@ -121,14 +121,14 @@
         </a>
     </div>
     <div class="col-sm-4 col-xs-8">
-        <a href="">
-            <div id="tile10" class="tile">
+        <a href="product/<%= products.novidade.CodigoArtigo %>">
+            <div id="tile12" class="tile">
 
                 <div class="carousel slide" data-ride="carousel">
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
-                            <img src="http://i.ytimg.com/vi/R4-YdC5N6Lo/maxresdefault.jpg" class="img-responsive"/>
+                            <img src="../images/phones/<%= products.novidade.fotoURL %>" class="img-responsive"/>
                         </div>
 
                     </div>
@@ -140,56 +140,59 @@
 
 </div>
 
-<div class="row">
-    <div class="col-sm-4 col-xs-8">
-        <a href="">
-            <div id="tile8" class="tile">
+    <div class="row">
+        <div class="col-sm-4 col-xs-8">
+            <a href="product/<%= products.oportunidade.CodigoArtigo %>">
+                <div id="tile8" class="tile">
 
-                <div class="carousel slide" data-ride="carousel">
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <img src="http://cdn1.xda-developers.com/devdb/deviceForum/screenshots/2589/20131018T122945.png" class="img-responsive" style="height: 100%"/>
+                    <div class="carousel slide" data-ride="carousel">
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="../images/phones/<%= products.oportunidade.fotoURL %>"
+                                     class="img-responsive" style="height: 100%"/>
+                            </div>
                         </div>
                     </div>
+
                 </div>
+            </a>
+        </div>
+        <div class="col-sm-4 col-xs-8">
+            <a href="product/<%= products.maisvendido.CodigoArtigo %>">
+                <div id="tile11" class="tile">
 
-            </div>
-        </a>
-    </div>
-    <div class="col-sm-4 col-xs-8">
-        <a href="/products">
-            <div id="tile11" class="tile">
-
-                <div class="carousel slide" data-ride="carousel">
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <img src="http://www.tu.no/incoming/2014/07/07/1200030275.jpg/alternates/h1080/1200030275.jpg" class="img-responsive"/>
+                    <div class="carousel slide" data-ride="carousel">
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="../images/phones/<%= products.maisvendido.fotoURL %>"
+                                     class="img-responsive"/>
+                            </div>
                         </div>
                     </div>
+
                 </div>
+            </a>
+        </div>
+        <div class="col-sm-4 col-xs-8">
+            <a href="product/<%= products.stock.CodigoArtigo %>">
+                <div id="tile10" class="tile">
 
-            </div>
-        </a>
-    </div>
-    <div class="col-sm-4 col-xs-8">
-        <a href="">
-            <div id="tile10" class="tile">
+                    <div class="carousel slide" data-ride="carousel">
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="../images/phones/<%= products.stock.fotoURL %>"
+                                     class="img-responsive"/>
+                            </div>
 
-                <div class="carousel slide" data-ride="carousel">
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <img src="http://files.tested.com/photos/2013/01/09/43717-ubuntu1.jpg" class="img-responsive"/>
                         </div>
-
                     </div>
-                </div>
 
-            </div>
-        </a>
-    </div>
+                </div>
+            </a>
+        </div>
 
 </div>
 
