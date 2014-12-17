@@ -94,9 +94,15 @@
                             <% }); %>
 
                         </section>
+                        <% if (filter == 0) { %>
                         <button id="add" class="btn btn-fresh btn-lg text-uppercase" ng-click="getPage()">carregar mais
                             produtos
                         </button>
+                        <% else if (filter == 1) { %>
+                        <button id="add" class="btn btn-fresh btn-lg text-uppercase" ng-click="getFilterPage(<%= url %>)">carregar mais
+                            produtos
+                        </button>
+                        <% { %>
                     </div>
                 </div>
             </div>

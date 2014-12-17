@@ -99,22 +99,22 @@ exports.listen = function (app) {
         var url = "http://localhost:49445/api/artigos?page=0";
         console.log(req.params);
         if (req.params.so != 'undefined') {
-            url += "&so="+req.params.so;
+            url += "&so=" + req.params.so;
         }
         if (req.params.marca != 'undefined') {
-            url += "&marca="+req.params.marca;
+            url += "&marca=" + req.params.marca;
         }
         if (req.params.limPrecoMin != 'undefined') {
-            url += "&precoLimiteInferior="+req.params.limPrecoMin;
+            url += "&precoLimiteInferior=" + req.params.limPrecoMin;
         }
         if (req.params.limPrecoMax != 'undefined') {
-            url += "&precoLimiteSuperior="+req.params.limPrecoMax;
+            url += "&precoLimiteSuperior=" + req.params.limPrecoMax;
         }
         if (req.params.limEcraMin != 'undefined') {
-            url += "&ecraLimiteInferior="+req.params.limEcraMin;
+            url += "&ecraLimiteInferior=" + req.params.limEcraMin;
         }
         if (req.params.limEcraMax != 'undefined') {
-            url += "&ecraLimiteSuperior="+req.params.limEcraMax;
+            url += "&ecraLimiteSuperior=" + req.params.limEcraMax;
         }
 
         requestify.request(url, {
@@ -130,7 +130,9 @@ exports.listen = function (app) {
                             title: 'Produtos',
                             products: produtos,
                             user: req.session.user,
-                            cart: req.session.shoppingCart
+                            cart: req.session.shoppingCart,
+                            filter: 1,
+                            url: '/' + req.params.so + "/" + req.params.marca + "/" + req.params.limPrecoMin + "/" + limPrecoMax + "/" + limEcraMin + "/" + limEcraMax
                         });
                     } else {
                         res.render("products.ejs", {
@@ -138,7 +140,9 @@ exports.listen = function (app) {
                             title: 'Produtos',
                             products: produtos,
                             user: null,
-                            cart: null
+                            cart: null,
+                            filter: 1,
+                            url: '/' + req.params.so + "/" + req.params.marca + "/" + req.params.limPrecoMin + "/" + limPrecoMax + "/" + limEcraMin + "/" + limEcraMax
                         });
                     }
                 } else {
@@ -166,7 +170,9 @@ exports.listen = function (app) {
                             title: 'Produtos',
                             products: produtos,
                             user: req.session.user,
-                            cart: req.session.shoppingCart
+                            cart: req.session.shoppingCart,
+                            filter: 0,
+                            url: null
                         });
                     } else {
                         res.render("sales.ejs", {
@@ -174,7 +180,9 @@ exports.listen = function (app) {
                             title: 'Produtos',
                             products: produtos,
                             user: null,
-                            cart: null
+                            cart: null,
+                            filter: 0,
+                            url: null
                         });
                     }
                 } else {
@@ -201,7 +209,9 @@ exports.listen = function (app) {
                             title: 'Produtos',
                             products: produtos,
                             user: req.session.user,
-                            cart: req.session.shoppingCart
+                            cart: req.session.shoppingCart,
+                            filter: 0,
+                            url: null
                         });
                     } else {
                         res.render("products.ejs", {
@@ -209,7 +219,9 @@ exports.listen = function (app) {
                             title: 'Produtos',
                             products: produtos,
                             user: null,
-                            cart: null
+                            cart: null,
+                            filter: 0,
+                            url: null
                         });
                     }
                 } else {
@@ -289,6 +301,49 @@ exports.listen = function (app) {
                     }
                 });
         }
+
+    });
+
+    app.post('/get-filter-page/:so/:marca/:limPrecoMin/:limPrecoMax/:limEcraMin/:limEcraMax', function (req, res) {
+        console.log(req.body.page);
+        if (req.body.promocao) {
+            var url = "http://localhost:49445/api/artigos?page=" + req.body.page + "&promocao=" + req.body.promocao;
+        } else {
+            var url = "http://localhost:49445/api/artigos?page=" + req.body.page;
+        }
+
+        if (req.params.so != 'undefined') {
+            url += "&so=" + req.params.so;
+        }
+        if (req.params.marca != 'undefined') {
+            url += "&marca=" + req.params.marca;
+        }
+        if (req.params.limPrecoMin != 'undefined') {
+            url += "&precoLimiteInferior=" + req.params.limPrecoMin;
+        }
+        if (req.params.limPrecoMax != 'undefined') {
+            url += "&precoLimiteSuperior=" + req.params.limPrecoMax;
+        }
+        if (req.params.limEcraMin != 'undefined') {
+            url += "&ecraLimiteInferior=" + req.params.limEcraMin;
+        }
+        if (req.params.limEcraMax != 'undefined') {
+            url += "&ecraLimiteSuperior=" + req.params.limEcraMax;
+        }
+
+        requestify.request(url, {
+            method: 'GET',
+            dataType: 'form-url-encoded'
+        })
+            .then(function (response) {
+                if (response.getCode() == "200") {
+                    produtos = response.getBody();
+                    console.log(produtos);
+                    res.status(200).send(produtos);
+                } else {
+                    console.log("error");
+                }
+            });
 
     });
 
