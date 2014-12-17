@@ -24,7 +24,7 @@
                     //console.log(data);
 
                     for (i = 0; i < data.length; i++) {
-                        var elem = '<article class="search-result row" style="background-color: #222222"> <div class="col-xs-12 col-sm-12 col-md-3"> <a href="/product/' + data[i].CodigoArtigo + '" class="thumbnail"><img src="localhost:8080/images/phones/'+data[i].fotoURL+'" alt="Lorem ipsum"/></a> </div> <div class="col-xs-12 col-sm-12 col-md-2"> <ul class="meta-search"> <li><i class="fa fa-android"></i> <span>' + data[i].NomeSistemaOperativo + '</span> </li> <li><i class="fa fa-mobile"></i> <span>' + data[i].TamanhoEcra + ' polegadas</span> </li> <li><i class="fa fa-mobile"></i> <span>' + data[i].StockAtual + ' in stock</span> </li> ';
+                        var elem = '<article class="search-result row" style="background-color: #222222"> <div class="col-xs-12 col-sm-12 col-md-3"> <a href="/product/' + data[i].CodigoArtigo + '" class="thumbnail"><img src="/images/phones/'+data[i].fotoURL+'" alt="Lorem ipsum"/></a> </div> <div class="col-xs-12 col-sm-12 col-md-2"> <ul class="meta-search"> <li><i class="fa fa-android"></i> <span>' + data[i].NomeSistemaOperativo + '</span> </li> <li><i class="fa fa-mobile"></i> <span>' + data[i].TamanhoEcra + ' polegadas</span> </li> <li><i class="fa fa-mobile"></i> <span>' + data[i].StockAtual + ' in stock</span> </li> ';
 
                         if (data[i].Desconto > 0) {
                             elem = elem + '<li id="preco-antigo"><i class="fa fa-euro"></i> <span>' + (data[i].PVP).toFixed(2) + '</span> </li>';
@@ -62,7 +62,7 @@
                 .success(function (data) {
 
                     for (i = 0; i < data.length; i++) {
-                        var elem = '<article class="search-result row" style="background-color: #222222"> <div class="col-xs-12 col-sm-12 col-md-3"> <a href="/product/' + data[i].CodigoArtigo + '" class="thumbnail"><img src="localhost:8080/images/phones/'+data[i].fotoURL+'"/></a> </div> <div class="col-xs-12 col-sm-12 col-md-2"> <ul class="meta-search"> <li><i class="fa fa-android"></i> <span>' + data[i].NomeSistemaOperativo + '</span> </li> <li><i class="fa fa-mobile"></i> <span>' + data[i].TamanhoEcra + ' polegadas</span> </li> <li><i class="fa fa-mobile"></i> <span>' + data[i].StockAtual + ' in stock</span> </li> ';
+                        var elem = '<article class="search-result row" style="background-color: #222222"> <div class="col-xs-12 col-sm-12 col-md-3"> <a href="/product/' + data[i].CodigoArtigo + '" class="thumbnail"><img src="/images/phones/'+data[i].fotoURL+'"/></a> </div> <div class="col-xs-12 col-sm-12 col-md-2"> <ul class="meta-search"> <li><i class="fa fa-android"></i> <span>' + data[i].NomeSistemaOperativo + '</span> </li> <li><i class="fa fa-mobile"></i> <span>' + data[i].TamanhoEcra + ' polegadas</span> </li> <li><i class="fa fa-mobile"></i> <span>' + data[i].StockAtual + ' in stock</span> </li> ';
 
                         if (data[i].Desconto > 0) {
                             elem = elem + '<li id="preco-antigo"><i class="fa fa-euro"></i> <span>' + (data[i].PVP).toFixed(2) + '</span> </li>';
