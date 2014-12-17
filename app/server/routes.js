@@ -97,7 +97,7 @@ exports.listen = function (app) {
     app.get('/products/filter/:so/:marca/:limPrecoMin/:limPrecoMax/:limEcraMin/:limEcraMax', function (req, res) {
         var messages = generateMessageBlock();
         var url = "http://localhost:49445/api/artigos?page=0";
-        var urlToSend =  '/' + req.params.so + "/" + req.params.marca + "/" + req.params.limPrecoMin + "/" + limPrecoMax + "/" + limEcraMin + "/" + limEcraMax;
+        var urlToSend =  '/' + req.params.so + "/" + req.params.marca + "/" + req.params.limPrecoMin + "/" + req.params.limPrecoMax + "/" + req.params.limEcraMin + "/" + req.params.limEcraMax;
         console.log(req.params);
         if (req.params.so != 'undefined') {
             url += "&so=" + req.params.so;
