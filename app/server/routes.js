@@ -132,7 +132,7 @@ exports.listen = function (app) {
                             user: req.session.user,
                             cart: req.session.shoppingCart,
                             filter: 1,
-                            url: '/' + req.params.so + "/" + req.params.marca + "/" + req.params.limPrecoMin + "/" + limPrecoMax + "/" + limEcraMin + "/" + limEcraMax
+                            url: 'x'
                         });
                     } else {
                         res.render("products.ejs", {
@@ -142,7 +142,7 @@ exports.listen = function (app) {
                             user: null,
                             cart: null,
                             filter: 1,
-                            url: '/' + req.params.so + "/" + req.params.marca + "/" + req.params.limPrecoMin + "/" + limPrecoMax + "/" + limEcraMin + "/" + limEcraMax
+                            url: 'x'
                         });
                     }
                 } else {
