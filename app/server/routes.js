@@ -453,7 +453,7 @@ exports.listen = function (app) {
 
                 if (req.params.id == products[i]['CodigoArtigo']) {
                     req.session.shoppingCart['totalItems'] -= req.session.shoppingCart['products'][i]['quantidade'];
-                    req.session.shoppingCart['total'] -= (req.session.shoppingCart['products'][i]['PVP'] * (1 - (req.session.shoppingCart['products'][i]['Desconto'] / 100)));
+                    req.session.shoppingCart['total'] -= (req.session.shoppingCart['products'][i]['PVP'] * (1 - (req.session.shoppingCart['products'][i]['Desconto'] / 100))) * req.session.shoppingCart['products'][i]['quantidade'];
                     products.splice(i, 1);
                     req.session.shoppingCart['products'] = products;
                     break;
@@ -506,7 +506,7 @@ exports.listen = function (app) {
                         req.session.shoppingCart['total'] = 0;
                         for (var i = 0; i < req.session.shoppingCart['products'].length; i++) {
                             req.session.shoppingCart['totalItems'] += req.session.shoppingCart['products'][i]['quantidade'];
-                            req.session.shoppingCart['total'] += (req.session.shoppingCart['products'][i]['PVP'] * (1 - (req.session.shoppingCart['products'][i]['Desconto'] / 100)));
+                            req.session.shoppingCart['total'] += (req.session.shoppingCart['products'][i]['PVP'] * (1 - (req.session.shoppingCart['products'][i]['Desconto'] / 100))) * req.session.shoppingCart['products'][i]['quantidade'];
                         }
                         req.session.shoppingCart['total'].toFixed(2);
                         console.log(req.session.shoppingCart);
