@@ -40,7 +40,7 @@
                     <td>Encomenda feita em <%= order.Data %></td>
                     <td><%= order.TotalItems %></td>
                     <td><%= order.Estado %></td>
-                    <td><%= order.Total %></td>
+                    <td><%= (order.Total).toFixed(2) %></td>
                 </tr>
                 <% }); %>
                 </tbody>

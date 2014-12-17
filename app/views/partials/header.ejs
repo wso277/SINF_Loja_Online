@@ -176,15 +176,15 @@
                                 <% }); %>
                                 <tr>
                                     <td><h4>Subtotal</h4></td>
-                                    <td class="text-center"><h5><strong><%= cart.total %>€</strong></h5></td>
+                                    <td class="text-center"><h5><strong><%= (cart.total).toFixed(2) %>€</strong></h5></td>
                                 </tr>
                                 <tr>
                                     <td><h4>Custos de Envio</h4></td>
-                                    <td class="text-center"><h5><strong><%= cart.totalItems * 2 %></strong></h5></td>
+                                    <td class="text-center"><h5><strong><%= (cart.totalItems * 2).toFixed(2) %></strong></h5></td>
                                 </tr>
                                 <tr>
                                     <td><h3>Total</h3></td>
-                                    <td class="text-center"><h3><strong><%= cart.total + cart.totalItems * 2 %></strong></h3></td>
+                                    <td class="text-center"><h3><strong><%= (cart.total + cart.totalItems * 2).toFixed(2) %></strong></h3></td>
                                     <td>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
                                             <span class="fa fa-shopping-cart"></span> Continuar

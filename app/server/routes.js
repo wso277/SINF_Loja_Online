@@ -569,19 +569,43 @@ exports.listen = function (app) {
                     if (response.getCode() == "200") {
                         var produtos = response.getBody();
                         console.log(produtos);
+                        requestify.request('http://localhost:49445/api/artigos/homepage',
+                            {method: 'GET',dataType: 'form-url-encoded'})
+                            .then(function (response) {
+                                if (response.getCode() == "200") {
+                                    var produtos = response.getBody();
+                                    console.log(produtos);
+                                    res.render("dashboard-private.ejs", {
+                                        title: "Dashboard",
+                                        messages: messages,
+                                        user: req.session.user,
+                                        cart: req.session.shoppingCart,
+                                        products: produtos
+                                    });
+                                } else {
+                                    console.log("error");
+                                }
+                            });
+                    } else {
+                        console.log("error");
+                    }
+                });
+        } else {
+            requestify.request('http://localhost:49445/api/artigos/homepage',
+                {method: 'GET',dataType: 'form-url-encoded'})
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        var produtos = response.getBody();
+                        console.log(produtos);
                         res.render("dashboard-private.ejs", {
                             title: "Dashboard",
                             messages: messages,
-                            user: req.session.user,
-                            cart: req.session.shoppingCart,
                             products: produtos
                         });
                     } else {
                         console.log("error");
                     }
                 });
-        } else {
-            res.render("dashboard-public.ejs", {title: "Dashboard", messages: messages});
         }
     });
 };
