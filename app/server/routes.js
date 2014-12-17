@@ -533,24 +533,24 @@ exports.listen = function (app) {
                             messages.success.push({title: "Bem-vindo", content: req.session.user.Nome});
                             req.session.shoppingCart = {products: [], totalItems: 0, total: 0};
                             console.log(req.session.shoppingCart);
+                            requestify.request('http://localhost:49445/api/artigos/homepage',
+                                {method: 'GET',dataType: 'form-url-encoded'})
+                                .then(function (response) {
+                                    if (response.getCode() == "200") {
+                                        var produtos = response.getBody();
+                                        console.log(produtos);
+                                        res.render("dashboard-private.ejs", {
+                                            title: "Dashboard",
+                                            messages: messages,
+                                            user: req.session.user,
+                                            cart: req.session.shoppingCart,
+                                            products: produtos
+                                        });
+                                    } else {
+                                        console.log("error");
+                                    }
+                                });
                         } else {
-                        }
-                    });
-                requestify.request('http://localhost:49445/api/artigos/homepage',
-                    {method: 'GET',dataType: 'form-url-encoded'})
-                    .then(function (response) {
-                        if (response.getCode() == "200") {
-                            var produtos = response.getBody();
-                            console.log(produtos);
-                            res.render("dashboard-private.ejs", {
-                                title: "Dashboard",
-                                messages: messages,
-                                user: req.session.user,
-                                cart: req.session.shoppingCart,
-                                products: produtos
-                            });
-                        } else {
-                            console.log("error");
                         }
                     });
             } else {
@@ -563,12 +563,23 @@ exports.listen = function (app) {
     app.get('*', function (req, res) {
         var messages = generateMessageBlock();
         if (req.session.user) {
-            res.render("dashboard-private.ejs", {
-                title: "Dashboard",
-                messages: messages,
-                user: req.session.user,
-                cart: req.session.shoppingCart
-            });
+            requestify.request('http://localhost:49445/api/artigos/homepage',
+                {method: 'GET',dataType: 'form-url-encoded'})
+                .then(function (response) {
+                    if (response.getCode() == "200") {
+                        var produtos = response.getBody();
+                        console.log(produtos);
+                        res.render("dashboard-private.ejs", {
+                            title: "Dashboard",
+                            messages: messages,
+                            user: req.session.user,
+                            cart: req.session.shoppingCart,
+                            products: produtos
+                        });
+                    } else {
+                        console.log("error");
+                    }
+                });
         } else {
             res.render("dashboard-public.ejs", {title: "Dashboard", messages: messages});
         }
