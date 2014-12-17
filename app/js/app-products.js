@@ -48,10 +48,10 @@
             $window.location.href='/products/filter/'+$scope.formData.so+'/'+$scope.formData.marca+'/'+$scope.formData.limPrecoMin+'/'+ $scope.formData.limPrecoMax+'/'+$scope.formData.limEcraMin+'/'+$scope.formData.limEcraMax;
         };
 
-        $scope.getPage = function (url) {
+        $scope.getFilterPage = function (url) {
             page = page + 1;
             //alert(page);
-            angular.element("#add").hide();
+            angular.element("#add2").hide();
             $http.post("/get-filter-page"+url, {page: page})
                 .success(function (data) {
 
