@@ -162,21 +162,30 @@
             </a>
         </div>
         <div class="col-sm-4 col-xs-8">
+            <% if (products.maisvendido != null) { %>
             <a href="product/<%= products.maisvendido.CodigoArtigo %>">
-                <div id="tile11" class="tile">
+                <% } else { %>
+                <a href="">
+                    <% } %>
+                    <div id="tile11" class="tile">
 
-                    <div class="carousel slide" data-ride="carousel">
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <img src="/images/phones/<%= products.maisvendido.fotoURL %>"
-                                     class="img-responsive"/>
+                        <div class="carousel slide" data-ride="carousel">
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <% if (products.maisvendido != null) { %>
+                                    <img src="/images/phones/<%= products.maisvendido.fotoURL %>"
+                                         class="img-responsive"/>
+                                    <% } else { %>
+                                    <img src=""
+                                         class="img-responsive"/>
+                                    <% } %>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-            </a>
+                    </div>
+                </a>
         </div>
         <div class="col-sm-4 col-xs-8">
             <a href="product/<%= products.stock.CodigoArtigo %>">
