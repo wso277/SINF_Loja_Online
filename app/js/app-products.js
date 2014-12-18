@@ -56,7 +56,6 @@
 
         $scope.getFilterPage = function (url) {
             page = page + 1;
-            alert(url);
             angular.element("#add2").hide();
             $http.post("/get-filter-page"+url, {page: page})
                 .success(function (data) {
